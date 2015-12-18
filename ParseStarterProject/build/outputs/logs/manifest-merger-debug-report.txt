@@ -1,0 +1,109 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:10:1-53:12
+	package
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:11:5-32
+		INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml
+		INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml
+		INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:10:11-69
+	android:versionCode
+		INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml
+		INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:13:5-67
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:13:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:14:5-79
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:14:22-76
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:17:5-71
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:17:22-68
+uses-permission#android.permission.READ_PROFILE
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:18:5-71
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:18:22-68
+uses-permission#android.permission.READ_CONTACTS
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:19:5-72
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:19:22-69
+application
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:21:5-51:19
+MERGED from [com.android.support:appcompat-v7:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/design/22.2.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:25:9-41
+	android:allowBackup
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:23:9-35
+	android:icon
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:24:9-43
+	android:theme
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:26:9-40
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:22:9-43
+meta-data#com.parse.APPLICATION_ID
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:27:9-29:52
+	android:value
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:29:13-49
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:28:13-52
+meta-data#com.parse.CLIENT_KEY
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:30:9-32:56
+	android:value
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:32:13-53
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:31:13-48
+activity#com.parse.starter.MainActivity
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:34:9-42:20
+	android:label
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:36:13-45
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:35:13-41
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:37:13-41:29
+action#android.intent.action.MAIN
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:38:17-69
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:38:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:40:17-77
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:40:27-74
+activity#com.parse.starter.Main2Activity
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:43:9-44:20
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:43:19-48
+activity#com.parse.starter.LoginActivity
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:45:9-48:20
+	android:label
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:47:13-57
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:46:13-42
+activity#com.parse.starter.SignUpActivity
+ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:49:9-50:20
+	android:name
+		ADDED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml:49:19-49
+uses-sdk
+INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/design/22.2.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:20:5-43
+	android:targetSdkVersion
+		INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml
+		INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml
+		INJECTED from /Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/AndroidManifest.xml
