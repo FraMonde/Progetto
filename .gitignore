@@ -19,14 +19,26 @@ local.properties
 .classpath
 .project
 
+# User-specific configurations
+.idea/libraries/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/.name
+.idea/compiler.xml
+.idea/copyright/profiles_settings.xml
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/scopes/scope_settings.xml
+.idea/vcs.xml
+*.iml
+
 # Android Studio
-.idea/
 .gradle
 /*/local.properties
 /*/out
 /*/*/build
 /*/*/production
-*.iml
 *.iws
 *.ipr
 *~
