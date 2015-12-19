@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.ParseSession;
 import com.parse.ParseUser;
 
 public class Main2Activity extends AppCompatActivity {
@@ -29,8 +30,9 @@ public class Main2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ParseUser.logOut();
-                Intent i = new Intent(Main2Activity.this, MainActivity.class);
-                startActivity(i);
+                Intent intent = new Intent(Main2Activity.this, DispatchActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }

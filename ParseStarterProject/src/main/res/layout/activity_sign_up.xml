@@ -33,9 +33,18 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:hint="Insert password"
         android:id="@+id/password_signup"
+        android:background="#ffffff"
+        android:paddingLeft="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        android:hint="Confirm password"
+        android:id="@+id/passwordAgain_signup"
         android:background="#ffffff"
         android:paddingLeft="10dp" />
 

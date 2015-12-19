@@ -33,9 +33,18 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:hint="Insert password"
         android:id="@+id/password_signup"
+        android:background="#ffffff"
+        android:paddingLeft="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        android:hint="Confirm password"
+        android:id="@+id/passwordAgain_signup"
         android:background="#ffffff"
         android:paddingLeft="10dp" />
 
@@ -49,4 +58,4 @@
         android:background="#f2f2f2" />
 
 </LinearLayout>
-<!-- From: file:/Users/francy/Downloads/Parse-Starter-Project-1.11.0/ParseStarterProject/src/main/res/layout/activity_sign_up.xml -->
+<!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/activity_sign_up.xml -->

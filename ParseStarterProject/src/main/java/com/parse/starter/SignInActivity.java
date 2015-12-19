@@ -8,8 +8,6 @@
  */
 package com.parse.starter;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -18,19 +16,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseSession;
 import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
-import bolts.Task;
 
 
-public class MainActivity extends ActionBarActivity {
+public class SignInActivity extends ActionBarActivity {
 
     EditText usernameText;
     EditText passwordText;
@@ -44,13 +38,6 @@ public class MainActivity extends ActionBarActivity {
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
-        // If there's a session open skip the sign in phase.
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        Task<ParseSession> session = ParseSession.getCurrentSessionInBackground();
-        /*if(currentUser != null && currentUser.getUsername() != null) {
-            Intent i = new Intent(this, Main2Activity.class);
-            startActivity(i);
-        } */
 
         usernameText = (EditText) findViewById(R.id.username_signin);
         passwordText = (EditText) findViewById(R.id.password_signin);
@@ -68,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
                 new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(MainActivity.this, SignUpActivity.class);
+                Intent i = new Intent(SignInActivity.this, SignUpActivity.class);
                 startActivity(i);
             }
         });
@@ -104,20 +91,14 @@ public class MainActivity extends ActionBarActivity {
             public void done(ParseUser user, ParseException e) {
                 if(user != null) {
                     // Log in ok.
-                    Intent i = new Intent(MainActivity.this, Main2Activity.class);
-                    startActivity(i);
+                    Intent intent = new Intent(SignInActivity.this, DispatchActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 } else {
                    // Log in not ok.
-                    new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Error")
-                            .setMessage(e.getMessage())
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // continue with delete
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
+                    Toast.makeText(SignInActivity.this, e.getMessage(),
+                            Toast.LENGTH_LONG).show();
                 }
             }
         });
