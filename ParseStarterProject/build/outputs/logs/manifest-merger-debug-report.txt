@@ -35,12 +35,13 @@ ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Proget
 		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:19:22-69
 application
 ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:21:5-52:19
-MERGED from [com.android.support:appcompat-v7:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:design:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/design/22.2.1/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:appcompat-v7:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/design/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
 	android:label
 		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:25:9-41
 	android:allowBackup
@@ -97,12 +98,14 @@ ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Proget
 		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:49:13-43
 uses-sdk
 INJECTED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml reason: use-sdk injection requested
-MERGED from [com.android.support:appcompat-v7:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:design:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/design/22.2.1/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:appcompat-v7:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/design/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:20:5-43
 	android:targetSdkVersion
 		INJECTED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml
 		INJECTED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml
