@@ -89,12 +89,12 @@ activity#com.parse.starter.SignUpActivity
 ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:46:9-47:20
 	android:name
 		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:46:19-49
-activity#com.parse.starter.MainActivity
+activity#com.parse.starter.SignInActivity
 ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:48:9-51:20
 	android:label
 		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:50:13-45
 	android:name
-		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:49:13-41
+		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:49:13-43
 uses-sdk
 INJECTED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:22.2.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/AndroidManifest.xml:20:5-43

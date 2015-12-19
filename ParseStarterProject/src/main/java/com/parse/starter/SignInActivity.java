@@ -34,7 +34,7 @@ public class SignInActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sign_in);
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
 

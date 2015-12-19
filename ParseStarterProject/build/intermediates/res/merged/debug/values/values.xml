@@ -207,6 +207,12 @@
     <dimen name="fab_size_mini">40dp</dimen>
     <dimen name="fab_size_normal">56dp</dimen>
     <dimen name="fab_translation_z_pressed">6dp</dimen>
+    <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="nav_header_height">160dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/design/22.2.1/res/values/values.xml -->
+    <eat-comment/>
     <dimen name="navigation_elevation">12dp</dimen>
     <dimen name="navigation_icon_padding">32dp</dimen>
     <dimen name="navigation_icon_size">24dp</dimen>
@@ -293,6 +299,8 @@
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="hello_world">Hello World!</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="parse_app_id">QxBgXIcpp5mhcRNPH7i25hulUAFBV0dExxxVUvVc</string>
     <string name="parse_client_key">7iTWBixrS8D2WK9f1znECkiVzFdaPpS8Nr8vEoRo</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
@@ -306,7 +314,9 @@
     <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="title_activity_dispatch">DispatchActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_main">MainActivity</string>
     <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
