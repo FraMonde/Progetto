@@ -10,6 +10,7 @@ package com.parse.starter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ public class SignInActivity extends ActionBarActivity {
     EditText passwordText;
     Button buttonSignin;
     Button buttonSignup;
+    // TODO: forgot password?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,17 @@ public class SignInActivity extends ActionBarActivity {
             }
         });
         
+    }
+
+    // TODO: da implementare
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override

@@ -21,17 +21,23 @@ import com.parse.ParseUser;
 
 public class Main2Activity extends AppCompatActivity {
 
-    ParseUser currentUser;
-    Button logOutButton;
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
     private Toolbar toolbar;
+    private TextView usernameText;
+    private TextView emailText;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        /*usernameText = (TextView) findViewById(R.id.username_text);
+        usernameText.setText("Ciao");
+        emailText = (TextView) findViewById(R.id.email_text);
+        emailText.setText(ParseUser.getCurrentUser().getEmail()); */
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -48,21 +54,6 @@ public class Main2Activity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
-
-        currentUser = ParseUser.getCurrentUser();
-
-        /*logOutButton = (Button) findViewById(R.id.logout_button);
-        logOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ParseUser.logOut();
-                Intent intent = new Intent(Main2Activity.this, DispatchActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
-        }); */
-
-;
     }
 
     @Override

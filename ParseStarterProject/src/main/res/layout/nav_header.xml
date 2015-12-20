@@ -6,13 +6,32 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
-    android:gravity="bottom">
+    android:gravity="top">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_image"
+        android:src="@drawable/ic_profile"
+        android:layout_marginBottom="30dp"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Header"
-        android:textColor="@android:color/white"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:id="@+id/username_text"
+        android:text="Francesca"
+        android:textSize="14sp"
+        android:paddingBottom="8dp"
+        android:textColor="#ffffff"
+        android:focusableInTouchMode="false"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/email_text"
+        android:text="email@email.it"
+        android:textSize="14sp"
+        android:textColor="#ffffff" />
 
 </LinearLayout>
