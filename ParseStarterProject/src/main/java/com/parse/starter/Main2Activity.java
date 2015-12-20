@@ -9,10 +9,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseSession;
 import com.parse.ParseUser;
@@ -37,7 +39,7 @@ public class Main2Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -86,7 +88,7 @@ public class Main2Activity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        //selectDrawerItem(menuItem);
+                        selectDrawerItem(menuItem);
                         return true;
                     }
                 });
@@ -108,6 +110,14 @@ public class Main2Activity extends AppCompatActivity {
             case R.id.nav_third_fragment:
                 //fragmentClass = ThirdFragment.class;
                 break;
+            case R.id.nav_settings:
+                break;
+            case R.id.nav_logout:
+                // TODO: selezione sub items
+                ParseUser.logOut();
+                Intent intent = new Intent(Main2Activity.this, DispatchActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             default:
                 //fragmentClass = FirstFragment.class;
         }
