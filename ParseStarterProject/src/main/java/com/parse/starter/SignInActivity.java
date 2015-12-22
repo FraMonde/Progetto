@@ -64,15 +64,18 @@ public class SignInActivity extends ActionBarActivity {
         
     }
 
-    // TODO: da implementare
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
+        usernameText.setText(savedInstanceState.getString(UserKey.USERNAME_KEY));
+        passwordText.setText(savedInstanceState.getString(UserKey.PASSWORD_KEY));
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(UserKey.USERNAME_KEY, usernameText.getText().toString());
+        outState.putString(UserKey.PASSWORD_KEY, passwordText.getText().toString());
     }
 
     @Override

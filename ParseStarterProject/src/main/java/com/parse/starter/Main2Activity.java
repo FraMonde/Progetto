@@ -9,14 +9,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.parse.ParseSession;
 import com.parse.ParseUser;
 
 public class Main2Activity extends AppCompatActivity {
@@ -34,11 +29,6 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        /*usernameText = (TextView) findViewById(R.id.username_text);
-        usernameText.setText("Ciao");
-        emailText = (TextView) findViewById(R.id.email_text);
-        emailText.setText(ParseUser.getCurrentUser().getEmail()); */
-
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -54,6 +44,12 @@ public class Main2Activity extends AppCompatActivity {
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
         setupDrawerContent(nvDrawer);
+
+        View header = nvDrawer.getHeaderView(0);
+        usernameText = (TextView) header.findViewById(R.id.username_text);
+        usernameText.setText(ParseUser.getCurrentUser().getUsername());
+        emailText = (TextView) header.findViewById(R.id.email_text);
+        emailText.setText(ParseUser.getCurrentUser().getEmail());
     }
 
     @Override
@@ -90,42 +86,42 @@ public class Main2Activity extends AppCompatActivity {
         // position
         Fragment fragment = null;
 
-        Class fragmentClass;
+        Class fragmentClass = null;
         switch(menuItem.getItemId()) {
             case R.id.nav_first_fragment:
                 //fragmentClass = FirstFragment.class;
                 break;
-            case R.id.nav_second_fragment:
-                //fragmentClass = SecondFragment.class;
+            case R.id.nav_chalet:
+                fragmentClass = HomeFragment.class;
                 break;
-            case R.id.nav_third_fragment:
+            case R.id.nav_group:
                 //fragmentClass = ThirdFragment.class;
                 break;
             case R.id.nav_settings:
                 break;
             case R.id.nav_logout:
-                // TODO: selezione sub items
                 ParseUser.logOut();
                 Intent intent = new Intent(Main2Activity.this, DispatchActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                return;
             default:
-                //fragmentClass = FirstFragment.class;
+                fragmentClass = HomeFragment.class;
         }
 
         try {
-            //fragment = (Fragment) fragmentClass.newInstance();
+                fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // Insert the fragment by replacing any existing fragment
-        /*FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         // Highlight the selected item, update the title, and close the drawer
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
-        mDrawer.closeDrawers(); */
+        mDrawer.closeDrawers();
     }
 }

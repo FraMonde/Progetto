@@ -6,7 +6,7 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
-    android:gravity="top">
+    android:gravity="bottom">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -19,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/username_text"
-        android:text="Francesca"
         android:textSize="14sp"
         android:paddingBottom="8dp"
         android:textColor="#ffffff"
@@ -30,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/email_text"
-        android:text="email@email.it"
         android:textSize="14sp"
         android:textColor="#ffffff" />
 

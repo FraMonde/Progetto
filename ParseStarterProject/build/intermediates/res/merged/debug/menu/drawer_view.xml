@@ -4,20 +4,20 @@
         <item
             android:id="@+id/nav_first_fragment"
             android:icon="@drawable/ic_one"
-            android:title="First" />
+            android:title="Impianti" />
         <item
-            android:id="@+id/nav_second_fragment"
-            android:icon="@drawable/ic_two"
-            android:title="Second" />
+            android:id="@+id/nav_chalet"
+            android:icon="@drawable/ic_chalet"
+            android:title="Baite" />
         <item
-            android:id="@+id/nav_third_fragment"
-            android:icon="@drawable/ic_three"
-            android:title="Third" />
+            android:id="@+id/nav_group"
+            android:icon="@drawable/ic_group"
+            android:title="Gruppo" />
     </group>
 
-    <group android:checkableBehavior="single">
-        <item android:title="Sub items">
-            <menu>
+    <item>
+        <menu>
+            <group android:checkableBehavior="single">
                 <item
                     android:icon="@drawable/ic_settings"
                     android:title="Settings"
@@ -26,8 +26,8 @@
                     android:icon="@drawable/ic_logout"
                     android:title="Log out"
                     android:id="@+id/nav_logout"/>
-            </menu>
-        </item>
-    </group>
+            </group>
+        </menu>
+    </item>
 
 </menu><!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/menu/drawer_view.xml -->
