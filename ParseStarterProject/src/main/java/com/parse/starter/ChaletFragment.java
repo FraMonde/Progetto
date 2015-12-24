@@ -2,7 +2,7 @@ package com.parse.starter;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +14,6 @@ import android.widget.TextView;
 
 import com.parse.starter.dummy.DummyContent;
 
-/**
- * A fragment representing a list of Items.
- * <p>
- * Large screen devices (such as tablets) are supported by replacing the ListView
- * with a GridView.
- * <p>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
- * interface.
- */
 public class ChaletFragment extends Fragment implements AbsListView.OnItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -47,12 +38,12 @@ public class ChaletFragment extends Fragment implements AbsListView.OnItemClickL
      */
     private ListAdapter mAdapter;
 
-    // TODO: Rename and change types of parameters
-    public static ChaletFragment newInstance(String param1, String param2) {
-        ChaletFragment fragment = new ChaletFragment();
+
+    public static ChaletFragment newInstance() {
+
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
+        ChaletFragment fragment = new ChaletFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -91,17 +82,6 @@ public class ChaletFragment extends Fragment implements AbsListView.OnItemClickL
         mListView.setOnItemClickListener(this);
 
         return view;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override

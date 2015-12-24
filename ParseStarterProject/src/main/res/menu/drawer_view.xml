@@ -2,8 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_first_fragment"
-            android:icon="@drawable/ic_one"
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home"
+            android:checked="true"/>
+        <item
+            android:id="@+id/nav_lift"
+            android:icon="@drawable/ic_lift"
             android:title="Impianti" />
         <item
             android:id="@+id/nav_chalet"
@@ -15,7 +20,7 @@
             android:title="Gruppo" />
     </group>
 
-    <item>
+    <item android:title="Submenu">
         <menu>
             <group android:checkableBehavior="single">
                 <item

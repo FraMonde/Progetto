@@ -50,6 +50,10 @@ public class Main2Activity extends AppCompatActivity {
         usernameText.setText(ParseUser.getCurrentUser().getUsername());
         emailText = (TextView) header.findViewById(R.id.email_text);
         emailText.setText(ParseUser.getCurrentUser().getEmail());
+
+        Fragment fragment = HomeFragment.newInstance();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
 
     @Override
@@ -88,16 +92,22 @@ public class Main2Activity extends AppCompatActivity {
 
         Class fragmentClass = null;
         switch(menuItem.getItemId()) {
-            case R.id.nav_first_fragment:
-                //fragmentClass = FirstFragment.class;
-                break;
-            case R.id.nav_chalet:
+            case  R.id.nav_home:
                 fragmentClass = HomeFragment.class;
                 break;
+            case R.id.nav_lift:
+                //TODO: fare nuovo fragment
+                fragmentClass = ChaletFragment.class;
+                break;
+            case R.id.nav_chalet:
+                fragmentClass = ChaletFragment.class;
+                break;
             case R.id.nav_group:
-                //fragmentClass = ThirdFragment.class;
+                fragmentClass = GroupFragment.class;
                 break;
             case R.id.nav_settings:
+             //TODO: fare nuovo fragment
+                fragmentClass = HomeFragment.class;
                 break;
             case R.id.nav_logout:
                 ParseUser.logOut();
@@ -110,7 +120,7 @@ public class Main2Activity extends AppCompatActivity {
         }
 
         try {
-                fragment = (Fragment) fragmentClass.newInstance();
+            fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
