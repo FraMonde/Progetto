@@ -27,6 +27,7 @@
     <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/values-sw600dp/refs.xml -->
     <eat-comment/>
     <item name="fragment_chalet" type="layout">@layout/fragment_chalet_grid</item>
+    <item name="fragment_lift" type="layout">@layout/fragment_lift_grid</item>
     <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/design/23.1.1/res/values-sw600dp/values-sw600dp.xml -->
     <eat-comment/>
     <style name="Widget.Design.TabLayout" parent="Base.Widget.Design.TabLayout">

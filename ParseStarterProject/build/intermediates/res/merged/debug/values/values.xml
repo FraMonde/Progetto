@@ -286,6 +286,7 @@
     <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/values/refs.xml -->
     <eat-comment/>
     <item name="fragment_chalet" type="layout">@layout/fragment_chalet_list</item>
+    <item name="fragment_lift" type="layout">@layout/fragment_lift_list</item>
     <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
@@ -343,6 +344,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_member">MemberActivity</string>
     <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>

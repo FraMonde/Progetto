@@ -1,9 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:orientation="vertical" tools:context="com.parse.starter.GroupFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.parse.starter.GroupFragment">
 
 
-    <SearchView
+    <!--<SearchView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/searchView" />
@@ -15,7 +18,21 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:max="100"
         android:indeterminate="true"
-        android:visibility="gone" />
+        android:visibility="gone" /> -->
+
+    <Button
+        android:id="@+id/meber_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="MEMBERS" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="#d6f2ee"
+        android:text="MAPPA"
+        android:gravity="center"/>
 
 </LinearLayout>
 <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/fragment_group.xml -->

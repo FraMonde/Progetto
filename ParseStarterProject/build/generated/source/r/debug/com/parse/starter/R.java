@@ -2205,8 +2205,9 @@ containing a value of this type.
         public static final int ic_photo=0x7f02004e;
         public static final int ic_profile=0x7f02004f;
         public static final int ic_settings=0x7f020050;
-        public static final int notification_template_icon_bg=0x7f020052;
-        public static final int side_nav_bar=0x7f020051;
+        public static final int ic_user=0x7f020051;
+        public static final int notification_template_icon_bg=0x7f020053;
+        public static final int side_nav_bar=0x7f020052;
     }
     public static final class id {
         public static final int action0=0x7f0c0083;
@@ -2275,10 +2276,12 @@ containing a value of this type.
         public static final int info=0x7f0c008e;
         public static final int item_touch_helper_previous_elevation=0x7f0c0005;
         public static final int left=0x7f0c0022;
+        public static final int lift_tv=0x7f0c007f;
         public static final int line1=0x7f0c0088;
         public static final int line3=0x7f0c008c;
         public static final int listMode=0x7f0c000b;
         public static final int list_item=0x7f0c0041;
+        public static final int meber_button=0x7f0c007e;
         public static final int media_actions=0x7f0c0086;
         public static final int middle=0x7f0c0031;
         public static final int mini=0x7f0c002f;
@@ -2301,7 +2304,6 @@ containing a value of this type.
         public static final int password_signup=0x7f0c0074;
         public static final int pin=0x7f0c001b;
         public static final int profile_image=0x7f0c0080;
-        public static final int progress=0x7f0c007f;
         public static final int progress_circular=0x7f0c0006;
         public static final int progress_horizontal=0x7f0c0007;
         public static final int radio=0x7f0c0054;
@@ -2312,7 +2314,6 @@ containing a value of this type.
         public static final int scrollIndicatorUp=0x7f0c004b;
         public static final int scrollView=0x7f0c004c;
         public static final int scrollable=0x7f0c0038;
-        public static final int searchView=0x7f0c007e;
         public static final int search_badge=0x7f0c005e;
         public static final int search_bar=0x7f0c005d;
         public static final int search_button=0x7f0c005f;
@@ -2397,39 +2398,45 @@ containing a value of this type.
         public static final int abc_select_dialog_material=0x7f040018;
         public static final int activity_dispatch=0x7f040019;
         public static final int activity_main2=0x7f04001a;
-        public static final int activity_sign_in=0x7f04001b;
-        public static final int activity_sign_up=0x7f04001c;
-        public static final int content_dispatch=0x7f04001d;
-        public static final int design_layout_snackbar=0x7f04001e;
-        public static final int design_layout_snackbar_include=0x7f04001f;
-        public static final int design_layout_tab_icon=0x7f040020;
-        public static final int design_layout_tab_text=0x7f040021;
-        public static final int design_menu_item_action_area=0x7f040022;
-        public static final int design_navigation_item=0x7f040023;
-        public static final int design_navigation_item_header=0x7f040024;
-        public static final int design_navigation_item_separator=0x7f040025;
-        public static final int design_navigation_item_subheader=0x7f040026;
-        public static final int design_navigation_menu=0x7f040027;
-        public static final int design_navigation_menu_item=0x7f040028;
-        public static final int fragment_chalet=0x7f04003b;
-        public static final int fragment_chalet_grid=0x7f040029;
-        public static final int fragment_chalet_list=0x7f04002a;
-        public static final int fragment_group=0x7f04002b;
-        public static final int fragment_home=0x7f04002c;
-        public static final int nav_header=0x7f04002d;
-        public static final int notification_media_action=0x7f04002e;
-        public static final int notification_media_cancel_action=0x7f04002f;
-        public static final int notification_template_big_media=0x7f040030;
-        public static final int notification_template_big_media_narrow=0x7f040031;
-        public static final int notification_template_lines=0x7f040032;
-        public static final int notification_template_media=0x7f040033;
-        public static final int notification_template_part_chronometer=0x7f040034;
-        public static final int notification_template_part_time=0x7f040035;
-        public static final int select_dialog_item_material=0x7f040036;
-        public static final int select_dialog_multichoice_material=0x7f040037;
-        public static final int select_dialog_singlechoice_material=0x7f040038;
-        public static final int support_simple_spinner_dropdown_item=0x7f040039;
-        public static final int toolbar=0x7f04003a;
+        public static final int activity_member=0x7f04001b;
+        public static final int activity_sign_in=0x7f04001c;
+        public static final int activity_sign_up=0x7f04001d;
+        public static final int content_dispatch=0x7f04001e;
+        public static final int content_member=0x7f04001f;
+        public static final int design_layout_snackbar=0x7f040020;
+        public static final int design_layout_snackbar_include=0x7f040021;
+        public static final int design_layout_tab_icon=0x7f040022;
+        public static final int design_layout_tab_text=0x7f040023;
+        public static final int design_menu_item_action_area=0x7f040024;
+        public static final int design_navigation_item=0x7f040025;
+        public static final int design_navigation_item_header=0x7f040026;
+        public static final int design_navigation_item_separator=0x7f040027;
+        public static final int design_navigation_item_subheader=0x7f040028;
+        public static final int design_navigation_menu=0x7f040029;
+        public static final int design_navigation_menu_item=0x7f04002a;
+        public static final int fragment_chalet=0x7f040040;
+        public static final int fragment_chalet_grid=0x7f04002b;
+        public static final int fragment_chalet_list=0x7f04002c;
+        public static final int fragment_group=0x7f04002d;
+        public static final int fragment_home=0x7f04002e;
+        public static final int fragment_lift=0x7f040041;
+        public static final int fragment_lift_grid=0x7f04002f;
+        public static final int fragment_lift_list=0x7f040030;
+        public static final int lift_adapter=0x7f040031;
+        public static final int nav_header=0x7f040032;
+        public static final int notification_media_action=0x7f040033;
+        public static final int notification_media_cancel_action=0x7f040034;
+        public static final int notification_template_big_media=0x7f040035;
+        public static final int notification_template_big_media_narrow=0x7f040036;
+        public static final int notification_template_lines=0x7f040037;
+        public static final int notification_template_media=0x7f040038;
+        public static final int notification_template_part_chronometer=0x7f040039;
+        public static final int notification_template_part_time=0x7f04003a;
+        public static final int select_dialog_item_material=0x7f04003b;
+        public static final int select_dialog_multichoice_material=0x7f04003c;
+        public static final int select_dialog_singlechoice_material=0x7f04003d;
+        public static final int support_simple_spinner_dropdown_item=0x7f04003e;
+        public static final int toolbar=0x7f04003f;
     }
     public static final class menu {
         public static final int drawer_view=0x7f0d0000;
@@ -2482,6 +2489,7 @@ containing a value of this type.
         public static final int title_activity_home=0x7f060028;
         public static final int title_activity_login=0x7f060029;
         public static final int title_activity_main=0x7f06002a;
+        public static final int title_activity_member=0x7f06002b;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f09007f;

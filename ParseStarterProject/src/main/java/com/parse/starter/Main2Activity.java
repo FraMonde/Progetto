@@ -96,8 +96,7 @@ public class Main2Activity extends AppCompatActivity {
                 fragmentClass = HomeFragment.class;
                 break;
             case R.id.nav_lift:
-                //TODO: fare nuovo fragment
-                fragmentClass = ChaletFragment.class;
+                fragmentClass = LiftFragment.class;
                 break;
             case R.id.nav_chalet:
                 fragmentClass = ChaletFragment.class;
