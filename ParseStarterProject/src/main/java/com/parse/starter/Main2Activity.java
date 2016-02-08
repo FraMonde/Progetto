@@ -14,6 +14,9 @@ import android.view.View;
 import android.widget.TextView;
 import com.parse.ParseUser;
 
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+
 public class Main2Activity extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
@@ -54,6 +57,7 @@ public class Main2Activity extends AppCompatActivity {
         Fragment fragment = HomeFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
     }
 
     @Override

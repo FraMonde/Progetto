@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class LiftAdapter extends BaseAdapter {
 
-    private  List<ParseObject> lift;
+    private List<ParseObject> lift;
     private Context context;
 
     public LiftAdapter(List<ParseObject> lift, Context context) {
@@ -47,13 +47,16 @@ public class LiftAdapter extends BaseAdapter {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = li.inflate(R.layout.lift_adapter, viewGroup, false);
         }
-       TextView tv = (TextView) view.findViewById(R.id.lift_tv);
+        TextView name_tv = (TextView) view.findViewById(R.id.lift_tv);
         String liftName = lift.get(i).getString("Name");
-        tv.setText(liftName);
-        if (i % 2 == 0)
-            view.setBackgroundColor(0xffffffff);
-        else
-            view.setBackgroundColor(0xffcccccc);
+        name_tv.setText(liftName);
+
+        TextView time_tv = (TextView) view.findViewById(R.id.time_tv);
+        Number person = lift.get(i).getNumber("Person");
+        Number personMin = lift.get(i).getNumber("PerMin");
+        Number liftTime = (int)person/(int)personMin;
+        time_tv.setText(liftTime.toString()+"min");
+
         return view;
     }
 

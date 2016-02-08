@@ -19,6 +19,8 @@ import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class LiftFragment extends Fragment implements AbsListView.OnItemClickListener {
 
@@ -63,7 +65,7 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
         liftAdapter = new LiftAdapter(liftList, getContext());
         listView.setAdapter(liftAdapter);
         this.getLift();
-
+        
         // Set OnItemClickListener so we can be notified on item clicks
         listView.setOnItemClickListener(this);
 
