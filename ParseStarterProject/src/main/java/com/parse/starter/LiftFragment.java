@@ -1,8 +1,6 @@
 package com.parse.starter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.net.ParseException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,8 +17,8 @@ import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LiftFragment extends Fragment implements AbsListView.OnItemClickListener {
 
@@ -28,6 +26,7 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     private AbsListView listView;
     private LiftAdapter liftAdapter;
     private List<ParseObject> liftList = new ArrayList<ParseObject>();
+    private Timer timer;
 
     public static LiftFragment newInstance() {
         LiftFragment fragment = new LiftFragment();
@@ -48,11 +47,6 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            //mParam1 = getArguments().getString(ARG_PARAM1);
-            //mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -64,12 +58,26 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
         listView = (AbsListView) view.findViewById(android.R.id.list);
         liftAdapter = new LiftAdapter(liftList, getContext());
         listView.setAdapter(liftAdapter);
-        this.getLift();
-        
-        // Set OnItemClickListener so we can be notified on item clicks
-        listView.setOnItemClickListener(this);
+
+        // Network call is called every 20 seconds.
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                getLift();
+
+            }
+        };
+        timer = new Timer();
+        timer.schedule(timerTask, 0, 20000);
 
         return view;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        timer.cancel();
+        timer = null;
     }
 
     @Override
@@ -84,11 +92,6 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-           // mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        //}
     }
 
     /**
@@ -104,7 +107,6 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
         }
     }
 
-    // TODO: chiamata da fare ogni tot
     // Network call
     private void getLift() {
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Lift");

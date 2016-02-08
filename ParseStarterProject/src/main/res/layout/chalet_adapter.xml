@@ -7,12 +7,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lift_tv" />
+        android:id="@+id/chalet_tv" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/time_tv"
+        android:id="@+id/person_tv"
         android:layout_marginLeft="50dp"/>
 
-</LinearLayout><!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/lift_adapter.xml -->
+</LinearLayout>

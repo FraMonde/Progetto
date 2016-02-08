@@ -1,10 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.parse.starter.HomeFragment"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.parse.starter.HomeFragment">
 
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="HOME PAGE" />
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Tieni acceso il Bluetooth per segnalare la tua presenza in coda" />
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/bluetooth"
+        android:id="@+id/bluetotth_cb" />
 
 </LinearLayout>
 <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/fragment_home.xml -->

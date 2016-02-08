@@ -1,6 +1,8 @@
 package com.parse.starter;
 
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,15 +11,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.parse.ParseUser;
 
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
-public class Main2Activity extends AppCompatActivity {
+public class Main2Activity extends AppCompatActivity implements HomeFragment.OnHomeFragmentInteractionListener {
 
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
@@ -25,7 +31,9 @@ public class Main2Activity extends AppCompatActivity {
     private TextView usernameText;
     private TextView emailText;
 
-
+    private BluetoothAdapter bluetoothAdapter;
+    private final static int REQUEST_ENABLE_BT = 1;
+    private Boolean bluetoothEnable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +46,6 @@ public class Main2Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         getSupportActionBar().setHomeButtonEnabled(true);
-        //getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -58,6 +65,19 @@ public class Main2Activity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
+        // Use this check to determine whether BLE is supported on the device. Then
+        // you can selectively disable BLE-related features.
+ /*       if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, "ble_not_supported", Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        // Ensures Bluetooth is available on the device and it is enabled. If not,
+        // displays a dialog requesting user permission to enable Bluetooth.
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }      */
     }
 
     @Override
@@ -136,5 +156,19 @@ public class Main2Activity extends AppCompatActivity {
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawer.closeDrawers();
+    }
+
+    //Interface OnHomeFragmentInteractionListener's methods
+    @Override
+    public void onBluetoothButtonClick() {
+        if(!bluetoothEnable) {
+            //startService(new Intent(Main2Activity.this, FindBluetoothService.class));
+            Log.i("non abilitato", "non abilitato");
+            bluetoothEnable = true;
+        } else {
+            //stopService(new Intent(Main2Activity.this, FindBluetoothService.class));
+            Log.i("abilitato", "abilitato");
+            bluetoothEnable = false;
+        }
     }
 }
