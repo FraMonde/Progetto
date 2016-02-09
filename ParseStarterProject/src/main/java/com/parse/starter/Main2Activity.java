@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,19 +66,17 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
-        // Use this check to determine whether BLE is supported on the device. Then
-        // you can selectively disable BLE-related features.
- /*       if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "ble_not_supported", Toast.LENGTH_SHORT).show();
-            finish();
+        if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+
+            bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            // Ensures Bluetooth is available on the device and it is enabled. If not,
+            // displays a dialog requesting user permission to enable Bluetooth.
+            if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
         }
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        // Ensures Bluetooth is available on the device and it is enabled. If not,
-        // displays a dialog requesting user permission to enable Bluetooth.
-        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }      */
+
     }
 
     @Override
@@ -115,8 +114,8 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         Fragment fragment = null;
 
         Class fragmentClass = null;
-        switch(menuItem.getItemId()) {
-            case  R.id.nav_home:
+        switch (menuItem.getItemId()) {
+            case R.id.nav_home:
                 fragmentClass = HomeFragment.class;
                 break;
             case R.id.nav_lift:
@@ -129,7 +128,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                 fragmentClass = GroupFragment.class;
                 break;
             case R.id.nav_settings:
-             //TODO: fare nuovo fragment
+                //TODO: fare nuovo fragment
                 fragmentClass = HomeFragment.class;
                 break;
             case R.id.nav_logout:
@@ -161,14 +160,22 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     //Interface OnHomeFragmentInteractionListener's methods
     @Override
     public void onBluetoothButtonClick() {
-        if(!bluetoothEnable) {
-            //startService(new Intent(Main2Activity.this, FindBluetoothService.class));
-            Log.i("non abilitato", "non abilitato");
-            bluetoothEnable = true;
+
+        // Use this check to determine whether BLE is supported on the device. Then
+        // you can selectively disable BLE-related features.
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, "Bluetooth is not supported!", Toast.LENGTH_SHORT).show();
         } else {
-            //stopService(new Intent(Main2Activity.this, FindBluetoothService.class));
-            Log.i("abilitato", "abilitato");
-            bluetoothEnable = false;
+            //TODO: cosa succede se non autorizzo il blue ma schiaccio il bottone?
+            if (!bluetoothEnable) {
+                startService(new Intent(Main2Activity.this, FindBluetoothService.class));
+                Log.i("non abilitato", "start servizio");
+                bluetoothEnable = true;
+            } else {
+                stopService(new Intent(Main2Activity.this, FindBluetoothService.class));
+                Log.i("abilitato", "stop servizio");
+                bluetoothEnable = false;
+            }
         }
     }
 }

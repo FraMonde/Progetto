@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp">
 
     <TextView
+        android:id="@+id/lift_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lift_tv" />
+        android:layout_alignParentLeft="true" />
+
+    <ImageView
+        android:id="@+id/line_img"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_toLeftOf="@+id/time_tv"
+        android:src="@drawable/line" />
 
     <TextView
+        android:id="@+id/time_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/time_tv"
-        android:layout_marginLeft="50dp"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp" />
 
-</LinearLayout><!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/lift_adapter.xml -->
+</RelativeLayout><!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/lift_adapter.xml -->
