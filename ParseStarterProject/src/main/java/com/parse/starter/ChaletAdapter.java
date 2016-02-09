@@ -55,7 +55,10 @@ public class ChaletAdapter extends BaseAdapter {
         TextView time_tv = (TextView) view.findViewById(R.id.person_tv);
         Number totalSeat = chalet.get(i).getNumber("TotalSeat");
         Number busySeat = chalet.get(i).getNumber("BusySeat");
-        time_tv.setText(busySeat.toString() + " su " + totalSeat.toString());
+        Number freeSeat = (int)totalSeat - (int)busySeat;
+        if((int)freeSeat<0)
+            freeSeat = 0;
+        time_tv.setText(freeSeat.toString() + " posti liberi");
 
         return view;
     }
