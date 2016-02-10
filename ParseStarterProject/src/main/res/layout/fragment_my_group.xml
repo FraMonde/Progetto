@@ -5,6 +5,4 @@
     android:orientation="vertical"
     tools:context="com.parse.starter.MyGroupFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
 </LinearLayout>

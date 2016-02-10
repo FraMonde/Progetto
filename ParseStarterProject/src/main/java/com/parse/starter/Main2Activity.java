@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.parse.ParseUser;
 
-public class Main2Activity extends AppCompatActivity implements HomeFragment.OnHomeFragmentInteractionListener {
+public class Main2Activity extends AppCompatActivity implements HomeFragment.OnHomeFragmentInteractionListener, GroupFragment.OnGroupFragmentInteractionListener {
 
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
@@ -172,5 +172,13 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                 Log.i("abilitato", "stop servizio");
             }
         }
+    }
+
+    //Interface OnGroupFragmentInteractionListener's methods
+    @Override
+    public void onCreateGroupButtonClick() {
+        MyGroupFragment fragment = MyGroupFragment.newInstance();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
 }

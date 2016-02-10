@@ -6,45 +6,61 @@
     tools:context="com.parse.starter.GroupFragment">
 
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="30dp"
+        android:text="Crea il tuo gruppo!"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
+
     <EditText
+        android:id="@+id/groupName_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/groupName_et"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:hint="Insert group&apos;s name" />
+        android:hint="Nome del gruppo" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <EditText
+            android:id="@+id/memberName_et"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:id="@+id/memberName_et"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_gravity="center_horizontal"
-            android:hint="Member's name" />
+            android:hint="Aggiungi un amico" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"
-            android:id="@+id/add_bt" />
+            android:id="@+id/add_bt"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:background="@drawable/ic_add" />
     </LinearLayout>
 
     <TextView
+        android:id="@+id/member_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/member_tv" />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp" />
 
     <Button
+        android:id="@+id/createGroup_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="Create"
-        android:id="@+id/createGroup_bt"
-        android:layout_gravity="center_horizontal" />
+        android:textColor="#0097A7" />
 </LinearLayout>

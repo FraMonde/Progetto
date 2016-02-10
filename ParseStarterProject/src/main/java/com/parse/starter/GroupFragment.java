@@ -31,6 +31,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
     Button createButton;
     Button addButton;
 
+    private OnGroupFragmentInteractionListener myListener;
+
     public static GroupFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -70,6 +72,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onDetach() {
         super.onDetach();
+        myListener = null;
     }
 
     @Override
@@ -82,6 +85,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
             case R.id.createGroup_bt:
                 String groupName = nameText.getText().toString();
                 createGroup(groupName, members);
+                myListener = (OnGroupFragmentInteractionListener)getActivity();
+                if(myListener != null) {
+                    myListener.onCreateGroupButtonClick();
+                }
                 break;
             default:
                 throw new RuntimeException("Unknow button ID");
@@ -146,5 +153,9 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
         }
 
         group.saveInBackground();
+    }
+
+    public interface OnGroupFragmentInteractionListener {
+        public void onCreateGroupButtonClick();
     }
 }
