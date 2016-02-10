@@ -14,15 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseUser;
-
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 public class Main2Activity extends AppCompatActivity implements HomeFragment.OnHomeFragmentInteractionListener {
 
@@ -34,7 +29,6 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
 
     private BluetoothAdapter bluetoothAdapter;
     private final static int REQUEST_ENABLE_BT = 1;
-    private Boolean bluetoothEnable = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +119,11 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                 fragmentClass = ChaletFragment.class;
                 break;
             case R.id.nav_group:
-                fragmentClass = GroupFragment.class;
+                Boolean myGroup = ParseUser.getCurrentUser().getBoolean(UserKey.GROUP_KEY);
+                if (myGroup)
+                    fragmentClass = MyGroupFragment.class;
+                else
+                    fragmentClass = GroupFragment.class;
                 break;
             case R.id.nav_settings:
                 //TODO: fare nuovo fragment
@@ -159,22 +157,19 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
 
     //Interface OnHomeFragmentInteractionListener's methods
     @Override
-    public void onBluetoothButtonClick() {
+    public void onBluetoothButtonClick(boolean enable) {
 
         // Use this check to determine whether BLE is supported on the device. Then
         // you can selectively disable BLE-related features.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "Bluetooth is not supported!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bluetooth non supportato!", Toast.LENGTH_SHORT).show();
         } else {
-            //TODO: cosa succede se non autorizzo il blue ma schiaccio il bottone?
-            if (!bluetoothEnable) {
+            if (enable) {
                 startService(new Intent(Main2Activity.this, FindBluetoothService.class));
                 Log.i("non abilitato", "start servizio");
-                bluetoothEnable = true;
             } else {
                 stopService(new Intent(Main2Activity.this, FindBluetoothService.class));
                 Log.i("abilitato", "stop servizio");
-                bluetoothEnable = false;
             }
         }
     }

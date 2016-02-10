@@ -6,20 +6,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    ImageButton bluetoothButton;
+    CheckBox bluetoothButton;
     private OnHomeFragmentInteractionListener myListener;
 
     public static HomeFragment newInstance() {
 
-        Bundle args = new Bundle();
-
         HomeFragment fragment = new HomeFragment();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -37,9 +36,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        bluetoothButton = (ImageButton) view.findViewById(R.id.bluetotth_cb);
+        bluetoothButton = (CheckBox) view.findViewById(R.id.bluetotth_cb);
         bluetoothButton.setOnClickListener(this);
-        bluetoothButtonImage();
 
         return view;
     }
@@ -52,24 +50,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        bluetoothButtonImage();
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+            bluetoothButton.setChecked(false);
+            Toast.makeText(getActivity(), "Accendi il Bluetooth!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         myListener = (OnHomeFragmentInteractionListener) getActivity();
         if (myListener != null) {
-            myListener.onBluetoothButtonClick();
-        }
-    }
-
-    private void bluetoothButtonImage() {
-        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-            bluetoothButton.setBackgroundResource(R.drawable.bl_notenabled);
-        } else {
-            bluetoothButton.setBackgroundResource(R.drawable.bl_enabled);
+            myListener.onBluetoothButtonClick(bluetoothButton.isChecked());
         }
     }
 
     public interface OnHomeFragmentInteractionListener {
-        public void onBluetoothButtonClick();
+        public void onBluetoothButtonClick(boolean enable);
     }
 
 }

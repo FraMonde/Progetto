@@ -114,6 +114,7 @@ public class SignUpActivity extends AppCompatActivity {
             newUser.setUsername(username);
             newUser.setEmail(email);
             newUser.setPassword(password);
+            newUser.put(UserKey.GROUP_KEY, false);
 
             newUser.signUpInBackground(new SignUpCallback() {
                 @Override

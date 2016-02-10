@@ -1,23 +1,35 @@
 package com.parse.starter;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class GroupFragment extends Fragment {
+public class GroupFragment extends Fragment implements View.OnClickListener {
 
-    private OnFragmentInteractionListener mListener;
+    private List<ParseUser> members = new ArrayList<ParseUser>();
+
+    EditText nameText;
+    EditText memberText;
+    TextView memberAddedText;
+    Button createButton;
+    Button addButton;
 
     public static GroupFragment newInstance() {
 
@@ -40,37 +52,40 @@ public class GroupFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        searchFriend("prova1");
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_group, container, false);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_group, container, false);
+
+        nameText = (EditText) view.findViewById(R.id.groupName_et);
+        memberText = (EditText) view.findViewById(R.id.memberName_et);
+        memberAddedText = (TextView) view.findViewById(R.id.member_tv);
+        createButton = (Button) view.findViewById(R.id.createGroup_bt);
+        createButton.setOnClickListener(this);
+        addButton = (Button) view.findViewById(R.id.add_bt);
+        addButton.setOnClickListener(this);
+
+        return view;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.add_bt:
+                String memberName = memberText.getText().toString();
+                searchFriend(memberName);
+                break;
+            case R.id.createGroup_bt:
+                String groupName = nameText.getText().toString();
+                createGroup(groupName, members);
+                break;
+            default:
+                throw new RuntimeException("Unknow button ID");
+        }
     }
 
     private void searchFriend(String username) {
@@ -82,7 +97,7 @@ public class GroupFragment extends Fragment {
 
             @Override
             public void done(List<ParseUser> users, ParseException e) {
-                if (e == null) {
+                if (e == null && users.size() > 0) {
                     //Success we have Users to display
                     //store users in array
                     String[] usernames = new String[users.size()];
@@ -90,11 +105,46 @@ public class GroupFragment extends Fragment {
                     int i = 0;
                     for (ParseUser user : users) {
                         usernames[i] = user.getUsername();
+                        members.add(user);
+                        String text = memberAddedText.getText().toString();
+                        memberAddedText.setText(text+usernames[i]+"\n");
+                        memberText.setText("");
                         i++;
                     }
                 }
+                else if(users.size() == 0) {
+                    Toast.makeText(getActivity(), "Utente non trovato", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
             }
-
         });
+    }
+
+    private void createGroup(String groupName, List<ParseUser> members) {
+        if(members.size() == 0) {
+            Toast.makeText(getActivity(), "Aggiungi almeno un utente!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(groupName == null || groupName.trim().equals("")) {
+            Toast.makeText(getActivity(), "Scegli un nome per il gruppo!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ParseObject group = new ParseObject("Group");
+        group.put("Name", groupName);
+        ParseUser user = ParseUser.getCurrentUser();
+        members.add(user);
+        // Update the user's variable for group.
+        user.put(UserKey.GROUP_KEY, true);
+        user.saveInBackground();
+
+        ParseRelation<ParseObject> relation = group.getRelation("members");
+        for (ParseUser u : members) {
+            relation.add(u);
+        }
+
+        group.saveInBackground();
     }
 }

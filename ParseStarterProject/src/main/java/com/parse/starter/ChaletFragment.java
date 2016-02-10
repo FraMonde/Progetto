@@ -1,6 +1,5 @@
 package com.parse.starter;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.starter.dummy.DummyContent;
 
 import java.util.ArrayList;
 import java.util.List;
