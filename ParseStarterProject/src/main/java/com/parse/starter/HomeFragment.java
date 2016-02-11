@@ -1,8 +1,13 @@
 package com.parse.starter;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +19,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     CheckBox bluetoothButton;
     private OnHomeFragmentInteractionListener myListener;
+    private SharedPreferences pref;
 
     public static HomeFragment newInstance() {
 
@@ -28,6 +34,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pref = PreferenceManager.getDefaultSharedPreferences(getContext());
     }
 
     @Override
@@ -49,12 +56,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+
+        // Use this check to determine whether BLE is supported on the device. Then
+        // you can selectively disable BLE-related features.
+        if (!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            bluetoothButton.setChecked(false);
+            Toast.makeText(getActivity(), "Bluetooth non supportato!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if(bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
             bluetoothButton.setChecked(false);
             Toast.makeText(getActivity(), "Accendi il Bluetooth!", Toast.LENGTH_SHORT).show();
             return;
         }
+
         myListener = (OnHomeFragmentInteractionListener) getActivity();
         if (myListener != null) {
             myListener.onBluetoothButtonClick(bluetoothButton.isChecked());
@@ -65,4 +82,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         public void onBluetoothButtonClick(boolean enable);
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        boolean checked = pref.getBoolean("CHECKED", false);
+        bluetoothButton.setChecked(checked);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        pref.edit().putBoolean("CHECKED", bluetoothButton.isChecked()).apply();
+    }
 }

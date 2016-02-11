@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:10:1-61:12
+ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:10:1-62:12
 	package
 		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:11:5-32
 		INJECTED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml
@@ -42,7 +42,7 @@ ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Proget
 	android:name
 		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:21:22-69
 application
-ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:23:5-59:19
+ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:23:5-60:19
 MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:design:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/design/23.1.1/AndroidManifest.xml:22:5-20
@@ -112,6 +112,10 @@ ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Proget
 		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:57:13-44
 	android:name
 		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:55:13-43
+service#com.parse.starter.FindBluetoothService
+ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:59:9-56
+	android:name
+		ADDED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml:59:18-54
 uses-sdk
 INJECTED from /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:23.1.1] /Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/AndroidManifest.xml:20:5-43

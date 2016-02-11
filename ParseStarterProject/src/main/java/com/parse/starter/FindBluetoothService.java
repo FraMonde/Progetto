@@ -47,7 +47,7 @@ public class FindBluetoothService extends Service {
         super.onCreate();
 
         lifts = new HashMap<String, String>();
-        lifts.put("E0-F8-47-30-19-E5", "XMEgkvbYQC");
+        lifts.put("E0:F8:47:30:19:E5", "XMEgkvbYQC");
 
         keys = lifts.keySet();
 
@@ -118,9 +118,9 @@ public class FindBluetoothService extends Service {
                         @Override
                         public void done(ParseObject object, ParseException e) {
                             if (e == null) {
-                                int numeroPersone = object.getInt("persone");
+                                int numeroPersone = object.getInt("Person");
                                 numeroPersone--;
-                                object.put("persone", numeroPersone);
+                                object.put("Person", numeroPersone);
                                 object.saveInBackground();
                             } else {
                                 e.printStackTrace();

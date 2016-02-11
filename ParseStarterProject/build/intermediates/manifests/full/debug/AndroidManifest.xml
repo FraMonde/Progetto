@@ -62,6 +62,8 @@
             android:label="@string/title_activity_member"
             android:theme="@style/AppTheme" >
         </activity>
+
+        <service android:name="com.parse.starter.FindBluetoothService" />
     </application>
 
 </manifest>

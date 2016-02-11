@@ -95,6 +95,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    // Network calls
     private void searchFriend(String username) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", username);
@@ -112,6 +113,12 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
                     int i = 0;
                     for (ParseUser user : users) {
                         usernames[i] = user.getUsername();
+                        // Checked if the user already belong to a group.
+                        //TODO: Utente già in un gruppo.
+                        /*if(user.getBoolean(UserKey.GROUP_KEY)) {
+                            Toast.makeText(getActivity(), "L'utente appartiene già ad un gruppo!", Toast.LENGTH_SHORT).show();
+                            return;
+                        } */
                         members.add(user);
                         String text = memberAddedText.getText().toString();
                         memberAddedText.setText(text+usernames[i]+"\n");
@@ -139,6 +146,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
+
         ParseObject group = new ParseObject("Group");
         group.put("Name", groupName);
         ParseUser user = ParseUser.getCurrentUser();
@@ -148,11 +156,19 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
         user.saveInBackground();
 
         ParseRelation<ParseObject> relation = group.getRelation("members");
+
         for (ParseUser u : members) {
             relation.add(u);
+            //TODO: non funziona
+            u.put(UserKey.GROUP_KEY, true);
+            u.saveInBackground();
         }
 
         group.saveInBackground();
+    }
+
+    private boolean checkMemberInGroup(ParseUser u) {
+        return false;
     }
 
     public interface OnGroupFragmentInteractionListener {

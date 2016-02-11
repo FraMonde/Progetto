@@ -5,4 +5,16 @@
     android:orientation="vertical"
     tools:context="com.parse.starter.MyGroupFragment">
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/memberList"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit Group"
+        android:layout_gravity="bottom"
+        android:id="@+id/exit_bt" />
 </LinearLayout>
