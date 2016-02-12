@@ -1,13 +1,22 @@
 package com.parse.starter;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,22 +29,23 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GroupFragment extends Fragment implements View.OnClickListener {
 
-    private List<ParseUser> members = new ArrayList<ParseUser>();
-    private List<String> membersName = new ArrayList<String>();
+    private List<ParseUser> members;
+    private OnGroupFragmentInteractionListener myListener;
+    private SharedPreferences pref;
 
     EditText nameText;
     EditText memberText;
-    Button createButton;
     Button addButton;
-    private ArrayAdapter<String> arrayAdapter;
+    private GroupMemberAdapter groupMemberAdapter;
     private ListView lw;
-
-    private OnGroupFragmentInteractionListener myListener;
 
     public static GroupFragment newInstance() {
 
@@ -53,6 +63,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        members = new ArrayList<ParseUser>();
+        pref = PreferenceManager.getDefaultSharedPreferences(getContext());
     }
 
     @Override
@@ -61,16 +73,15 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_group, container, false);
+        setHasOptionsMenu(true);
 
         nameText = (EditText) view.findViewById(R.id.groupName_et);
         memberText = (EditText) view.findViewById(R.id.memberName_et);
-        createButton = (Button) view.findViewById(R.id.createGroup_bt);
-        createButton.setOnClickListener(this);
         addButton = (Button) view.findViewById(R.id.add_bt);
         addButton.setOnClickListener(this);
         lw = (ListView) view.findViewById(R.id.member_lv);
-        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, membersName);
-        lw.setAdapter(arrayAdapter);
+        groupMemberAdapter = new GroupMemberAdapter(members, getContext());
+        ((AdapterView<ListAdapter>) lw).setAdapter(groupMemberAdapter);
 
         return view;
     }
@@ -82,23 +93,28 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.add_bt:
-                String memberName = memberText.getText().toString();
-                searchFriend(memberName);
-                break;
-            case R.id.createGroup_bt:
-                String groupName = nameText.getText().toString();
-                createGroup(groupName, members);
-                myListener = (OnGroupFragmentInteractionListener)getActivity();
-                if(myListener != null) {
-                    myListener.onCreateGroupButtonClick();
-                }
-                break;
-            default:
-                throw new RuntimeException("Unknow button ID");
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.create_group_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String groupName = nameText.getText().toString();
+        if (createGroup(groupName, members)) {
+            myListener = (OnGroupFragmentInteractionListener) getActivity();
+            if (myListener != null) {
+                myListener.onCreateGroupButtonClick();
+            }
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        String memberName = memberText.getText().toString();
+        searchFriend(memberName);
+
     }
 
     // Network calls
@@ -119,6 +135,11 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
                     int i = 0;
                     for (ParseUser user : users) {
                         usernames[i] = user.getUsername();
+                        // Check if I've already added the user.
+                        if (members.contains(user) || user.equals(ParseUser.getCurrentUser())) {
+                            Toast.makeText(getActivity(), "L'utente è già stato aggiunto!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         // Checked if the user already belong to a group.
                         //TODO: Utente già in un gruppo.
                         /*if(user.getBoolean(UserKey.GROUP_KEY)) {
@@ -127,12 +148,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
                         } */
                         members.add(user);
                         memberText.setText("");
-                        membersName.add(usernames[i]);
-                        arrayAdapter.notifyDataSetChanged();
+                        groupMemberAdapter.refreshEvents(members);
                         i++;
                     }
-                }
-                else if(users.size() == 0) {
+                } else if (users.size() == 0) {
                     Toast.makeText(getActivity(), "Utente non trovato", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -141,15 +160,15 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void createGroup(String groupName, List<ParseUser> members) {
-        if(members.size() == 0) {
+    private boolean createGroup(String groupName, List<ParseUser> members) {
+        if (members.size() == 0) {
             Toast.makeText(getActivity(), "Aggiungi almeno un utente!", Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
 
-        if(groupName == null || groupName.trim().equals("")) {
+        if (groupName == null || groupName.trim().equals("")) {
             Toast.makeText(getActivity(), "Scegli un nome per il gruppo!", Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
 
 
@@ -171,6 +190,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
         }
 
         group.saveInBackground();
+        return true;
     }
 
     private boolean checkMemberInGroup(ParseUser u) {
@@ -179,5 +199,21 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
 
     public interface OnGroupFragmentInteractionListener {
         public void onCreateGroupButtonClick();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        String groupName = pref.getString("NAME", "");
+        nameText.setText(groupName);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        //TODO: salvare la lista
+        pref.edit().putString("NAME", nameText.getText().toString()).apply();
     }
 }
