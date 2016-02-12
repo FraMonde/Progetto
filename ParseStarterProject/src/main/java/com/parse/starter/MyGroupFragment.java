@@ -1,18 +1,13 @@
 package com.parse.starter;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TabHost;
 import android.widget.Toast;
-import android.widget.TabHost.TabSpec;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -26,7 +21,7 @@ import java.util.List;
 
 public class MyGroupFragment extends Fragment {
 
-    private String[] data;
+    private List<String> data = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapter;
     private ListView lw;
 
@@ -51,7 +46,8 @@ public class MyGroupFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_my_group, container, false);
         lw = (ListView) rootView.findViewById(R.id.memberList);
-        //arrayAdapter = new ArrayAdapter<String>()
+        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, data);
+        lw.setAdapter(arrayAdapter);
 
         return rootView;
     }
@@ -70,17 +66,21 @@ public class MyGroupFragment extends Fragment {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
-                if(e == null) {
-                   for(ParseObject group:objects) {
+                if (e == null) {
+                    for (ParseObject group : objects) {
                         //Find the member of the group.
-                       ParseRelation r = group.getRelation("members");
-                       ParseQuery query = r.getQuery();
-                       try {
-                           List<ParseUser> members = query.find();
-                       } catch (ParseException e1) {
-                           e1.printStackTrace();
-                       }
-                   }
+                        ParseRelation r = group.getRelation("members");
+                        ParseQuery query = r.getQuery();
+                        try {
+                            List<ParseUser> members = query.find();
+                            for (ParseUser m : members) {
+                                data.add(m.getUsername());
+                            }
+                            arrayAdapter.notifyDataSetChanged();
+                        } catch (ParseException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }

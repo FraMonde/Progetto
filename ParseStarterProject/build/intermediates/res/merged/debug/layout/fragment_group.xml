@@ -5,7 +5,6 @@
     android:orientation="vertical"
     tools:context="com.parse.starter.GroupFragment">
 
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -27,41 +26,49 @@
         android:layout_marginRight="20dp"
         android:hint="Nome del gruppo" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="9dp"
+        android:padding="5dp">
 
         <EditText
             android:id="@+id/memberName_et"
-            android:layout_width="250dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:hint="Aggiungi un amico" />
+            android:layout_marginTop="20dp"
+            android:hint="Aggiungi un amico"
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/add_bt"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="30dp"
             android:background="@drawable/ic_add" />
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/member_tv"
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/member_lv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp" />
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1" />
 
     <Button
         android:id="@+id/createGroup_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:text="Create"
         android:textColor="#0097A7" />
+
 </LinearLayout>
 <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/fragment_group.xml -->

@@ -5,8 +5,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +26,14 @@ import java.util.List;
 public class GroupFragment extends Fragment implements View.OnClickListener {
 
     private List<ParseUser> members = new ArrayList<ParseUser>();
+    private List<String> membersName = new ArrayList<String>();
 
     EditText nameText;
     EditText memberText;
-    TextView memberAddedText;
     Button createButton;
     Button addButton;
+    private ArrayAdapter<String> arrayAdapter;
+    private ListView lw;
 
     private OnGroupFragmentInteractionListener myListener;
 
@@ -60,11 +64,13 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
 
         nameText = (EditText) view.findViewById(R.id.groupName_et);
         memberText = (EditText) view.findViewById(R.id.memberName_et);
-        memberAddedText = (TextView) view.findViewById(R.id.member_tv);
         createButton = (Button) view.findViewById(R.id.createGroup_bt);
         createButton.setOnClickListener(this);
         addButton = (Button) view.findViewById(R.id.add_bt);
         addButton.setOnClickListener(this);
+        lw = (ListView) view.findViewById(R.id.member_lv);
+        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, membersName);
+        lw.setAdapter(arrayAdapter);
 
         return view;
     }
@@ -96,7 +102,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
     }
 
     // Network calls
-    private void searchFriend(String username) {
+    private void searchFriend(final String username) {
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", username);
         //query.orderByAscending(ParseConstants.KEY_USERNAME);
@@ -120,9 +126,9 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
                             return;
                         } */
                         members.add(user);
-                        String text = memberAddedText.getText().toString();
-                        memberAddedText.setText(text+usernames[i]+"\n");
                         memberText.setText("");
+                        membersName.add(usernames[i]);
+                        arrayAdapter.notifyDataSetChanged();
                         i++;
                     }
                 }

@@ -2293,7 +2293,7 @@ containing a value of this type.
         public static final int media_actions=0x7f0c0092;
         public static final int memberList=0x7f0c0088;
         public static final int memberName_et=0x7f0c0083;
-        public static final int member_tv=0x7f0c0085;
+        public static final int member_lv=0x7f0c0085;
         public static final int middle=0x7f0c0031;
         public static final int mini=0x7f0c002f;
         public static final int multiply=0x7f0c0026;
