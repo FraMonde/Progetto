@@ -35,7 +35,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class GroupFragment extends Fragment implements View.OnClickListener {
+public class GroupFragment extends Fragment implements View.OnClickListener, GroupMemberAdapter.OnGroupAdapterListener {
 
     private List<ParseUser> members;
     private OnGroupFragmentInteractionListener myListener;
@@ -60,6 +60,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
+    // Fragments life cycle methods.
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,10 +82,26 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
         addButton = (Button) view.findViewById(R.id.add_bt);
         addButton.setOnClickListener(this);
         lw = (ListView) view.findViewById(R.id.member_lv);
-        groupMemberAdapter = new GroupMemberAdapter(members, getContext());
+        groupMemberAdapter = new GroupMemberAdapter(members, getContext(), this);
         ((AdapterView<ListAdapter>) lw).setAdapter(groupMemberAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        String groupName = pref.getString("NAME", "");
+        nameText.setText(groupName);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        //TODO: salvare la lista
+        pref.edit().putString("NAME", nameText.getText().toString()).apply();
     }
 
     @Override
@@ -140,6 +158,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
                             Toast.makeText(getActivity(), "L'utente è già stato aggiunto!", Toast.LENGTH_SHORT).show();
                             return;
                         }
+                        checkMemberInGroup(user);
                         // Checked if the user already belong to a group.
                         //TODO: Utente già in un gruppo.
                         /*if(user.getBoolean(UserKey.GROUP_KEY)) {
@@ -194,26 +213,33 @@ public class GroupFragment extends Fragment implements View.OnClickListener {
     }
 
     private boolean checkMemberInGroup(ParseUser u) {
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
+        query.whereEqualTo("members", u);
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    if(objects.size() == 0)
+                        Toast.makeText(getActivity(), "Non in un gruppo", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(getActivity(), "In un gruppo", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return false;
+    }
+
+    @Override
+    public void memberDeleted(ParseUser user) {
+        members.remove(user);
     }
 
     public interface OnGroupFragmentInteractionListener {
         public void onCreateGroupButtonClick();
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        String groupName = pref.getString("NAME", "");
-        nameText.setText(groupName);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        //TODO: salvare la lista
-        pref.edit().putString("NAME", nameText.getText().toString()).apply();
     }
 }

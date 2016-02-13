@@ -2198,18 +2198,19 @@ containing a value of this type.
         public static final int design_snackbar_background=0x7f020047;
         public static final int ic_add=0x7f020048;
         public static final int ic_chalet=0x7f020049;
-        public static final int ic_group=0x7f02004a;
-        public static final int ic_home=0x7f02004b;
-        public static final int ic_lift=0x7f02004c;
-        public static final int ic_logout=0x7f02004d;
-        public static final int ic_menu=0x7f02004e;
-        public static final int ic_photo=0x7f02004f;
-        public static final int ic_profile=0x7f020050;
-        public static final int ic_settings=0x7f020051;
-        public static final int ic_user=0x7f020052;
-        public static final int line=0x7f020053;
-        public static final int notification_template_icon_bg=0x7f020055;
-        public static final int side_nav_bar=0x7f020054;
+        public static final int ic_delete=0x7f02004a;
+        public static final int ic_group=0x7f02004b;
+        public static final int ic_home=0x7f02004c;
+        public static final int ic_lift=0x7f02004d;
+        public static final int ic_line=0x7f02004e;
+        public static final int ic_logout=0x7f02004f;
+        public static final int ic_menu=0x7f020050;
+        public static final int ic_photo=0x7f020051;
+        public static final int ic_profile=0x7f020052;
+        public static final int ic_settings=0x7f020053;
+        public static final int ic_user=0x7f020054;
+        public static final int notification_template_icon_bg=0x7f020056;
+        public static final int side_nav_bar=0x7f020055;
     }
     public static final class id {
         public static final int action0=0x7f0c0090;

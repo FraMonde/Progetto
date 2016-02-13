@@ -21,10 +21,12 @@ public class GroupMemberAdapter extends BaseAdapter implements View.OnClickListe
 
     private List<ParseUser> membersList;
     private Context context;
+    private OnGroupAdapterListener myListener;
 
-    public GroupMemberAdapter(List<ParseUser> members, Context context) {
+    public GroupMemberAdapter(List<ParseUser> members, Context context, OnGroupAdapterListener listener) {
         this.membersList = members;
         this.context = context;
+        this.myListener = listener;
     }
 
     @Override
@@ -72,6 +74,10 @@ public class GroupMemberAdapter extends BaseAdapter implements View.OnClickListe
         ParseUser u = this.membersList.get((Integer) view.getTag());
         this.membersList.remove(u);
         notifyDataSetChanged();
-        //TODO: distruggi la relation
+        myListener.memberDeleted(u);
+    }
+
+    public interface OnGroupAdapterListener {
+        public void memberDeleted(ParseUser user);
     }
 }

@@ -15,7 +15,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_toLeftOf="@+id/time_tv"
-        android:src="@drawable/line" />
+        android:src="@drawable/ic_line" />
 
     <TextView
         android:id="@+id/time_tv"
