@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,11 +20,14 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyGroupFragment extends Fragment {
+public class MyGroupFragment extends Fragment implements View.OnClickListener {
 
     private List<String> data = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapter;
+    private OnMyGroupFragmentListener myListener;
+
     private ListView lw;
+    private Button exitBt;
 
     public static MyGroupFragment newInstance() {
         MyGroupFragment fragment = new MyGroupFragment();
@@ -37,6 +41,7 @@ public class MyGroupFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myListener = (OnMyGroupFragmentListener)getActivity();
     }
 
     @Override
@@ -48,6 +53,8 @@ public class MyGroupFragment extends Fragment {
         lw = (ListView) rootView.findViewById(R.id.memberList);
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, data);
         lw.setAdapter(arrayAdapter);
+        exitBt = (Button) rootView.findViewById(R.id.exit_bt);
+        exitBt.setOnClickListener(this);
 
         return rootView;
     }
@@ -55,6 +62,7 @@ public class MyGroupFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        myListener = null;
     }
 
     private void getGroupMember() {
@@ -87,6 +95,36 @@ public class MyGroupFragment extends Fragment {
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        final ParseUser currentUser = ParseUser.getCurrentUser();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
+        query.whereEqualTo("members", currentUser);
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    for (ParseObject group : objects) {
+                        //Find the member of the group.
+                        ParseRelation r = group.getRelation("members");
+                        r.remove(currentUser);
+                        group.saveInBackground();
+                        currentUser.put(UserKey.GROUP_KEY, false);
+                        currentUser.saveInBackground();
+                        myListener.onExitGroupButtonClick();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    public interface OnMyGroupFragmentListener {
+        public void onExitGroupButtonClick();
     }
 
 }

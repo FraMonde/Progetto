@@ -1,5 +1,6 @@
 package com.parse.starter;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -150,25 +151,36 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
                     //store users in array
                     String[] usernames = new String[users.size()];
                     //Loop Users
-                    int i = 0;
-                    for (ParseUser user : users) {
-                        usernames[i] = user.getUsername();
+                    final int[] i = {0};
+                    for (final ParseUser user : users) {
+                        usernames[i[0]] = user.getUsername();
                         // Check if I've already added the user.
                         if (members.contains(user) || user.equals(ParseUser.getCurrentUser())) {
                             Toast.makeText(getActivity(), "L'utente è già stato aggiunto!", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        checkMemberInGroup(user);
-                        // Checked if the user already belong to a group.
-                        //TODO: Utente già in un gruppo.
-                        /*if(user.getBoolean(UserKey.GROUP_KEY)) {
-                            Toast.makeText(getActivity(), "L'utente appartiene già ad un gruppo!", Toast.LENGTH_SHORT).show();
-                            return;
-                        } */
-                        members.add(user);
-                        memberText.setText("");
-                        groupMemberAdapter.refreshEvents(members);
-                        i++;
+                        // Check if the user's in another group.
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
+                        query.whereEqualTo("members", user);
+
+                        query.findInBackground(new FindCallback<ParseObject>() {
+                            @Override
+                            public void done(List<ParseObject> objects, ParseException e) {
+                                if (e == null) {
+                                    if (objects.size() == 0) {
+                                        members.add(user);
+                                        memberText.setText("");
+                                        groupMemberAdapter.refreshEvents(members);
+                                        i[0]++;
+                                    }
+                                    else{
+                                        Toast.makeText(getActivity(), "L'utente è già in un gruppo", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     }
                 } else if (users.size() == 0) {
                     Toast.makeText(getActivity(), "Utente non trovato", Toast.LENGTH_SHORT).show();
@@ -203,35 +215,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
 
         for (ParseUser u : members) {
             relation.add(u);
-            //TODO: non funziona
-            u.put(UserKey.GROUP_KEY, true);
-            u.saveInBackground();
         }
 
         group.saveInBackground();
         return true;
-    }
-
-    private boolean checkMemberInGroup(ParseUser u) {
-
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
-        query.whereEqualTo("members", u);
-
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null) {
-                    if(objects.size() == 0)
-                        Toast.makeText(getActivity(), "Non in un gruppo", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(getActivity(), "In un gruppo", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        return false;
     }
 
     @Override

@@ -1,7 +1,11 @@
 package com.parse.starter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +31,8 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     private LiftAdapter liftAdapter;
     private List<ParseObject> liftList = new ArrayList<ParseObject>();
     private Timer timer;
+    private Handler handler;
+    ProgressDialog progressDialog;
 
     public static LiftFragment newInstance() {
         LiftFragment fragment = new LiftFragment();
@@ -47,6 +53,12 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message message) {
+                progressDialog = ProgressDialog.show(getActivity(), null, "Loading…");
+            }
+        };
     }
 
     @Override
@@ -109,10 +121,14 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
 
     // Network call
     private void getLift() {
+
+        //final Message message = handler.obtainMessage();
+        //message.sendToTarget();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Lift");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, com.parse.ParseException e) {
+                //progressDialog.dismiss();
                 if (e == null) {
                     liftList = objects;
                     liftAdapter.refreshEvents(liftList);

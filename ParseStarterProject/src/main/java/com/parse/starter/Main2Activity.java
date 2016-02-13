@@ -12,14 +12,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-public class Main2Activity extends AppCompatActivity implements HomeFragment.OnHomeFragmentInteractionListener, GroupFragment.OnGroupFragmentInteractionListener {
+import java.util.List;
+
+public class Main2Activity extends AppCompatActivity implements HomeFragment.OnHomeFragmentInteractionListener, GroupFragment.OnGroupFragmentInteractionListener, MyGroupFragment.OnMyGroupFragmentListener {
 
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
@@ -28,12 +37,20 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     private TextView emailText;
 
     private BluetoothAdapter bluetoothAdapter;
+    private int mCurrentSelectedPosition = 0;
     private final static int REQUEST_ENABLE_BT = 1;
+    private final static String SELECTED_POSITION = "POSITION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        //TODO: mantieni selezionata una voce del menù.
+        /*if (savedInstanceState != null) {
+            mCurrentSelectedPosition = savedInstanceState.getInt(SELECTED_POSITION);
+            selectDrawerItem(nvDrawer.getMenu().getItem(1));
+        } */
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -71,6 +88,20 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
             }
         }
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(SELECTED_POSITION, mCurrentSelectedPosition);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        mCurrentSelectedPosition = savedInstanceState.getInt(SELECTED_POSITION);
     }
 
     @Override
@@ -119,8 +150,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                 fragmentClass = ChaletFragment.class;
                 break;
             case R.id.nav_group:
-                Boolean myGroup = ParseUser.getCurrentUser().getBoolean(UserKey.GROUP_KEY);
-                if (myGroup)
+                if (ParseUser.getCurrentUser().getBoolean("group"))
                     fragmentClass = MyGroupFragment.class;
                 else
                     fragmentClass = GroupFragment.class;
@@ -155,6 +185,26 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         mDrawer.closeDrawers();
     }
 
+    private void hasGroup() {
+        final ParseUser currentUser = ParseUser.getCurrentUser();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
+        query.whereEqualTo("members", currentUser);
+
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e == null) {
+                    if (objects.size() == 0) {
+                        currentUser.put(UserKey.GROUP_KEY, false);
+                    } else
+                        currentUser.put(UserKey.GROUP_KEY, true);
+
+                } else
+                    Toast.makeText(Main2Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     //Interface OnHomeFragmentInteractionListener's methods
     @Override
     public void onBluetoothButtonClick(boolean enable) {
@@ -173,4 +223,13 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
     }
+
+    //Interface OnMyGroupFragmentListener's method
+    @Override
+    public void onExitGroupButtonClick() {
+        GroupFragment fragment = GroupFragment.newInstance();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+    }
+
 }
