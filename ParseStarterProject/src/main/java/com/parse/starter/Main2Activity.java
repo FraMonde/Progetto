@@ -3,20 +3,18 @@ package com.parse.starter;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,18 +37,11 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     private BluetoothAdapter bluetoothAdapter;
     private int mCurrentSelectedPosition = 0;
     private final static int REQUEST_ENABLE_BT = 1;
-    private final static String SELECTED_POSITION = "POSITION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-
-        //TODO: mantieni selezionata una voce del menù.
-        /*if (savedInstanceState != null) {
-            mCurrentSelectedPosition = savedInstanceState.getInt(SELECTED_POSITION);
-            selectDrawerItem(nvDrawer.getMenu().getItem(1));
-        } */
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -94,14 +85,18 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(SELECTED_POSITION, mCurrentSelectedPosition);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        mCurrentSelectedPosition = savedInstanceState.getInt(SELECTED_POSITION);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        
     }
 
     @Override

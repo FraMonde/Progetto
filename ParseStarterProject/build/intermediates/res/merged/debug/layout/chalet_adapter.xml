@@ -15,7 +15,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_toLeftOf="@+id/person_tv"
-        android:src="@drawable/chalet_seat" />
+        android:src="@drawable/ic_seat" />
 
     <TextView
         android:id="@+id/person_tv"

@@ -2,18 +2,25 @@
 <items version="2" >
 
     <item
-        jar="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jar="/Users/francy/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.3.0/8a62fd16fcc1c06f284fc98e6cbded2a5af1dd4c/bolts-tasks-1.3.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
-        <dex dex="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-eff082aa441819a85cc7e3a83cc5eddb81db8ddc.jar" />
+        sha1="8a62fd16fcc1c06f284fc98e6cbded2a5af1dd4c">
+        <dex dex="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/pre-dexed/debug/bolts-tasks-1.3.0-cc65703e891b6c955219b7f1febb33952a886269.jar" />
     </item>
     <item
-        jar="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jar="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
-        <dex dex="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/pre-dexed/debug/internal_impl-23.1.1-91c9e6ba7b79372b091687efb5aa2e938828f8a1.jar" />
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-07fcb5256533ded78cf2d97b80e7c8815e7154ee.jar" />
+    </item>
+    <item
+        jar="/Users/francy/.gradle/caches/modules-2/files-2.1/com.parse/parse-android/1.11.0/6592129dec2caa8791d322c7e4b6b7a30e8eadae/parse-android-1.11.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6592129dec2caa8791d322c7e4b6b7a30e8eadae">
+        <dex dex="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/pre-dexed/debug/parse-android-1.11.0-fb8c7abec55b35c47ea3d19104ffe3253b5cd35f.jar" />
     </item>
     <item
         jar="/Users/francy/Documents/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
@@ -30,11 +37,11 @@
         <dex dex="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-2846859d482ad724f6f5dc9372686ca961523fe8.jar" />
     </item>
     <item
-        jar="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jar="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
-        <dex dex="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-07fcb5256533ded78cf2d97b80e7c8815e7154ee.jar" />
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-eff082aa441819a85cc7e3a83cc5eddb81db8ddc.jar" />
     </item>
     <item
         jar="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
@@ -42,6 +49,13 @@
         revision="23.0.1"
         sha1="5c5699834e9722f1c288fea2de82725d078ba127">
         <dex dex="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/pre-dexed/debug/classes-fbae4b2fb1e169bf683730753eb16b751a23e27d.jar" />
+    </item>
+    <item
+        jar="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/francy/Documents/Politecnico/Digital Interaction Design/Progetto/ParseStarterProject/build/intermediates/pre-dexed/debug/internal_impl-23.1.1-91c9e6ba7b79372b091687efb5aa2e938828f8a1.jar" />
     </item>
 
 </items>
