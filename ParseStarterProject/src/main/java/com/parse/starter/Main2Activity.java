@@ -96,7 +96,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        
+
     }
 
     @Override
@@ -150,10 +150,9 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                 else
                     fragmentClass = GroupFragment.class;
                 break;
-            case R.id.nav_settings:
-                //TODO: fare nuovo fragment
+           /* case R.id.nav_settings:
                 fragmentClass = HomeFragment.class;
-                break;
+                break; */
             case R.id.nav_logout:
                 ParseUser.logOut();
                 Intent intent = new Intent(Main2Activity.this, DispatchActivity.class);
@@ -225,6 +224,15 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         GroupFragment fragment = GroupFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Used to go to the Home screen and not to the DispatchActivity.
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 }

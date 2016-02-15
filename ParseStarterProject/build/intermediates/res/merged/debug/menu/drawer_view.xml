@@ -3,9 +3,9 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
+            android:checked="true"
             android:icon="@drawable/ic_home"
-            android:title="Home"
-            android:checked="true"/>
+            android:title="Home" />
         <item
             android:id="@+id/nav_lift"
             android:icon="@drawable/ic_lift"
@@ -20,19 +20,20 @@
             android:title="Gruppo" />
     </group>
 
-    <item android:title="Submenu">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:icon="@drawable/ic_settings"
-                    android:title="Settings"
-                    android:id="@+id/nav_settings"/>
-                <item
-                    android:icon="@drawable/ic_logout"
-                    android:title="Log out"
-                    android:id="@+id/nav_logout"/>
-            </group>
-        </menu>
-    </item>
+
+    <group
+        android:id="@+id/submenu"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_settings"
+            android:enabled="false"
+            android:icon="@drawable/ic_settings"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="Log out" />
+    </group>
+
 
 </menu><!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/menu/drawer_view.xml -->
