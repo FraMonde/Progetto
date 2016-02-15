@@ -1,8 +1,6 @@
 package com.parse.starter;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -14,29 +12,35 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
-import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.locks.Lock;
 
 public class GroupFragment extends Fragment implements View.OnClickListener, GroupMemberAdapter.OnGroupAdapterListener {
+
+    private static final String GROUP_NAME_KEY = "GROUP_NAME";
+    private static final String MEMBER_NAME_KEY = "MEMBER_NAME";
+    private static final String LIST_MEMBER_KEY = "LIST_MEMBER";
 
     private List<ParseUser> members;
     private OnGroupFragmentInteractionListener myListener;
@@ -93,16 +97,36 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        String groupName = pref.getString("NAME", "");
+        String groupName = pref.getString(GROUP_NAME_KEY, "");
         nameText.setText(groupName);
+        String memberName = pref.getString(MEMBER_NAME_KEY, "");
+        memberText.setText(memberName);
+
+        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity().getApplicationContext());
+        Gson gson = new GsonBuilder().setExclusionStrategies(new ParseExclusion()).create();
+        String json = appSharedPrefs.getString(LIST_MEMBER_KEY, "");
+        Type type = new TypeToken<List<ParseUser>>() {
+        }.getType();
+        if (!json.equals(null) && !json.equals("")) {
+            members = gson.fromJson(json, type);
+            if (members != null)
+                groupMemberAdapter.refreshEvents(members);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
 
-        //TODO: salvare la lista
-        pref.edit().putString("NAME", nameText.getText().toString()).apply();
+        pref.edit().putString(GROUP_NAME_KEY, nameText.getText().toString()).apply();
+        pref.edit().putString(MEMBER_NAME_KEY, memberText.getText().toString()).apply();
+
+        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity().getApplicationContext());
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+        Gson gson = new GsonBuilder().setExclusionStrategies(new ParseExclusion()).create();
+        String json = gson.toJson(members);
+        prefsEditor.putString(LIST_MEMBER_KEY, json);
+        prefsEditor.commit();
     }
 
     @Override
@@ -133,7 +157,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     public void onClick(View view) {
         String memberName = memberText.getText().toString();
         searchFriend(memberName);
-
     }
 
     // Network calls
@@ -155,7 +178,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
                     for (final ParseUser user : users) {
                         usernames[i[0]] = user.getUsername();
                         // Check if I've already added the user.
-                        if (members.contains(user) || user.equals(ParseUser.getCurrentUser())) {
+                        if (checkAddedUser(user) || user.equals(ParseUser.getCurrentUser())) {
+
                             Toast.makeText(getActivity(), "L'utente è già stato aggiunto!", Toast.LENGTH_SHORT).show();
                             return;
                         }
@@ -172,8 +196,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
                                         memberText.setText("");
                                         groupMemberAdapter.refreshEvents(members);
                                         i[0]++;
-                                    }
-                                    else{
+                                    } else {
                                         Toast.makeText(getActivity(), "L'utente è già in un gruppo", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
@@ -221,6 +244,14 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
         return true;
     }
 
+    private boolean checkAddedUser(ParseUser user) {
+        for(ParseUser u:members) {
+            if(u.getUsername().equals(user.getUsername()))
+                return true;
+        }
+        return false;
+    }
+
     @Override
     public void memberDeleted(ParseUser user) {
         members.remove(user);
@@ -229,4 +260,18 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     public interface OnGroupFragmentInteractionListener {
         public void onCreateGroupButtonClick();
     }
+
+    private class ParseExclusion implements ExclusionStrategy {
+
+        public boolean shouldSkipClass(Class<?> arg0) {
+            return false;
+        }
+
+        public boolean shouldSkipField(FieldAttributes f) {
+            return (f.getDeclaredClass() == Lock.class);
+        }
+
+    }
 }
+
+
