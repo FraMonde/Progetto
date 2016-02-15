@@ -8,7 +8,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,7 +35,6 @@ import com.parse.ParseUser;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 
@@ -46,11 +44,14 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     private static final String MEMBER_NAME_KEY = "MEMBER_NAME";
     private static final String LIST_MEMBER_KEY = "LIST_MEMBER";
 
-    private List<ParseUser> members;
+    private List<ParseUser> members = new ArrayList<ParseUser>();
     private OnGroupFragmentInteractionListener myListener;
     private SharedPreferences pref;
     private Handler handler;
     private ProgressDialog progressDialog;
+    private Gson gson = new GsonBuilder().
+            setExclusionStrategies(new ParseExclusion()).
+            create();
 
     private EditText nameText;
     private EditText memberText;
@@ -76,7 +77,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        members = new ArrayList<ParseUser>();
         getActivity().setTitle("Nuovo gruppo");
         pref = PreferenceManager.getDefaultSharedPreferences(getContext());
         handler = new Handler(Looper.getMainLooper()) {
@@ -116,14 +116,13 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
         memberText.setText(memberName);
 
         SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity().getApplicationContext());
-        Gson gson = new GsonBuilder().setExclusionStrategies(new ParseExclusion()).create();
         String json = appSharedPrefs.getString(LIST_MEMBER_KEY, "");
         Type type = new TypeToken<List<ParseUser>>() {}.getType();
-        /*if (!json.equals(null) && !json.equals("")) {
+       /* if (!json.equals(null) && !json.equals("")) {
             members = gson.fromJson(json, type);
             if (members != null)
                 groupMemberAdapter.refreshEvents(members);
-        }*/
+        } */
     }
 
     @Override
@@ -135,7 +134,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
 
         SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity().getApplicationContext());
         SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
-        Gson gson = new GsonBuilder().setExclusionStrategies(new ParseExclusion()).create();
         String json = gson.toJson(members);
         prefsEditor.putString(LIST_MEMBER_KEY, json);
         prefsEditor.commit();
