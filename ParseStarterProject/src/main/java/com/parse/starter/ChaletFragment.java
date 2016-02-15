@@ -1,6 +1,10 @@
 package com.parse.starter;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +32,9 @@ public class ChaletFragment extends Fragment implements AbsListView.OnItemClickL
     private ChaletAdapter chaletAdapter;
     private List<ParseObject> chaletList = new ArrayList<ParseObject>();
     private Timer timer;
+    private Handler handler;
+    private boolean firstAppear;
+    private ProgressDialog progressDialog;
 
 
     public static ChaletFragment newInstance() {
@@ -49,6 +56,13 @@ public class ChaletFragment extends Fragment implements AbsListView.OnItemClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firstAppear = true;
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message message) {
+                progressDialog = ProgressDialog.show(getActivity(), null, "Loading…");
+            }
+        };
     }
 
     @Override
@@ -106,10 +120,16 @@ public class ChaletFragment extends Fragment implements AbsListView.OnItemClickL
 
     // Network call
     private void getChalet() {
+        final Message message = handler.obtainMessage();
+        if (firstAppear)
+            message.sendToTarget();
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Chalet");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, com.parse.ParseException e) {
+                if (firstAppear)
+                    progressDialog.dismiss();
+                firstAppear = false;
                 if (e == null) {
                     chaletList = objects;
                     chaletAdapter.refreshEvents(chaletList);

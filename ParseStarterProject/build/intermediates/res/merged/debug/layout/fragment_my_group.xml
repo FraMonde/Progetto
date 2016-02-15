@@ -11,11 +11,5 @@
         android:id="@+id/memberList"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Exit Group"
-        android:layout_gravity="bottom"
-        android:id="@+id/exit_bt" />
 </LinearLayout>
 <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/fragment_my_group.xml -->

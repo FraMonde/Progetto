@@ -1,8 +1,15 @@
 package com.parse.starter;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -20,11 +27,13 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyGroupFragment extends Fragment implements View.OnClickListener {
+public class MyGroupFragment extends Fragment {
 
     private List<String> data = new ArrayList<String>();
     private ArrayAdapter<String> arrayAdapter;
     private OnMyGroupFragmentListener myListener;
+    private Handler handler;
+    private ProgressDialog progressDialog;
 
     private ListView lw;
     private Button exitBt;
@@ -42,6 +51,12 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         myListener = (OnMyGroupFragmentListener)getActivity();
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message message) {
+                progressDialog = ProgressDialog.show(getActivity(), null, "Loading…");
+            }
+        };
     }
 
     @Override
@@ -50,11 +65,10 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         getGroupMember();
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_my_group, container, false);
+        setHasOptionsMenu(true);
         lw = (ListView) rootView.findViewById(R.id.memberList);
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, data);
         lw.setAdapter(arrayAdapter);
-        exitBt = (Button) rootView.findViewById(R.id.exit_bt);
-        exitBt.setOnClickListener(this);
 
         return rootView;
     }
@@ -65,7 +79,24 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         myListener = null;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.my_group_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        exitGroup();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Load all the members of the current user's group.
     private void getGroupMember() {
+
+        final Message message = handler.obtainMessage();
+        message.sendToTarget();
         final ParseUser currentUser = ParseUser.getCurrentUser();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
@@ -74,8 +105,10 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
+                progressDialog.dismiss();
                 if (e == null) {
                     for (ParseObject group : objects) {
+                        getActivity().setTitle(group.getString("Name"));
                         //Find the member of the group.
                         ParseRelation r = group.getRelation("members");
                         ParseQuery query = r.getQuery();
@@ -97,8 +130,8 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onClick(View view) {
+    // Method to exit the group.
+    private void exitGroup() {
         final ParseUser currentUser = ParseUser.getCurrentUser();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
         query.whereEqualTo("members", currentUser);

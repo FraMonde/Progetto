@@ -1,7 +1,11 @@
 package com.parse.starter;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -45,10 +49,12 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     private List<ParseUser> members;
     private OnGroupFragmentInteractionListener myListener;
     private SharedPreferences pref;
+    private Handler handler;
+    private ProgressDialog progressDialog;
 
-    EditText nameText;
-    EditText memberText;
-    Button addButton;
+    private EditText nameText;
+    private EditText memberText;
+    private Button addButton;
     private GroupMemberAdapter groupMemberAdapter;
     private ListView lw;
 
@@ -71,7 +77,14 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         members = new ArrayList<ParseUser>();
+        getActivity().setTitle("Nuovo gruppo");
         pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message message) {
+                progressDialog = ProgressDialog.show(getActivity(), null, "Loading…");
+            }
+        };
     }
 
     @Override
@@ -105,13 +118,12 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
         SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity().getApplicationContext());
         Gson gson = new GsonBuilder().setExclusionStrategies(new ParseExclusion()).create();
         String json = appSharedPrefs.getString(LIST_MEMBER_KEY, "");
-        Type type = new TypeToken<List<ParseUser>>() {
-        }.getType();
-        if (!json.equals(null) && !json.equals("")) {
+        Type type = new TypeToken<List<ParseUser>>() {}.getType();
+        /*if (!json.equals(null) && !json.equals("")) {
             members = gson.fromJson(json, type);
             if (members != null)
                 groupMemberAdapter.refreshEvents(members);
-        }
+        }*/
     }
 
     @Override
@@ -160,7 +172,11 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     }
 
     // Network calls
+
+    // Search the added friend to obtain the ParseUser object.
     private void searchFriend(final String username) {
+        final Message message = handler.obtainMessage();
+        message.sendToTarget();
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", username);
         //query.orderByAscending(ParseConstants.KEY_USERNAME);
@@ -169,6 +185,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
 
             @Override
             public void done(List<ParseUser> users, ParseException e) {
+                progressDialog.dismiss();
                 if (e == null && users.size() > 0) {
                     //Success we have Users to display
                     //store users in array
@@ -186,10 +203,12 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
                         // Check if the user's in another group.
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
                         query.whereEqualTo("members", user);
-
+                        final Message message = handler.obtainMessage();
+                        message.sendToTarget();
                         query.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> objects, ParseException e) {
+                                progressDialog.dismiss();
                                 if (e == null) {
                                     if (objects.size() == 0) {
                                         members.add(user);

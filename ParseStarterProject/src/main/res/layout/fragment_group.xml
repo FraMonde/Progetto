@@ -5,7 +5,7 @@
     android:orientation="vertical"
     tools:context="com.parse.starter.GroupFragment">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,22 +14,22 @@
         android:layout_marginTop="30dp"
         android:text="Crea il tuo gruppo!"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" />
+        android:textStyle="bold" /> -->
 
     <EditText
         android:id="@+id/groupName_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
         android:hint="Nome del gruppo" />
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="5dp"
         android:padding="5dp">
 
         <EditText
@@ -38,7 +38,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
             android:hint="Aggiungi un amico"
             android:singleLine="true" />
 
@@ -53,13 +52,30 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp"
+        android:text="MEMBRI DEL GRUPPO"
+        android:textColor="#009688" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#009688" />
+
     <ListView
         android:id="@+id/member_lv"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_weight="1" />
 
 </LinearLayout>
