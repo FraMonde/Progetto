@@ -13,6 +13,10 @@
         <item name="colorPrimary">#00BCD4</item>
         <item name="colorPrimaryDark">#0097A7</item>
         <item name="colorAccent">#009688</item>
+
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="colorControlActivated">#ffffff</item>
+        <item name="colorControlHighlight">#ffffff</item>
     </style>
         <!-- Customize your theme here. -->
 

@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.parse.FindCallback;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -118,7 +119,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
         SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity().getApplicationContext());
         String json = appSharedPrefs.getString(LIST_MEMBER_KEY, "");
         Type type = new TypeToken<List<ParseUser>>() {}.getType();
-       /* if (!json.equals(null) && !json.equals("")) {
+        // TODO: non va.
+        /*if (!json.equals(null) && !json.equals("")) {
             members = gson.fromJson(json, type);
             if (members != null)
                 groupMemberAdapter.refreshEvents(members);
@@ -244,6 +246,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
 
 
         ParseObject group = new ParseObject("Group");
+        ParseACL acl = new ParseACL();
+        acl.setPublicReadAccess(true);
         group.put("Name", groupName);
         ParseUser user = ParseUser.getCurrentUser();
         members.add(user);
@@ -255,8 +259,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
 
         for (ParseUser u : members) {
             relation.add(u);
+            acl.setWriteAccess(u, true);
         }
 
+        group.setACL(acl);
         group.saveInBackground();
         return true;
     }

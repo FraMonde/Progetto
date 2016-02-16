@@ -39,4 +39,7 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_member">MemberActivity</string>
+
+    <string name="accept_group">Accetta</string>
+    <string name="refuse_group">Rifiuta</string>
 </resources>

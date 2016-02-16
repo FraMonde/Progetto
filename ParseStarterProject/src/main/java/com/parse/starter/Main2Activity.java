@@ -1,32 +1,45 @@
 package com.parse.starter;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.util.List;
 
 public class Main2Activity extends AppCompatActivity implements HomeFragment.OnHomeFragmentInteractionListener, GroupFragment.OnGroupFragmentInteractionListener, MyGroupFragment.OnMyGroupFragmentListener {
+
+    private static final String MEMBER_KEY = "members";
+    private static final String GROUP_KEY = "Group";
 
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
@@ -35,13 +48,17 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     private TextView emailText;
 
     private BluetoothAdapter bluetoothAdapter;
-    private int mCurrentSelectedPosition = 0;
     private final static int REQUEST_ENABLE_BT = 1;
+    private ProgressDialog progressDialog;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        // Check If the user belongs to a group.
+        hasGroup();
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -154,6 +171,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                 fragmentClass = HomeFragment.class;
                 break; */
             case R.id.nav_logout:
+                //TODO: loading.
                 ParseUser.logOut();
                 Intent intent = new Intent(Main2Activity.this, DispatchActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -180,23 +198,43 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     }
 
     private void hasGroup() {
-        final ParseUser currentUser = ParseUser.getCurrentUser();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
-        query.whereEqualTo("members", currentUser);
 
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (e == null) {
-                    if (objects.size() == 0) {
-                        currentUser.put(UserKey.GROUP_KEY, false);
-                    } else
-                        currentUser.put(UserKey.GROUP_KEY, true);
+        // Check if the user's group.
+        if (!(ParseUser.getCurrentUser().getBoolean(UserKey.GROUP_KEY))) {
+            ParseQuery<ParseObject> query = ParseQuery.getQuery(GROUP_KEY);
+            query.whereEqualTo(MEMBER_KEY, ParseUser.getCurrentUser());
 
-                } else
-                    Toast.makeText(Main2Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(final List<ParseObject> objects, ParseException e) {
+                    if (e == null) {
+                        if (objects.size() > 0) {
+                            // The user is in a group but he's not accepted yet.
+                            new AlertDialog.Builder(Main2Activity.this)
+                                    .setTitle("Avviso")
+                                    .setMessage("Sei invitato ad entrare nel gruppo" + objects.get(0).getString("Name") + ". Accetti l'invito?")
+                                    .setPositiveButton(R.string.accept_group, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ParseUser.getCurrentUser().put(UserKey.GROUP_KEY, true);
+                                            ParseUser.getCurrentUser().saveInBackground();
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.refuse_group, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            ParseRelation r = objects.get(0).getRelation("members");
+                                            r.remove(ParseUser.getCurrentUser());
+                                            objects.get(0).saveInBackground();
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
+                        }
+                    } else {
+                        Toast.makeText(Main2Activity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 
     //Interface OnHomeFragmentInteractionListener's methods
