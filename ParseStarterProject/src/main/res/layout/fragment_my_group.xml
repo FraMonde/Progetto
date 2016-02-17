@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_group"
     android:orientation="vertical"
     tools:context="com.parse.starter.MyGroupFragment">
 
@@ -15,10 +16,12 @@
             android:id="@+id/newMemberName_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:hint="Aggiungi un amico"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff" />
 
         <Button
             android:id="@+id/addInMyGroup_bt"
@@ -26,7 +29,7 @@
             android:layout_height="30dp"
             android:layout_gravity="right|center_vertical"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="30dp"
             android:background="@drawable/ic_add" />
 
     </FrameLayout>
@@ -35,23 +38,42 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:text="MEMBRI DEL GRUPPO"
-        android:textColor="#009688" />
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#009688" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="#ffffff" />
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/memberList"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="90dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:divider="@null" />
+
+    <Button
+        android:id="@+id/map_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="70dp"
+        android:layout_weight="0"
+        android:background="@drawable/layout_bt"
+        android:text="Mappa"
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.parse.starter;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,9 +23,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -32,7 +30,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +50,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     private ListView lw;
     private EditText memberText;
     private Button addButton;
+    private Button mapButton;
 
     public static MyGroupFragment newInstance() {
         MyGroupFragment fragment = new MyGroupFragment();
@@ -86,6 +84,8 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         memberText = (EditText) view.findViewById(R.id.newMemberName_et);
         addButton = (Button) view.findViewById(R.id.addInMyGroup_bt);
         addButton.setOnClickListener(this);
+        mapButton = (Button) view.findViewById(R.id.map_bt);
+        mapButton.setOnClickListener(this);
         lw = (ListView) view.findViewById(R.id.memberList);
         arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, data);
         lw.setAdapter(arrayAdapter);
@@ -195,7 +195,15 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        searchFriend(memberText.getText().toString());
+        switch (view.getId()) {
+            case R.id.addInMyGroup_bt:
+                searchFriend(memberText.getText().toString());
+                break;
+            case R.id.map_bt:
+                Intent intent = new Intent(getContext(), MapActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     // Search the added friend to verify if It can be added to the group.

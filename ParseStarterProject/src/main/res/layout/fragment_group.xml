@@ -2,29 +2,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_group"
     android:orientation="vertical"
     tools:context="com.parse.starter.GroupFragment">
-
-    <!--<TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="40dp"
-        android:layout_marginTop="30dp"
-        android:text="Crea il tuo gruppo!"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold" /> -->
 
     <EditText
         android:id="@+id/groupName_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
-        android:hint="Nome del gruppo" />
+        android:hint="Nome del gruppo"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff" />
 
     <FrameLayout
         android:layout_width="fill_parent"
@@ -36,10 +28,12 @@
             android:id="@+id/memberName_et"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:hint="Aggiungi un amico"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff" />
 
         <Button
             android:id="@+id/add_bt"
@@ -47,7 +41,7 @@
             android:layout_height="30dp"
             android:layout_gravity="right|center_vertical"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="30dp"
             android:background="@drawable/ic_add" />
 
     </FrameLayout>
@@ -56,26 +50,29 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:text="MEMBRI DEL GRUPPO"
-        android:textColor="#009688" />
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="3dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="#009688" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="#ffffff" />
 
     <ListView
         android:id="@+id/member_lv"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginBottom="180dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:divider="@null" />
 
 </LinearLayout>

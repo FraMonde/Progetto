@@ -8,20 +8,26 @@
         android:id="@+id/chalet_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:textColor="#ffffff"
+        android:textSize="17dp"
+        android:textStyle="bold" />
 
-    <ImageView
+    <!-- <ImageView
         android:id="@+id/line_img"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_toLeftOf="@+id/person_tv"
-        android:src="@drawable/ic_seat" />
+        android:src="@drawable/ic_seat" /> -->
 
     <TextView
         android:id="@+id/person_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="10dp"
+        android:textColor="#ffffff"
+        android:textSize="17dp"
+        android:textStyle="bold" />
 
 </RelativeLayout><!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/chalet_adapter.xml -->
