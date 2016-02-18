@@ -53,6 +53,12 @@ public class MyGroupMemberAdapter extends BaseAdapter {
         String userName = membersList.get(i).getUsername();
         name_tv.setText(userName);
 
+        TextView wait_tv = (TextView) view.findViewById(R.id.wait_tv);
+        if (membersList.get(i).getBoolean(UserKey.GROUP_KEY))
+            wait_tv.setVisibility(View.GONE);
+        else
+            wait_tv.setVisibility(View.VISIBLE);
+
         return view;
     }
 

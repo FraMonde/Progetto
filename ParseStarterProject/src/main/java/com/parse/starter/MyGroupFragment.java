@@ -33,6 +33,8 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MyGroupFragment extends Fragment implements View.OnClickListener {
 
@@ -44,6 +46,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     private OnMyGroupFragmentListener myListener;
     private SharedPreferences pref;
     private ParseObject myGroup;
+    private Timer timer;
 
     private ListView lw;
     private EditText memberText;
@@ -82,6 +85,18 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         lw = (ListView) view.findViewById(R.id.memberList);
         groupMemberAdapter = new MyGroupMemberAdapter(data, getContext());
         ((AdapterView<ListAdapter>) lw).setAdapter(groupMemberAdapter);
+        getActivity().setTitle("Gruppo");
+
+        // Network call is called every 20 seconds.
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                getGroupMember();
+
+            }
+        };
+        timer = new Timer();
+        timer.schedule(timerTask, 0, 20000);
 
         return view;
     }
@@ -130,6 +145,8 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     public void onPause() {
         super.onPause();
 
+        timer.cancel();
+        timer = null;
         pref.edit().putString(MEMBER_NAME_KEY, memberText.getText().toString()).apply();
     }
 
@@ -148,12 +165,12 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
                 if (e == null) {
                     for (ParseObject group : objects) {
                         myGroup = group;
-                        getActivity().setTitle(group.getString("Name"));
                         //Find the member of the group.
                         ParseRelation r = group.getRelation(MEMBER_KEY);
                         ParseQuery query = r.getQuery();
                         try {
                             List<ParseUser> members = query.find();
+                            data.clear();
                             for (ParseUser m : members) {
                                 data.add(m);
                             }
@@ -184,6 +201,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
 
     }
 
+   // Called to add a member and to see the map.
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

@@ -230,13 +230,15 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                             // The user is in a group but he's not accepted yet.
                             new AlertDialog.Builder(Main2Activity.this)
                                     .setTitle("Avviso")
-                                    .setMessage("Sei invitato ad entrare nel gruppo" + objects.get(0).getString("Name") + ". Accetti l'invito?")
+                                    .setMessage("Sei invitato ad entrare nel gruppo " + objects.get(0).getString("Name") + ". Accetti l'invito?")
                                     .setPositiveButton(R.string.accept_group, new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) { // Accept.
                                             ParseUser.getCurrentUser().put(UserKey.GROUP_KEY, true);
                                             ParseUser.getCurrentUser().saveInBackground();
                                             // Start the location service.
                                             startService(new Intent(Main2Activity.this, FindMyPosition.class));
+                                            if (itemIdSelected == R.id.nav_group)
+                                                selectDrawerItem(nvDrawer.getMenu().findItem(itemIdSelected));
                                         }
                                     })
                                     .setNegativeButton(R.string.refuse_group, new DialogInterface.OnClickListener() {

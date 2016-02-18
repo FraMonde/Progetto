@@ -1,12 +1,7 @@
 package com.parse.starter;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,14 +27,6 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     private LiftAdapter liftAdapter;
     private List<ParseObject> liftList = new ArrayList<ParseObject>();
     private Timer timer;
-    private Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message message) {
-            progressDialog = ProgressDialog.show(getActivity(), null, "Loading…");
-        }
-    };;
-    private boolean firstAppear;
-    private ProgressDialog progressDialog;
 
     public static LiftFragment newInstance() {
         LiftFragment fragment = new LiftFragment();
@@ -60,8 +47,6 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        firstAppear = true;
     }
 
     @Override
@@ -74,7 +59,7 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
         liftAdapter = new LiftAdapter(liftList, getContext());
         listView.setAdapter(liftAdapter);
 
-        // Network call is called every 30 seconds.
+        // Network call is called every 20 seconds.
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -83,7 +68,7 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
             }
         };
         timer = new Timer();
-        timer.schedule(timerTask, 0, 30000);
+        timer.schedule(timerTask, 0, 20000);
 
         return view;
     }
@@ -125,31 +110,19 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     // Network call
     private void getLift() {
 
-        final Message message = handler.obtainMessage();
-        if (firstAppear) {
-            message.sendToTarget();
-            firstAppear = false;
-        }
-
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Lift");
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, com.parse.ParseException e) {
-                if ((progressDialog != null) && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                }
+
                 if (e == null) {
                     liftList = objects;
                     liftAdapter.refreshEvents(liftList);
                 } else {
                     Toast.makeText(getActivity(), e.getMessage(),
                             Toast.LENGTH_LONG).show();
-                    if ((progressDialog != null) && progressDialog.isShowing()) {
-                        progressDialog.dismiss();
-                    }
                 }
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
             }
         });
     }

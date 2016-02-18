@@ -9,6 +9,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:textSize="14dp" />
+
+    <TextView
+        android:id="@+id/wait_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="in attesa"
+        android:textColor="#ffffff"
+        android:textStyle="italic"
+        android:layout_alignParentRight="true"/>
 
 </RelativeLayout><!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/my_group_member_adapter.xml -->
