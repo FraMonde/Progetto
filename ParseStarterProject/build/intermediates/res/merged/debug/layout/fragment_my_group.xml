@@ -62,8 +62,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:divider="@null"
-        android:style="@style/CodeFont"/>
+        android:divider="@null" />
 
     <Button
         android:id="@+id/map_bt"
@@ -74,7 +73,8 @@
         android:layout_weight="0"
         android:background="@drawable/layout_bt"
         android:text="Mappa"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:textStyle="bold" />
 
 </LinearLayout>
 <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/fragment_my_group.xml -->

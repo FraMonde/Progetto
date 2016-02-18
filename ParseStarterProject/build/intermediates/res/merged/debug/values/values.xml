@@ -414,7 +414,7 @@
     <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#00BCD4</item>
+        <item name="colorPrimary">#6DAEBE</item>
         <item name="colorPrimaryDark">#32647b</item>
         <item name="colorAccent">#009688</item>
 
@@ -1377,11 +1377,6 @@
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabTextAppearance">@style/TextAppearance.Design.Tab</item>
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
-    </style>
-    <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/values/styles.xml -->
-    <eat-comment/>
-    <style name="CodeFont" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">#ffffff</item>
     </style>
     <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>

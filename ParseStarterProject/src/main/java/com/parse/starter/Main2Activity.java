@@ -1,33 +1,25 @@
 package com.parse.starter;
 
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -35,6 +27,8 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Main2Activity extends AppCompatActivity implements HomeFragment.OnHomeFragmentInteractionListener, GroupFragment.OnGroupFragmentInteractionListener, MyGroupFragment.OnMyGroupFragmentListener {
 
@@ -49,16 +43,26 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
 
     private BluetoothAdapter bluetoothAdapter;
     private final static int REQUEST_ENABLE_BT = 1;
-    private ProgressDialog progressDialog;
-    private Handler handler;
+    private int itemIdSelected;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        //TODO: attiva service location se sei già in un gruppo. Notifiche gruppo se stai usando app.
 
         // Check If the user belongs to a group.
-        hasGroup();
+        // Network call is called every 30 seconds.
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                hasGroup();
+
+            }
+        };
+        timer = new Timer();
+        timer.schedule(timerTask, 0, 30000);
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -84,6 +88,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         Fragment fragment = HomeFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        itemIdSelected = R.id.nav_home;
 
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
 
@@ -102,12 +107,16 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
+        outState.putInt("menu", itemIdSelected);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
+        int p = savedInstanceState.getInt("menu");
+        MenuItem i = nvDrawer.getMenu().findItem(p);
+        selectDrawerItem(i);
     }
 
     @Override
@@ -132,6 +141,13 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        timer.cancel();
+        timer = null;
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -171,7 +187,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                 fragmentClass = HomeFragment.class;
                 break; */
             case R.id.nav_logout:
-                //TODO: loading.
+                //TODO: loading. Anche per log in e sign up.
                 ParseUser.logOut();
                 Intent intent = new Intent(Main2Activity.this, DispatchActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -195,8 +211,10 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawer.closeDrawers();
+        itemIdSelected = menuItem.getItemId();
     }
 
+    // Used to check If the user's been added to a group.
     private void hasGroup() {
 
         // Check if the user's group.
@@ -214,13 +232,15 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                                     .setTitle("Avviso")
                                     .setMessage("Sei invitato ad entrare nel gruppo" + objects.get(0).getString("Name") + ". Accetti l'invito?")
                                     .setPositiveButton(R.string.accept_group, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
+                                        public void onClick(DialogInterface dialog, int which) { // Accept.
                                             ParseUser.getCurrentUser().put(UserKey.GROUP_KEY, true);
                                             ParseUser.getCurrentUser().saveInBackground();
+                                            // Start the location service.
+                                            startService(new Intent(Main2Activity.this, FindMyPosition.class));
                                         }
                                     })
                                     .setNegativeButton(R.string.refuse_group, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
+                                        public void onClick(DialogInterface dialog, int which) { //Refuse.
                                             ParseRelation r = objects.get(0).getRelation("members");
                                             r.remove(ParseUser.getCurrentUser());
                                             objects.get(0).saveInBackground();
@@ -237,7 +257,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         }
     }
 
-    //Interface OnHomeFragmentInteractionListener's methods
+    //Interface OnHomeFragmentInteractionListener's method. Called when I tap the checkbox for the service.
     @Override
     public void onBluetoothButtonClick(boolean enable) {
 
@@ -248,20 +268,24 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         }
     }
 
-    //Interface OnGroupFragmentInteractionListener's methods
+    //Interface OnGroupFragmentInteractionListener's method. Calles when I create a group.
     @Override
     public void onCreateGroupButtonClick() {
         MyGroupFragment fragment = MyGroupFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        // Start the location service.
+        startService(new Intent(Main2Activity.this, FindMyPosition.class));
     }
 
-    //Interface OnMyGroupFragmentListener's method
+    //Interface OnMyGroupFragmentListener's method. Called when I exit from a group.
     @Override
     public void onExitGroupButtonClick() {
         GroupFragment fragment = GroupFragment.newInstance();
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        // Stop the location service.
+        stopService(new Intent(Main2Activity.this, FindMyPosition.class));
     }
 
     @Override

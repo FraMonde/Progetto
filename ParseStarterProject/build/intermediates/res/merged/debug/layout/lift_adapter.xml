@@ -14,13 +14,6 @@
         android:textSize="17dp"
         android:textStyle="bold" />
 
-    <!-- <ImageView
-         android:id="@+id/line_img"
-         android:layout_width="20dp"
-         android:layout_height="20dp"
-         android:layout_toLeftOf="@+id/time_tv"
-         android:src="@drawable/ic_line" /> -->
-
     <TextView
         android:id="@+id/time_tv"
         android:layout_width="wrap_content"

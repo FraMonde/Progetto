@@ -17,9 +17,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -39,11 +40,8 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     private static final String MEMBER_KEY = "members";
     private static final String GROUP_KEY = "Group";
 
-    private List<String> data = new ArrayList<String>();
-    private ArrayAdapter<String> arrayAdapter;
+    private List<ParseUser> data = new ArrayList<ParseUser>();
     private OnMyGroupFragmentListener myListener;
-    private Handler handler;
-    private ProgressDialog progressDialog;
     private SharedPreferences pref;
     private ParseObject myGroup;
 
@@ -51,6 +49,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     private EditText memberText;
     private Button addButton;
     private Button mapButton;
+    private MyGroupMemberAdapter groupMemberAdapter;
 
     public static MyGroupFragment newInstance() {
         MyGroupFragment fragment = new MyGroupFragment();
@@ -66,12 +65,6 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         myListener = (OnMyGroupFragmentListener) getActivity();
         pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        handler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message message) {
-                progressDialog = ProgressDialog.show(getActivity(), null, "Loading…");
-            }
-        };
     }
 
     @Override
@@ -87,8 +80,8 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         mapButton = (Button) view.findViewById(R.id.map_bt);
         mapButton.setOnClickListener(this);
         lw = (ListView) view.findViewById(R.id.memberList);
-        arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_expandable_list_item_1, data);
-        lw.setAdapter(arrayAdapter);
+        groupMemberAdapter = new MyGroupMemberAdapter(data, getContext());
+        ((AdapterView<ListAdapter>) lw).setAdapter(groupMemberAdapter);
 
         return view;
     }
@@ -143,8 +136,6 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     // Load all the members of the current user's group.
     private void getGroupMember() {
 
-        final Message message = handler.obtainMessage();
-        message.sendToTarget();
         final ParseUser currentUser = ParseUser.getCurrentUser();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery(GROUP_KEY);
@@ -153,7 +144,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
-                progressDialog.dismiss();
+
                 if (e == null) {
                     for (ParseObject group : objects) {
                         myGroup = group;
@@ -164,9 +155,9 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
                         try {
                             List<ParseUser> members = query.find();
                             for (ParseUser m : members) {
-                                data.add(m.getUsername());
+                                data.add(m);
                             }
-                            arrayAdapter.notifyDataSetChanged();
+                            groupMemberAdapter.notifyDataSetChanged();
                         } catch (ParseException e1) {
                             e1.printStackTrace();
                         }
@@ -208,8 +199,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
 
     // Search the added friend to verify if It can be added to the group.
     private void searchFriend(final String username) {
-        final Message message = handler.obtainMessage();
-        message.sendToTarget();
+
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", username);
         //query.orderByAscending(ParseConstants.KEY_USERNAME);
@@ -218,7 +208,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void done(List<ParseUser> users, ParseException e) {
-                progressDialog.dismiss();
+
                 if (e == null && users.size() > 0) {
                     //Success we have Users to display
                     //store users in array
@@ -236,20 +226,17 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
                         // Check if the user's in another group.
                         ParseQuery<ParseObject> query = ParseQuery.getQuery(GROUP_KEY);
                         query.whereEqualTo(MEMBER_KEY, user);
-                        final Message message = handler.obtainMessage();
-                        message.sendToTarget();
                         query.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> objects, ParseException e) {
-                                progressDialog.dismiss();
                                 if (e == null) {
                                     if (objects.size() == 0) {
                                         ParseRelation r = myGroup.getRelation(MEMBER_KEY);
                                         r.add(user);
                                         myGroup.saveInBackground();
-                                        data.add(user.getUsername());
+                                        data.add(user);
                                         memberText.setText("");
-                                        arrayAdapter.notifyDataSetChanged();
+                                        groupMemberAdapter.notifyDataSetChanged();
                                         i[0]++;
                                     } else {
                                         Toast.makeText(getActivity(), "L'utente è già in un gruppo", Toast.LENGTH_SHORT).show();
@@ -270,8 +257,8 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     }
 
     private boolean checkAddedUser(String user) {
-        for (String u : data) {
-            if (u.equals(user))
+        for (ParseUser u : data) {
+            if (u.getUsername().equals(user))
                 return true;
         }
         return false;

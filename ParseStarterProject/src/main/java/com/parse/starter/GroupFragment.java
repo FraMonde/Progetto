@@ -48,8 +48,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     private List<ParseUser> members = new ArrayList<ParseUser>();
     private OnGroupFragmentInteractionListener myListener;
     private SharedPreferences pref;
-    private Handler handler;
-    private ProgressDialog progressDialog;
     private Gson gson = new GsonBuilder().
             setExclusionStrategies(new ParseExclusion()).
             create();
@@ -80,12 +78,6 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Nuovo gruppo");
         pref = PreferenceManager.getDefaultSharedPreferences(getContext());
-        handler = new Handler(Looper.getMainLooper()) {
-            @Override
-            public void handleMessage(Message message) {
-                progressDialog = ProgressDialog.show(getActivity(), null, "Loading…");
-            }
-        };
     }
 
     @Override
@@ -175,8 +167,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
 
     // Search the added friend to obtain the ParseUser object.
     private void searchFriend(final String username) {
-        final Message message = handler.obtainMessage();
-        message.sendToTarget();
+
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", username);
         //query.orderByAscending(ParseConstants.KEY_USERNAME);
@@ -185,7 +176,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
 
             @Override
             public void done(List<ParseUser> users, ParseException e) {
-                progressDialog.dismiss();
+
                 if (e == null && users.size() > 0) {
                     //Success we have Users to display
                     //store users in array
@@ -203,12 +194,10 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
                         // Check if the user's in another group.
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
                         query.whereEqualTo("members", user);
-                        final Message message = handler.obtainMessage();
-                        message.sendToTarget();
+
                         query.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> objects, ParseException e) {
-                                progressDialog.dismiss();
                                 if (e == null) {
                                     if (objects.size() == 0) {
                                         members.add(user);

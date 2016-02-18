@@ -13,13 +13,6 @@
         android:textSize="17dp"
         android:textStyle="bold" />
 
-    <!-- <ImageView
-        android:id="@+id/line_img"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_toLeftOf="@+id/person_tv"
-        android:src="@drawable/ic_seat" /> -->
-
     <TextView
         android:id="@+id/person_tv"
         android:layout_width="wrap_content"
