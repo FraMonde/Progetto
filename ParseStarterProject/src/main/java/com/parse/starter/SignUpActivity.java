@@ -47,18 +47,6 @@ public class SignUpActivity extends AppCompatActivity {
         passwordText = (EditText) findViewById(R.id.password_signup);
         passwordAgainText = (EditText) findViewById(R.id.passwordAgain_signup);
 
-        /*userImage = (ImageView) findViewById(R.id.userpicture_image);
-        userImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,
-                        "Select Picture"), SELECT_PICTURE);
-            }
-        }); */
-
         buttonSignup = (Button) findViewById(R.id.signup_button);
         buttonSignup.setOnClickListener(new View.OnClickListener() {
             @Override

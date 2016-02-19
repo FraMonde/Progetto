@@ -13,4 +13,17 @@
     tools:context="com.parse.starter.MapActivity"
     tools:showIn="@layout/activity_map">
 
+    <ImageView
+        android:id="@+id/semaforo"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="#ff0000" />
+
+    <com.parse.starter.MapView
+        android:id="@+id/cv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/semaforo" />
+
 </RelativeLayout>

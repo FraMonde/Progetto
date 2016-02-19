@@ -3,8 +3,10 @@ package com.parse.starter;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -34,6 +37,8 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
 
     private static final String MEMBER_KEY = "members";
     private static final String GROUP_KEY = "Group";
+    private static final int REQUEST_ENABLE_BT = 1;
+    private static final String ITEM_SELECTED_KEY = "Menu";
 
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
@@ -42,15 +47,20 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     private TextView emailText;
 
     private BluetoothAdapter bluetoothAdapter;
-    private final static int REQUEST_ENABLE_BT = 1;
     private int itemIdSelected;
     private Timer timer;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        //TODO: attiva service location se sei già in un gruppo. Notifiche gruppo se stai usando app.
+
+        pref = PreferenceManager.getDefaultSharedPreferences(Main2Activity.this);
+    //TODO: funziona?
+        if(ParseUser.getCurrentUser().getBoolean(GROUP_KEY)) {
+            startService(new Intent(Main2Activity.this, FindMyPosition.class));
+        }
 
         // Check If the user belongs to a group.
         // Network call is called every 30 seconds.
@@ -107,23 +117,9 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt("menu", itemIdSelected);
+        pref.edit().putInt(ITEM_SELECTED_KEY, itemIdSelected).apply();
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        int p = savedInstanceState.getInt("menu");
-        MenuItem i = nvDrawer.getMenu().findItem(p);
-        selectDrawerItem(i);
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -137,10 +133,13 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         return super.onOptionsItemSelected(item);
     }
 
-    // Make sure this is the method with just `Bundle` as the signature
     @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+    protected void onResume() {
+        super.onResume();
+
+        int p = pref.getInt(ITEM_SELECTED_KEY, R.id.nav_home);
+        MenuItem i = nvDrawer.getMenu().findItem(p);
+        selectDrawerItem(i);
     }
 
     @Override
