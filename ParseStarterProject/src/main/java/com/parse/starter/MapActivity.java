@@ -216,7 +216,9 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                             List<ParseUser> members = query.find();
                             parseUserList.clear();
                             for (ParseUser m : members) {
-                                parseUserList.add(m);
+                                // Add just user that have accepted.
+                                if (m.getBoolean(UserKey.GROUP_KEY))
+                                    parseUserList.add(m);
                             }
                         } catch (ParseException e1) {
                             e1.printStackTrace();
