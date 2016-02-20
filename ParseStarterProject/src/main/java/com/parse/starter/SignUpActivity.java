@@ -1,10 +1,8 @@
 package com.parse.starter;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.parse.ParseACL;
 import com.parse.ParseException;
-import com.parse.ParseSession;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -25,15 +21,12 @@ import java.io.IOException;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    //This will be the requestCode. I can change and put any value.
-    private final static int SELECT_PICTURE = 1;
     private ParseUser newUser;
 
     EditText usernameText;
     EditText emailText;
     EditText passwordText;
     EditText passwordAgainText;
-    ImageView userImage;
     Button buttonSignup;
 
     @Override
@@ -42,12 +35,19 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         newUser = new ParseUser();
 
+        Typeface face1 = Typeface.createFromAsset(getAssets(), "fonts/Gotham Book.ttf");
         usernameText = (EditText) findViewById(R.id.username_signup);
         emailText = (EditText) findViewById(R.id.email_signup);
         passwordText = (EditText) findViewById(R.id.password_signup);
         passwordAgainText = (EditText) findViewById(R.id.passwordAgain_signup);
+        usernameText.setTypeface(face1);
+        emailText.setTypeface(face1);
+        passwordText.setTypeface(face1);
+        passwordAgainText.setTypeface(face1);
 
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/GOTHAM-BOLD.TTF");
         buttonSignup = (Button) findViewById(R.id.signup_button);
+        buttonSignup.setTypeface(face);
         buttonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,28 +70,6 @@ public class SignUpActivity extends AppCompatActivity {
         outState.putString(UserKey.USERNAME_KEY, usernameText.getText().toString());
         outState.putString(UserKey.PASSWORD_KEY, passwordText.getText().toString());
         outState.putString(UserKey.CONFIRMPASSWORD_KEY, passwordAgainText.getText().toString());
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-                Uri selectedImageUri = data.getData();
-                try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                    userImage.setImageBitmap(bitmap);
-
-                    //newUser.put("userImage", bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Toast.makeText(SignUpActivity.this, e.getMessage(),
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        }
     }
 
     private void signUp(String username, String email, String password, String confirmPassword) {

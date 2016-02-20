@@ -3,6 +3,7 @@ package com.parse.starter;
 import android.bluetooth.BluetoothAdapter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -12,12 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     CheckBox bluetoothButton;
+    TextView home_TextView;
     private OnHomeFragmentInteractionListener myListener;
     private SharedPreferences pref;
 
@@ -44,6 +47,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         bluetoothButton = (CheckBox) view.findViewById(R.id.bluetotth_cb);
         bluetoothButton.setOnClickListener(this);
+        
+        home_TextView = (TextView) view.findViewById(R.id.home_advice);
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/GOTHAM-BOLD.TTF");
+        home_TextView.setTypeface(face);
 
         return view;
     }

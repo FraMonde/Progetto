@@ -9,6 +9,7 @@
 package com.parse.starter;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
@@ -31,7 +32,6 @@ public class SignInActivity extends ActionBarActivity {
     EditText passwordText;
     Button buttonSignin;
     Button buttonSignup;
-    // TODO: forgot password?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +40,15 @@ public class SignInActivity extends ActionBarActivity {
 
         ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
-
+        Typeface face1 = Typeface.createFromAsset(getAssets(), "fonts/Gotham Book.ttf");
         usernameText = (EditText) findViewById(R.id.username_signin);
         passwordText = (EditText) findViewById(R.id.password_signin);
+        usernameText.setTypeface(face1);
+        passwordText.setTypeface(face1);
 
         buttonSignin = (Button) findViewById(R.id.signin_button);
+        Typeface face2 = Typeface.createFromAsset(getAssets(), "fonts/GOTHAM-BOLD.TTF");
+        buttonSignin.setTypeface(face2);
         buttonSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +57,7 @@ public class SignInActivity extends ActionBarActivity {
         });
 
         buttonSignup = (Button) findViewById(R.id.signup_linkButton);
+        buttonSignup.setTypeface(face2);
         buttonSignup.setOnClickListener(
                 new View.OnClickListener() {
             @Override

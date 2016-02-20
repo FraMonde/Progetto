@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -53,6 +55,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     private Button addButton;
     private Button mapButton;
     private MyGroupMemberAdapter groupMemberAdapter;
+    private TextView memberTitleTextView;
 
     public static MyGroupFragment newInstance() {
         MyGroupFragment fragment = new MyGroupFragment();
@@ -77,11 +80,21 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_group, container, false);
         setHasOptionsMenu(true);
+
+        Typeface face1 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Gotham Book.ttf");
         memberText = (EditText) view.findViewById(R.id.newMemberName_et);
+        memberText.setTypeface(face1);
+
         addButton = (Button) view.findViewById(R.id.addInMyGroup_bt);
         addButton.setOnClickListener(this);
+
+        Typeface face2 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/GOTHAM-BOLD.TTF");
+        memberTitleTextView = (TextView) view.findViewById(R.id.myMemberTitle);
+        memberTitleTextView.setTypeface(face2);
+
         mapButton = (Button) view.findViewById(R.id.map_bt);
         mapButton.setOnClickListener(this);
+        mapButton.setTypeface(face2);
         lw = (ListView) view.findViewById(R.id.memberList);
         groupMemberAdapter = new MyGroupMemberAdapter(data, getContext());
         ((AdapterView<ListAdapter>) lw).setAdapter(groupMemberAdapter);

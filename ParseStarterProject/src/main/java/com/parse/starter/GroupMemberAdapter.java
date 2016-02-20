@@ -1,6 +1,7 @@
 package com.parse.starter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,9 +53,11 @@ public class GroupMemberAdapter extends BaseAdapter implements View.OnClickListe
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = li.inflate(R.layout.groupmember_adapter, viewGroup, false);
         }
+        Typeface face1 = Typeface.createFromAsset(context.getAssets(), "fonts/GOTHAM-MEDIUM.TTF");
         TextView name_tv = (TextView) view.findViewById(R.id.memberName_tv);
         String userName = membersList.get(i).getUsername();
         name_tv.setText(userName);
+        name_tv.setTypeface(face1);
 
         Button delete_bt = (Button) view.findViewById(R.id.delete_bt);
         delete_bt.setTag(i);

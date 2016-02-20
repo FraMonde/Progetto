@@ -51,7 +51,7 @@
         android:layout_gravity="center"
         android:background="@android:color/transparent"
         android:text="Not a member? Sign up now!"
-        android:textColor="#ffffff"
-        android:textStyle="bold" />
+        android:textColor="#ffffff" />
+    <!--   android:textStyle="bold" -->
 
 </LinearLayout><!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/content_sign_in.xml -->

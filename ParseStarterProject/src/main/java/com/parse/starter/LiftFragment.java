@@ -1,8 +1,11 @@
 package com.parse.starter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -27,6 +30,7 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     private LiftAdapter liftAdapter;
     private List<ParseObject> liftList = new ArrayList<ParseObject>();
     private Timer timer;
+    private ProgressDialog pdia;
 
     public static LiftFragment newInstance() {
         LiftFragment fragment = new LiftFragment();
@@ -60,13 +64,14 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
         listView.setAdapter(liftAdapter);
 
         // Network call is called every 20 seconds.
-        TimerTask timerTask = new TimerTask() {
+       TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                getLift();
 
+                GetLift lift = new GetLift();
+                lift.execute();
             }
-        };
+       };
         timer = new Timer();
         timer.schedule(timerTask, 0, 20000);
 
@@ -76,8 +81,8 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     @Override
     public void onPause() {
         super.onPause();
-        timer.cancel();
-        timer = null;
+        //timer.cancel();
+        //timer = null;
     }
 
     @Override
@@ -108,23 +113,43 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     }
 
     // Network call
-    private void getLift() {
+    class GetLift extends AsyncTask<Object, Void, List<ParseObject>> {
 
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Lift");
-
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, com.parse.ParseException e) {
-
-                if (e == null) {
-                    liftList = objects;
-                    liftAdapter.refreshEvents(liftList);
-                } else {
-                    Toast.makeText(getActivity(), e.getMessage(),
-                            Toast.LENGTH_LONG).show();
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    pdia = new ProgressDialog(getContext());
+                    pdia.setMessage("Loading...");
+                    pdia.show();
                 }
+            });
+        }
+        //TODO: first time e prova a ruotare.
+
+        @Override
+        protected List<ParseObject> doInBackground(Object... objects) {
+            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Lift");
+            try {
+                liftList = query.find();
+                return liftList;
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        });
+
+            return null;
+        }
+
+        protected void onPostExecute(List<ParseObject> result) {
+            super.onPostExecute(result);
+
+            if(result != null)
+                liftAdapter.refreshEvents(liftList);
+
+            pdia.dismiss();
+        }
     }
 
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -139,6 +140,8 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
 
         int p = pref.getInt(ITEM_SELECTED_KEY, R.id.nav_home);
         MenuItem i = nvDrawer.getMenu().findItem(p);
+        if(i == null)
+            i = nvDrawer.getMenu().findItem(R.id.nav_home);
         selectDrawerItem(i);
     }
 

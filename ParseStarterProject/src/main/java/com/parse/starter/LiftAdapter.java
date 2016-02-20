@@ -1,6 +1,7 @@
 package com.parse.starter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,15 +48,20 @@ public class LiftAdapter extends BaseAdapter {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = li.inflate(R.layout.lift_adapter, viewGroup, false);
         }
+
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/GOTHAM-BOLD.TTF");
+
         TextView name_tv = (TextView) view.findViewById(R.id.lift_tv);
         String liftName = lift.get(i).getString("Name");
         name_tv.setText(liftName);
+        name_tv.setTypeface(face);
 
         TextView time_tv = (TextView) view.findViewById(R.id.time_tv);
         Number person = lift.get(i).getNumber("Person");
         Number personMin = lift.get(i).getNumber("PerMin");
         Number liftTime = (int)person/(int)personMin;
         time_tv.setText(liftTime.toString()+"min");
+        time_tv.setTypeface(face);
 
         return view;
     }

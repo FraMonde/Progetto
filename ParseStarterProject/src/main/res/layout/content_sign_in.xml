@@ -51,7 +51,7 @@
         android:layout_gravity="center"
         android:background="@android:color/transparent"
         android:text="Not a member? Sign up now!"
-        android:textColor="#ffffff"
-        android:textStyle="bold" />
+        android:textColor="#ffffff" />
+    <!--   android:textStyle="bold" -->
 
 </LinearLayout>

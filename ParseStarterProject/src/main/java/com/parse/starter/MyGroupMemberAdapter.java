@@ -1,6 +1,7 @@
 package com.parse.starter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,11 +50,15 @@ public class MyGroupMemberAdapter extends BaseAdapter {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = li.inflate(R.layout.my_group_member_adapter, viewGroup, false);
         }
+        Typeface face1 = Typeface.createFromAsset(context.getAssets(), "fonts/GOTHAM-MEDIUM.TTF");
         TextView name_tv = (TextView) view.findViewById(R.id.myGroupMemberName_tv);
         String userName = membersList.get(i).getUsername();
         name_tv.setText(userName);
+        name_tv.setTypeface(face1);
 
+        Typeface face2 = Typeface.createFromAsset(context.getAssets(), "fonts/GOTHAM-LIGHT.TTF");
         TextView wait_tv = (TextView) view.findViewById(R.id.wait_tv);
+        wait_tv.setTypeface(face2);
         if (membersList.get(i).getBoolean(UserKey.GROUP_KEY))
             wait_tv.setVisibility(View.GONE);
         else

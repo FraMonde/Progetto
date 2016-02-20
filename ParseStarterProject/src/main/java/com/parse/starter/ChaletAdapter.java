@@ -1,6 +1,7 @@
 package com.parse.starter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +49,13 @@ public class ChaletAdapter extends BaseAdapter {
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = li.inflate(R.layout.chalet_adapter, viewGroup, false);
         }
+
+        Typeface face = Typeface.createFromAsset(context.getAssets(), "fonts/GOTHAM-BOLD.TTF");
+
         TextView name_tv = (TextView) view.findViewById(R.id.chalet_tv);
         String liftName = chalet.get(i).getString("Name");
         name_tv.setText(liftName);
+        name_tv.setTypeface(face);
 
         TextView time_tv = (TextView) view.findViewById(R.id.person_tv);
         Number totalSeat = chalet.get(i).getNumber("TotalSeat");
@@ -59,6 +64,7 @@ public class ChaletAdapter extends BaseAdapter {
         if((int)freeSeat<0)
             freeSeat = 0;
         time_tv.setText(freeSeat.toString() + " posti liberi");
+        time_tv.setTypeface(face);
 
         return view;
     }

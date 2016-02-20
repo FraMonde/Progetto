@@ -2,6 +2,7 @@ package com.parse.starter;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.ExclusionStrategy;
@@ -57,6 +59,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     private Button addButton;
     private GroupMemberAdapter groupMemberAdapter;
     private ListView lw;
+    private TextView memberTitleTextView;
 
     public static GroupFragment newInstance() {
 
@@ -88,8 +91,16 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
         View view = inflater.inflate(R.layout.fragment_group, container, false);
         setHasOptionsMenu(true);
 
+        Typeface face1 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Gotham Book.ttf");
         nameText = (EditText) view.findViewById(R.id.groupName_et);
         memberText = (EditText) view.findViewById(R.id.memberName_et);
+        nameText.setTypeface(face1);
+        memberText.setTypeface(face1);
+
+        Typeface face2 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/GOTHAM-BOLD.TTF");
+        memberTitleTextView = (TextView) view.findViewById(R.id.memberTitle);
+        memberTitleTextView.setTypeface(face2);
+
         addButton = (Button) view.findViewById(R.id.add_bt);
         addButton.setOnClickListener(this);
         lw = (ListView) view.findViewById(R.id.member_lv);
