@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -58,6 +59,9 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     private MyGroupMemberAdapter groupMemberAdapter;
     private TextView memberTitleTextView;
     private ProgressDialog pdia;
+
+    private final String prefCheckMap = "mapCheck_pref"; //preference per popup map
+
 
     public static MyGroupFragment newInstance() {
         MyGroupFragment fragment = new MyGroupFragment();
@@ -221,7 +225,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
 
     }
 
-   // Called to add a member and to see the map.
+    // Called to add a member and to see the map.
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -229,11 +233,46 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
                 searchFriend(memberText.getText().toString());
                 break;
             case R.id.map_bt:
-                Intent intent = new Intent(getContext(), MapActivity.class);
-                startActivity(intent);
+
+
+                if (!pref.getBoolean(prefCheckMap, false)) {
+                    final AlertDialog.Builder alertMap = new AlertDialog.Builder(getContext());
+                    View viewMapPopup = new View(getContext()).inflate(getContext(), R.layout.layout_map_popup, null);
+                    final CheckBox checkMap = (CheckBox) viewMapPopup.findViewById(R.id.check_map_opup);
+
+                    alertMap.setTitle("Benvenuto!");
+                    alertMap.setView(viewMapPopup);
+                    alertMap.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            if (checkMap.isChecked())
+                                pref.edit().putBoolean(prefCheckMap, true).apply();
+
+                            Intent i = new Intent(getContext(), MapActivity.class);
+                            startActivity(i);
+                        }
+                    });
+                    alertMap.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    alertMap.show();
+
+                } else {
+                    Intent i = new Intent(getContext(), MapActivity.class);
+                    startActivity(i);
+                }
                 break;
         }
+
+
+
     }
+
+
 
     // Search the added friend to verify if It can be added to the group.
     private void searchFriend(final String username) {

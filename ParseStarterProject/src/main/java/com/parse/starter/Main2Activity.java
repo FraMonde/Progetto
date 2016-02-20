@@ -40,6 +40,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
 
     private static final String MEMBER_KEY = "members";
     private static final String GROUP_KEY = "Group";
+    private static final String BOOL_GROUP_KEY = "hasGroup";
     private static final int REQUEST_ENABLE_BT = 1;
     private static final String ITEM_SELECTED_KEY = "Menu";
 
@@ -61,10 +62,6 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         setContentView(R.layout.activity_main2);
 
         pref = PreferenceManager.getDefaultSharedPreferences(Main2Activity.this);
-    //TODO: funziona?
-        if(ParseUser.getCurrentUser().getBoolean(GROUP_KEY)) {
-            startService(new Intent(Main2Activity.this, FindMyPosition.class));
-        }
 
         // Check If the user belongs to a group.
         // Network call is called every 30 seconds.
@@ -77,6 +74,10 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         };
         timer = new Timer();
         timer.schedule(timerTask, 0, 30000);
+
+        if(pref.getBoolean(BOOL_GROUP_KEY,false)) {
+            startService(new Intent(Main2Activity.this, FindMyPosition.class));
+        }
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -149,8 +150,8 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onDestroy() {
+        super.onDestroy();
         timer.cancel();
         timer = null;
     }
@@ -238,6 +239,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         if (!(ParseUser.getCurrentUser().getBoolean(UserKey.GROUP_KEY))) {
             ParseQuery<ParseObject> query = ParseQuery.getQuery(GROUP_KEY);
             query.whereEqualTo(MEMBER_KEY, ParseUser.getCurrentUser());
+            pref.getBoolean(BOOL_GROUP_KEY, false);
 
             query.findInBackground(new FindCallback<ParseObject>() {
                 @Override
@@ -254,6 +256,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                                             ParseUser.getCurrentUser().saveInBackground();
                                             // Start the location service.
                                             startService(new Intent(Main2Activity.this, FindMyPosition.class));
+                                            pref.edit().putBoolean(BOOL_GROUP_KEY, true).apply();
                                             if (itemIdSelected == R.id.nav_group)
                                                 selectDrawerItem(nvDrawer.getMenu().findItem(itemIdSelected));
                                         }
@@ -295,6 +298,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
         // Start the location service.
         startService(new Intent(Main2Activity.this, FindMyPosition.class));
+        pref.edit().putBoolean(BOOL_GROUP_KEY, true).apply();
     }
 
     //Interface OnMyGroupFragmentListener's method. Called when I exit from a group.
@@ -305,6 +309,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
         // Stop the location service.
         stopService(new Intent(Main2Activity.this, FindMyPosition.class));
+        pref.edit().putBoolean(BOOL_GROUP_KEY, false).apply();
     }
 
     @Override
