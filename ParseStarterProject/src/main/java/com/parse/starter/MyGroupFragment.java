@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -56,6 +57,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     private Button mapButton;
     private MyGroupMemberAdapter groupMemberAdapter;
     private TextView memberTitleTextView;
+    private ProgressDialog pdia;
 
     public static MyGroupFragment newInstance() {
         MyGroupFragment fragment = new MyGroupFragment();
@@ -158,9 +160,14 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     public void onPause() {
         super.onPause();
 
+        pref.edit().putString(MEMBER_NAME_KEY, memberText.getText().toString()).apply();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         timer.cancel();
         timer = null;
-        pref.edit().putString(MEMBER_NAME_KEY, memberText.getText().toString()).apply();
     }
 
     // Load all the members of the current user's group.
@@ -231,6 +238,16 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     // Search the added friend to verify if It can be added to the group.
     private void searchFriend(final String username) {
 
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                pdia = new ProgressDialog(getContext());
+                pdia.setMessage("Loading...");
+                pdia.show();
+            }
+        });
+
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", username);
         //query.orderByAscending(ParseConstants.KEY_USERNAME);
@@ -239,6 +256,11 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void done(List<ParseUser> users, ParseException e) {
+
+                if (pdia.isShowing()) {
+                    pdia.dismiss();
+                }
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
                 if (e == null && users.size() > 0) {
                     //Success we have Users to display

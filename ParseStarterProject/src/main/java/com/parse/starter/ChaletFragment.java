@@ -81,8 +81,8 @@ public class ChaletFragment extends Fragment implements AbsListView.OnItemClickL
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onDestroy() {
+        super.onDestroy();
         timer.cancel();
         timer = null;
     }

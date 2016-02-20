@@ -1,9 +1,11 @@
 package com.parse.starter;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
@@ -51,6 +53,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     private int itemIdSelected;
     private Timer timer;
     private SharedPreferences pref;
+    private ProgressDialog pdia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,10 +192,22 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                 fragmentClass = HomeFragment.class;
                 break; */
             case R.id.nav_logout:
-                //TODO: loading. Anche per log in e sign up.
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        pdia = new ProgressDialog(Main2Activity.this);
+                        pdia.setMessage("Loading...");
+                        pdia.show();
+                    }
+                });
                 ParseUser.logOut();
                 Intent intent = new Intent(Main2Activity.this, DispatchActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (pdia.isShowing()) {
+                    pdia.dismiss();
+                }
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                 startActivity(intent);
                 return;
             default:

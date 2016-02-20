@@ -1,6 +1,8 @@
 package com.parse.starter;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -22,6 +24,7 @@ import java.io.IOException;
 public class SignUpActivity extends AppCompatActivity {
 
     private ParseUser newUser;
+    private ProgressDialog pdia;
 
     EditText usernameText;
     EditText emailText;
@@ -83,9 +86,24 @@ public class SignUpActivity extends AppCompatActivity {
             newUser.setPassword(password);
             newUser.put(UserKey.GROUP_KEY, false);
 
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    pdia = new ProgressDialog(SignUpActivity.this);
+                    pdia.setMessage("Loading...");
+                    pdia.show();
+                }
+            });
+
             newUser.signUpInBackground(new SignUpCallback() {
                 @Override
                 public void done(ParseException e) {
+                        if (pdia.isShowing()) {
+                            pdia.dismiss();
+                        }
+                        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
                     if (e == null) {
                         // Signup succeed.
                         // Start an intent for the dispatch activity.

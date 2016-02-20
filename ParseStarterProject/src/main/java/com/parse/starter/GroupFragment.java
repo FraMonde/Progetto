@@ -2,6 +2,7 @@ package com.parse.starter;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,6 +61,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     private GroupMemberAdapter groupMemberAdapter;
     private ListView lw;
     private TextView memberTitleTextView;
+    private ProgressDialog pdia;
 
     public static GroupFragment newInstance() {
 
@@ -179,6 +181,16 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     // Search the added friend to obtain the ParseUser object.
     private void searchFriend(final String username) {
 
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                pdia = new ProgressDialog(getContext());
+                pdia.setMessage("Loading...");
+                pdia.show();
+            }
+        });
+
         ParseQuery<ParseUser> query = ParseUser.getQuery();
         query.whereEqualTo("username", username);
         //query.orderByAscending(ParseConstants.KEY_USERNAME);
@@ -187,6 +199,11 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
 
             @Override
             public void done(List<ParseUser> users, ParseException e) {
+
+                if (pdia.isShowing()) {
+                    pdia.dismiss();
+                }
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
                 if (e == null && users.size() > 0) {
                     //Success we have Users to display
@@ -202,6 +219,17 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
                             Toast.makeText(getActivity(), "L'utente è già stato aggiunto!", Toast.LENGTH_SHORT).show();
                             return;
                         }
+
+                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                pdia = new ProgressDialog(getContext());
+                                pdia.setMessage("Loading...");
+                                pdia.show();
+                            }
+                        });
+
                         // Check if the user's in another group.
                         ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
                         query.whereEqualTo("members", user);
@@ -209,6 +237,11 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
                         query.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> objects, ParseException e) {
+                                if (pdia.isShowing()) {
+                                    pdia.dismiss();
+                                }
+                                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
                                 if (e == null) {
                                     if (objects.size() == 0) {
                                         members.add(user);
