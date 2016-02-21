@@ -254,7 +254,6 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
                     View viewMapPopup = new View(getContext()).inflate(getContext(), R.layout.layout_map_popup, null);
                     final CheckBox checkMap = (CheckBox) viewMapPopup.findViewById(R.id.check_map_opup);
 
-                    alertMap.setTitle("Benvenuto!");
                     alertMap.setView(viewMapPopup);
                     alertMap.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override

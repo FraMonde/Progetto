@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,7 +38,8 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     CustomView customView;
     private IntentFilter filter;
 
-    private ImageView semaforo;
+    private View semaforo_rosso;
+    private View semaforo_verde;
 
     private SensorManager mSensorManager;
     private Sensor mGrav;
@@ -104,7 +107,8 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
 
         customView = (CustomView) findViewById(R.id.cv);
         customView.setOrientation(orientation);
-        semaforo = (ImageView) findViewById(R.id.semaforo);
+        semaforo_rosso = (View) findViewById(R.id.semaforo_rosso);
+        semaforo_verde = (View) findViewById(R.id.semaforo_verde);
 
         lastAzimuthRadians = 100;
 
@@ -274,7 +278,9 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
             float inclination = (float) Math.round(Math.toDegrees(Math.acos(mR[8])));
             if (inclination < 15) {  //TODO: valutare > 155  prima era < 25
                 if (!coloreSemaforo) {
-                    semaforo.setBackgroundColor(Color.GREEN);
+                    semaforo_rosso.getBackground().setAlpha(100);
+                    semaforo_verde.getBackground().setAlpha(255);
+                    //semaforo.setBackgroundColor(Color.GREEN);
                     coloreSemaforo = true;
                 }
                 switch (orientation) {
@@ -296,7 +302,9 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
             } else {
                 if (coloreSemaforo) {
 
-                    semaforo.setBackgroundColor(Color.RED);
+                    //semaforo.setBackgroundColor(Color.RED);
+                    semaforo_rosso.getBackground().setAlpha(255);
+                    semaforo_verde.getBackground().setAlpha(100);
                     coloreSemaforo = false;
                     Toast.makeText(getApplicationContext(), "Tieni il cellulare piatto!", Toast.LENGTH_SHORT).show();
                 }

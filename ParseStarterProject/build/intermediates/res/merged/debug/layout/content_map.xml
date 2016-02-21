@@ -11,10 +11,32 @@
     tools:context="com.parse.starter.MapActivity">
 
 
-    <ImageView
+   <!-- <ImageView
         android:id="@+id/semaforo"
         android:layout_width="20dp"
-        android:layout_height="20dp" />
+        android:layout_height="20dp"
+        android:layout_alignParentTop="true" /> -->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:id="@+id/semaforo">
+    <View
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/semaforo_rosso_map"
+        android:id="@+id/semaforo_rosso"
+        android:layout_marginRight="5dp"/>
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/semaforo_verde_map"
+            android:layout_alignParentTop="true"
+            android:id="@+id/semaforo_verde"/>
+    </LinearLayout>
 
     <com.parse.starter.CustomView
         android:id="@+id/cv"
