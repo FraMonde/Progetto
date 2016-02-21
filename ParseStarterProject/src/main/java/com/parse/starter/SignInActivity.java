@@ -8,13 +8,9 @@
  */
 package com.parse.starter;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,11 +22,7 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 
 public class SignInActivity extends ActionBarActivity {
@@ -39,7 +31,6 @@ public class SignInActivity extends ActionBarActivity {
     EditText passwordText;
     Button buttonSignin;
     Button buttonSignup;
-    private ProgressDialog pdia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,24 +104,21 @@ public class SignInActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        // Used to go to the Home screen and not to the DispatchActivity.
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     // Sign in method.
     private void signIn(String name, String password) {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                pdia = new ProgressDialog(SignInActivity.this);
-                pdia.setMessage("Loading...");
-                pdia.show();
-            }
-        });
+
         ParseUser.logInInBackground(name, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if (pdia.isShowing()) {
-                    pdia.dismiss();
-                }
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 
                 if (user != null) {
                     // Log in ok.
@@ -145,5 +133,6 @@ public class SignInActivity extends ActionBarActivity {
                 }
             }
         });
+
     }
 }

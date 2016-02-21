@@ -4,11 +4,18 @@
     android:layout_height="match_parent"
     android:padding="15dp">
 
+    <View
+        android:id="@+id/color"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_alignParentLeft="true"/>
+
     <TextView
         android:id="@+id/myGroupMemberName_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@+id/color"
         android:textColor="#ffffff"
         android:textSize="14dp" />
 
@@ -16,9 +23,9 @@
         android:id="@+id/wait_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:text="in attesa"
         android:textColor="#ffffff"
-        android:textStyle="italic"
-        android:layout_alignParentRight="true"/>
+        android:textStyle="italic" />
 
 </RelativeLayout>

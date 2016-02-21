@@ -51,6 +51,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences pref;
     private ParseObject myGroup;
     private Timer timer;
+    private boolean hasColor = true;
 
     private ListView lw;
     private EditText memberText;
@@ -77,6 +78,12 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         myListener = (OnMyGroupFragmentListener) getActivity();
         pref = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        String color = ParseUser.getCurrentUser().getString(UserKey.COLORS_KEY);
+        if (color == null || color.isEmpty())
+            hasColor = false;
+        else
+            hasColor = true;
     }
 
     @Override
@@ -197,6 +204,12 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
                             data.clear();
                             for (ParseUser m : members) {
                                 data.add(m);
+                                // If the current user has not a color yet I've to assign It.
+                                if (m.equals(currentUser) && !hasColor) {
+                                    int j = data.indexOf(m);
+                                    currentUser.put(UserKey.COLORS_KEY, UserKey.COLORS_LIST.get(j));
+                                    currentUser.saveInBackground();
+                                }
                             }
                             groupMemberAdapter.notifyDataSetChanged();
                         } catch (ParseException e1) {
@@ -220,6 +233,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         r.remove(currentUser);
         myGroup.saveInBackground();
         currentUser.put(UserKey.GROUP_KEY, false);
+        currentUser.put(UserKey.COLORS_KEY, null);
         currentUser.saveInBackground();
         myListener.onExitGroupButtonClick();
 
@@ -269,13 +283,17 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         }
 
 
-
     }
-
 
 
     // Search the added friend to verify if It can be added to the group.
     private void searchFriend(final String username) {
+
+        // Check the group's size
+        if (data.size() == 9) {
+            Toast.makeText(getActivity(), "Il gruppo è già pieno!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         getActivity().runOnUiThread(new Runnable() {
@@ -327,6 +345,10 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
                                         r.add(user);
                                         myGroup.saveInBackground();
                                         data.add(user);
+                                        // Assign a color to the user.
+                                        int j = data.indexOf(user);
+                                        user.put(UserKey.COLORS_KEY, UserKey.COLORS_LIST.get(j));
+
                                         memberText.setText("");
                                         groupMemberAdapter.notifyDataSetChanged();
                                         i[0]++;

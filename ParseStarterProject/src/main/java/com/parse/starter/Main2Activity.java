@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -19,7 +17,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -257,6 +254,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                                             // Start the location service.
                                             startService(new Intent(Main2Activity.this, FindMyPosition.class));
                                             pref.edit().putBoolean(BOOL_GROUP_KEY, true).apply();
+                                            //If i'm already in the group section I've to refresh It.
                                             if (itemIdSelected == R.id.nav_group)
                                                 selectDrawerItem(nvDrawer.getMenu().findItem(itemIdSelected));
                                         }

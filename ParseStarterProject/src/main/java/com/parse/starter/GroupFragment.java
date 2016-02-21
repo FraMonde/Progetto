@@ -181,6 +181,12 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     // Search the added friend to obtain the ParseUser object.
     private void searchFriend(final String username) {
 
+        // Check group's size.
+        if(members.size() == 8) {
+            Toast.makeText(getActivity(), "Il gruppo è già pieno!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -282,15 +288,17 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
         ParseACL acl = new ParseACL();
         acl.setPublicReadAccess(true);
         group.put("Name", groupName);
+
         ParseUser user = ParseUser.getCurrentUser();
         members.add(user);
         // Update the user's variable for group.
         user.put(UserKey.GROUP_KEY, true);
+        user.put(UserKey.COLORS_KEY, "RED");
         user.saveInBackground();
 
         ParseRelation<ParseObject> relation = group.getRelation("members");
 
-        for (ParseUser u : members) {
+        for(ParseUser u:members) {
             relation.add(u);
             acl.setWriteAccess(u, true);
         }

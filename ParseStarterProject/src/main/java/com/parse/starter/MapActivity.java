@@ -1,6 +1,5 @@
 package com.parse.starter;
 
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,12 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.support.v7.widget.Toolbar;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -28,7 +25,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -36,8 +32,8 @@ import java.util.TimerTask;
 
 public class MapActivity extends AppCompatActivity implements SensorEventListener {
 
-    //  private ResponseReceiver receiver;
-    private CustomView customView;
+    private ResponseReceiver receiver;
+    CustomView customView;
     private IntentFilter filter;
 
     private ImageView semaforo;
@@ -54,33 +50,41 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     private float[] outR = new float[9];
     private float[] mI = new float[9];
     private float[] mOrientation = new float[3];
+    private boolean flat;
+    private List<ParseUser> parseUserList = new ArrayList<>();
+    private ArrayList<Float> latitudini;
+    private ArrayList<Float> longitudini;
+    private ArrayList<Float> ultimeLatitudini = new ArrayList<>();
+    private ArrayList<Float> ultimeLongitudini = new ArrayList<>();
+    private ArrayList<String> colori = new ArrayList<>();
+    private ArrayList<String> nomi = new ArrayList<>();
     private float lastAzimuthRadians;
+    private float sumAzimuth;
+    private int countAzimuth;
     private final float ALPHA = 0.2f;
     private int orientation;
+    private float accNorm;
+    private float[] accelerationNormalize;
     private boolean coloreSemaforo = false;
-    private boolean cambiatoAzimut;
-    public final String array_lat = "array_lat";  //ArrayList utenti Parse
-    public final String array_long = "array_long"; //ArrayList utenti Parse
-
-    private List<ParseUser> parseUserList = new ArrayList<ParseUser>();
-    private ParseObject myGroup;
-    private ArrayList<Float> longitudini;
-    private ArrayList<Float> latitudini;
-    private ArrayList<String> colori;
+    private boolean primaVolta;
+    private int numeroAmici = 0;
+    private boolean cambiatoAzimut = false;
     private Timer timer;
     private boolean coordCambiate;
-    private int numeroAmici = 0;
-    private ArrayList<Float> ultimeLongitudini = new ArrayList<>();
-    private ArrayList<Float> ultimeLatitudini = new ArrayList<>();
+    private boolean aggiornato = false;
+    private ParseObject myGroup;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
         setContentView(R.layout.activity_map);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+
         Display display = getWindowManager().getDefaultDisplay();
         orientation = display.getRotation();
         switch (orientation) {
@@ -99,12 +103,6 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
 
 
         customView = (CustomView) findViewById(R.id.cv);
-
-        /*filter = new IntentFilter(ResponseReceiver.PROCESS_RESPONSE);
-        filter.addCategory(Intent.CATEGORY_DEFAULT);
-        receiver = new ResponseReceiver();
-        registerReceiver(receiver, filter);*/
-
         customView.setOrientation(orientation);
         semaforo = (ImageView) findViewById(R.id.semaforo);
 
@@ -115,16 +113,16 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         mAccel = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mMagn = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
-        longitudini = new ArrayList<>();
         latitudini = new ArrayList<>();
+        longitudini = new ArrayList<>();
         colori = new ArrayList<>();
 
-        //startService(new Intent(MapActivity.this, LocationService.class));
+        coordCambiate = false;
 
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                Log.i("Locationservice", "esecuzione");
+                Log.i("Parse", "esecuzione");
 
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
                 query.whereEqualTo("members", ParseUser.getCurrentUser());
@@ -140,7 +138,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                                 //Find the member of the group.
                                 ParseRelation r = group.getRelation("members");
                                 ParseQuery query = r.getQuery();
-                                query.whereNotEqualTo(UserKey.USERNAME_KEY,ParseUser.getCurrentUser().getUsername());
+                                query.whereNotEqualTo(UserKey.USERNAME_KEY, ParseUser.getCurrentUser().getUsername());
                                 try {
                                     List<ParseUser> members = query.find();
                                     parseUserList.clear();
@@ -158,29 +156,25 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                 });
                 if (parseUserList != null && parseUserList.size() > 0) {
 
-
+                    latitudini.clear();
+                    longitudini.clear();
+                    colori.clear();
                     for (int i = 0; i < parseUserList.size(); i++) {
 
-                        latitudini.clear();
-                        longitudini.clear();
-                        colori.clear();
+
                         latitudini.add((float) parseUserList.get(i).getDouble(UserKey.LAT_KEY));
                         longitudini.add((float) parseUserList.get(i).getDouble(UserKey.LNG_KEY));
-                        colori.add(parseUserList.get(i).getString("colour"));   //TODO: colori
+                        colori.add(parseUserList.get(i).getString(UserKey.COLORS_KEY));
 
                     }
-                    coordCambiate = false;
-                    // TextView textView = (TextView)findViewById(R.id.text);
-                    //Log.d("coloreSemaforo", String.valueOf(coloreSemaforo));
-                    Log.d("cambiatoAzimuthOnCreate", String.valueOf(cambiatoAzimut));
 
                     if (coloreSemaforo) {
-//                Log.d("BroadcastReceiver", "onReceive");
-//                Log.d("cambiato azimuth", String.valueOf(cambiatoAzimut));
 
                         if (latitudini.size() != numeroAmici) {   //TODO: controllare sta mierda!
-                            //Log.d("primo", "giro");
+                            Log.d("primo", "giro");
                             numeroAmici = latitudini.size();
+                            ultimeLongitudini.clear();
+                            ultimeLatitudini.clear();
                             ultimeLongitudini.addAll(longitudini);
                             ultimeLatitudini.addAll(latitudini);
                             customView.setPoint(longitudini, latitudini, colori);
@@ -192,12 +186,12 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                             });
 
 
-
                         } else {
                             if (ultimeLatitudini.size() > 0) {
+                                Log.d("secondo", "giro");
                                 for (int i = 0; i < ultimeLatitudini.size(); i++) {
                                     if (Math.abs(ultimeLatitudini.get(i) - latitudini.get(i)) > 0.0004 || Math.abs(ultimeLongitudini.get(i) - longitudini.get(i)) > 0.0007) { //cambiamento di coord
-                                       // Log.d("Coordinate", "cambiate");
+                                        Log.d("Coordinate", "cambiate");
                                         ultimeLatitudini.clear();
                                         ultimeLongitudini.clear();
                                         ultimeLongitudini.addAll(longitudini);
@@ -206,23 +200,25 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                                         break;
                                     }
                                 }
-                                if (coordCambiate) {
-                                   // Log.d("receiver", String.valueOf(cambiatoAzimut));
+                                Log.d("cambiatoAzimuthParse", String.valueOf(cambiatoAzimut));
+                                if (coordCambiate || cambiatoAzimut) {
+                                    Log.d("cambiatoAzimuthOnCreate", String.valueOf(cambiatoAzimut));
+                                    aggiornato = true;
                                     cambiatoAzimut = false;
+                                    coordCambiate = false;
                                     customView.setPoint(longitudini, latitudini, colori);
+                                    aggiornato = false;
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             customView.invalidate();
                                         }
                                     });
-
                                 }
                             }
                         }
 
                     }
-
 
                 }
             }
@@ -273,7 +269,6 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
 
         if (mLastAccelerometerSet && mLastMagnetometerSet) {
             SensorManager.getRotationMatrix(mR, mI, mLastAccelerometer, mLastMagnetometer);
-
             float[] or = new float[9];
             SensorManager.getOrientation(mR, or);
             float inclination = (float) Math.round(Math.toDegrees(Math.acos(mR[8])));
@@ -298,12 +293,14 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                         return;
                 }
 
-            } else if (coloreSemaforo) {
-                semaforo.setBackgroundColor(Color.RED);
-                coloreSemaforo = false;
-                Toast.makeText(getApplicationContext(), "Tieni il cellulare piatto!", Toast.LENGTH_SHORT).show();
-            }
+            } else {
+                if (coloreSemaforo) {
 
+                    semaforo.setBackgroundColor(Color.RED);
+                    coloreSemaforo = false;
+                    Toast.makeText(getApplicationContext(), "Tieni il cellulare piatto!", Toast.LENGTH_SHORT).show();
+                }
+            }
         }
 
     }
@@ -319,24 +316,18 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         return accelerometer;
     }
 
-
     private void getAzimuth(float[] R) {
+        if (aggiornato) {
+            cambiatoAzimut = false;
+        }
         SensorManager.getOrientation(R, mOrientation);
         float azimuthInRadians = mOrientation[0];
-        // Log.d("azimuth", String.valueOf(azimuthInRadians));
         if (Math.abs(lastAzimuthRadians - azimuthInRadians) > 0.1745) {  //  20 gradi ---> 0.3491   30 gradi ---> 0.5236   10 gradi ---> 0.1745
-
             lastAzimuthRadians = azimuthInRadians;
             customView.setAzimuth(lastAzimuthRadians);
-            if(latitudini.size()>0){
-                customView.setPoint(longitudini,latitudini,colori);
-                customView.invalidate();
-            }
-
-
-            //receiver.setCambiate(cambiatoAzimut);
+            cambiatoAzimut = true;
+            Log.d("lastAzimut", String.valueOf(lastAzimuthRadians));
         }
-        Log.d("cambiatoAzimuth", String.valueOf(cambiatoAzimut));
     }
 
     @Override
@@ -347,13 +338,11 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     }
 
     @Override
-    protected void onDestroy() {  //TODO: guardare onPause
+    protected void onDestroy() {
         super.onDestroy();
-        stopService(new Intent(MapActivity.this, LocationService.class));
-        //unregisterReceiver(receiver);
     }
 
-   /* public class ResponseReceiver extends BroadcastReceiver {
+    public class ResponseReceiver extends BroadcastReceiver {
 
         public static final String PROCESS_RESPONSE = "com.parse.starter.intent.action.PROCESS_RESPONSE";
         private ArrayList<Float> latitudini;
@@ -369,12 +358,10 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         public void onReceive(Context context, Intent intent) {
 
             coordCambiate = false;
-            // TextView textView = (TextView)findViewById(R.id.text);
+
             if (coloreSemaforo) {
-//                Log.d("BroadcastReceiver", "onReceive");
-//                Log.d("cambiato azimuth", String.valueOf(cambiatoAzimut));
-                latitudini = (ArrayList<Float>) intent.getSerializableExtra(array_lat);
-                longitudini = (ArrayList<Float>) intent.getSerializableExtra(array_long);
+                latitudini = (ArrayList<Float>) intent.getSerializableExtra(UserKey.PREF_LAT_KEY);
+                longitudini = (ArrayList<Float>) intent.getSerializableExtra(UserKey.PREF_LNG_KEY);
                 colori = intent.getStringArrayListExtra("colori");
 
                 if (latitudini.size() != numeroAmici) {   //TODO: controllare sta mierda!
@@ -412,17 +399,13 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                 }
 
             }
-
-            //String s = String.valueOf(intent.getExtras().getInt("enne"));
-            //textView.setText(latitudini.get(0));
-
         }
 
         public void setCambiate(boolean b) {
             cambiatoAzimut = b;
         }
 
-    }*/
+    }
 
 
 }

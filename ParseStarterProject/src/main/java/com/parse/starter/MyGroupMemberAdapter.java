@@ -1,12 +1,14 @@
 package com.parse.starter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.ParseUser;
@@ -55,6 +57,38 @@ public class MyGroupMemberAdapter extends BaseAdapter {
         String userName = membersList.get(i).getUsername();
         name_tv.setText(userName);
         name_tv.setTypeface(face1);
+
+        View image = (View) view.findViewById(R.id.color);
+        String color = membersList.get(i).getString(UserKey.COLORS_KEY);
+        if(color != null && !color.isEmpty()) {
+            switch (color) {
+                case "BLUE":
+                    image.setBackgroundColor(Color.BLUE);
+                    break;
+                case "GREEN":
+                    image.setBackgroundColor(Color.GREEN);
+                    break;
+                case "MAGENTA":
+                    image.setBackgroundColor(Color.MAGENTA);
+                    break;
+                case "CYAN":
+                    image.setBackgroundColor(Color.CYAN);
+                    break;
+                case "GRAY":
+                    image.setBackgroundColor(Color.GRAY);
+                    break;
+                case "YELLOW":
+                    image.setBackgroundColor(Color.YELLOW);
+                    break;
+                case "RED":
+                    image.setBackgroundColor(Color.RED);
+                    break;
+                case "WHITE":
+                    image.setBackgroundColor(Color.WHITE);
+                    break;
+
+            }
+        }
 
         Typeface face2 = Typeface.createFromAsset(context.getAssets(), "fonts/GOTHAM-LIGHT.TTF");
         TextView wait_tv = (TextView) view.findViewById(R.id.wait_tv);
