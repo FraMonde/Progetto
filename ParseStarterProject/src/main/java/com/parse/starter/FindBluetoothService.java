@@ -35,6 +35,7 @@ public class FindBluetoothService extends Service {
     private HashMap<String, String> lifts;
     private Set keys;
     private Notification notification;
+    private boolean finished = true;
 
     @Nullable
     @Override
@@ -46,8 +47,10 @@ public class FindBluetoothService extends Service {
     public void onCreate() {
         super.onCreate();
 
+        Log.d("bluettothService", "onCreate");
         lifts = new HashMap<String, String>();
         lifts.put("E0:F8:47:30:19:E5", "XMEgkvbYQC");
+        lifts.put("48:5A:B6:67:3A:28", "kailPiuHYB");
 
         keys = lifts.keySet();
 
@@ -68,13 +71,17 @@ public class FindBluetoothService extends Service {
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                Log.i("ServiceBluetooth", "esecuzione");
-                bluetoothAdapter.startDiscovery();
+
+                if (finished) {
+                    Log.i("ServiceBluetooth", "esecuzione");
+                    finished = false;
+                    bluetoothAdapter.startDiscovery();
+                }
 
             }
         };
         timer = new Timer();
-        timer.schedule(timerTask, 0, 15000);
+        timer.schedule(timerTask, 0, 4000);
     }
 
     @Override
@@ -98,6 +105,7 @@ public class FindBluetoothService extends Service {
             if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
                 //discovery starts, we can show progress dialog or perform other tasks
                 Log.i("ServiceBluetooth", "discovery started");
+                //finished = false;
                 if (passati[1]) {
                     passati[0] = true;
                     passati[1] = false;
@@ -107,6 +115,7 @@ public class FindBluetoothService extends Service {
                 //discovery finishes, dismiss progress dialog
                 Log.i("ServiceBluetooth", "discovery finshed");
 
+                finished = true;
                 if (passati[0] && !passati[1]) {   // Out of the lift.
 
                     passati[0] = false;

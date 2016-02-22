@@ -228,7 +228,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
             }
         };
         timer = new Timer();
-        timer.schedule(timerTask, 0, 4000);
+        timer.schedule(timerTask, 0, 2000);
 
     }
 

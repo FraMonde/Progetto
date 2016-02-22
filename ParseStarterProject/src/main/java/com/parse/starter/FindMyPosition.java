@@ -71,7 +71,7 @@ public class FindMyPosition extends Service implements GoogleApiClient.Connectio
                         @Override
                         public void onLocationChanged(Location location) {
 
-                          //  Log.i("ServicePosition", "locationChanged");
+                            Log.i("ServicePosition", "locationChanged");
                             parseUser = ParseUser.getCurrentUser();
                             Location l = location;
 

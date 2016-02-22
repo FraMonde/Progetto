@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_lift_land"
-    android:padding="40dp"
+    android:padding="300dp"
     tools:context="com.parse.starter.LiftFragment">
 
     <ListView
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
-        android:layout_marginBottom="75dp"/>
+        android:layout_marginBottom="80dp"/>
 
     <TextView
         android:id="@android:id/empty"

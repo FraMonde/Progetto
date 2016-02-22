@@ -19,7 +19,7 @@
     <EditText
         android:id="@+id/username_signin"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="30dp"
         android:hint="Inserisci username"
@@ -31,7 +31,7 @@
     <EditText
         android:id="@+id/password_signin"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="30dp"
         android:hint="Inserisci password"
         android:inputType="textPassword"
