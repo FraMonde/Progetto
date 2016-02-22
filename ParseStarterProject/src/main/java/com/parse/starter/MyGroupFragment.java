@@ -233,7 +233,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
         r.remove(currentUser);
         myGroup.saveInBackground();
         currentUser.put(UserKey.GROUP_KEY, false);
-        currentUser.put(UserKey.COLORS_KEY, null);
+        currentUser.put(UserKey.COLORS_KEY, "");
         currentUser.saveInBackground();
         myListener.onExitGroupButtonClick();
 

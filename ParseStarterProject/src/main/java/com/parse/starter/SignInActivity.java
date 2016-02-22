@@ -8,7 +8,9 @@
  */
 package com.parse.starter;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -31,6 +33,7 @@ public class SignInActivity extends ActionBarActivity {
     EditText passwordText;
     Button buttonSignin;
     Button buttonSignup;
+    private ProgressDialog pdia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,10 +119,22 @@ public class SignInActivity extends ActionBarActivity {
     // Sign in method.
     private void signIn(String name, String password) {
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                pdia = new ProgressDialog(SignInActivity.this);
+                pdia.setMessage("Loading...");
+                pdia.show();
+            }
+        });
         ParseUser.logInInBackground(name, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-
+                if (pdia.isShowing()) {
+                    pdia.dismiss();
+                }
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                 if (user != null) {
                     // Log in ok.
                     Intent intent = new Intent(SignInActivity.this, DispatchActivity.class);

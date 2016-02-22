@@ -32,7 +32,7 @@ public class CustomView extends View {
     private int orientation;
     private float maxPixel;
     private int ultimoNumeroAmici = 0;
-    private final double costToRadians = Math.PI/180;
+    private final double costToRadians = Math.PI / 180;
 
     public CustomView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -96,6 +96,9 @@ public class CustomView extends View {
         canvas.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
         drawRadar(canvas);
         if (coordinate) {
+            Log.d("longView", String.valueOf(longitudini.size()));
+            Log.d("latView", String.valueOf(latitudini.size()));
+
             //    drawRadar(canvas);
             for (int i = 0; i < latitudini.size(); i++) {
                 switch (colori.get(i)) {
@@ -147,10 +150,11 @@ public class CustomView extends View {
 
         float myLong = Float.parseFloat(preferences.getString(UserKey.PREF_LNG_KEY, ""));
         float myLat = Float.parseFloat(preferences.getString(UserKey.PREF_LAT_KEY, ""));
-        Log.d("long", String.valueOf(myLong));
-        Log.d("lat", String.valueOf(myLat));
+        // Log.d("long", String.valueOf(myLong));
+        //Log.d("lat", String.valueOf(myLat));
 
         if (azimuth != null) {
+            Log.d("azimuthView", String.valueOf(azimuth));
             ArrayList<Float> list_x = new ArrayList<>();
             ArrayList<Float> list_y = new ArrayList<>();
 

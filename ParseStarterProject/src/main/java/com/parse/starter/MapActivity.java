@@ -126,7 +126,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                Log.i("Parse", "esecuzione");
+              //  Log.i("Parse", "esecuzione");
 
                 ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
                 query.whereEqualTo("members", ParseUser.getCurrentUser());
@@ -175,7 +175,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                     if (coloreSemaforo) {
 
                         if (latitudini.size() != numeroAmici) {   //TODO: controllare sta mierda!
-                            Log.d("primo", "giro");
+                           // Log.d("primo", "giro");
                             numeroAmici = latitudini.size();
                             ultimeLongitudini.clear();
                             ultimeLatitudini.clear();
@@ -192,10 +192,10 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
 
                         } else {
                             if (ultimeLatitudini.size() > 0) {
-                                Log.d("secondo", "giro");
+                               // Log.d("secondo", "giro");
                                 for (int i = 0; i < ultimeLatitudini.size(); i++) {
                                     if (Math.abs(ultimeLatitudini.get(i) - latitudini.get(i)) > 0.0004 || Math.abs(ultimeLongitudini.get(i) - longitudini.get(i)) > 0.0007) { //cambiamento di coord
-                                        Log.d("Coordinate", "cambiate");
+                                 //       Log.d("Coordinate", "cambiate");
                                         ultimeLatitudini.clear();
                                         ultimeLongitudini.clear();
                                         ultimeLongitudini.addAll(longitudini);
@@ -204,9 +204,9 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                                         break;
                                     }
                                 }
-                                Log.d("cambiatoAzimuthParse", String.valueOf(cambiatoAzimut));
+                               // Log.d("cambiatoAzimuthParse", String.valueOf(cambiatoAzimut));
                                 if (coordCambiate || cambiatoAzimut) {
-                                    Log.d("cambiatoAzimuthOnCreate", String.valueOf(cambiatoAzimut));
+                                 //   Log.d("cambiatoAzimuthOnCreate", String.valueOf(cambiatoAzimut));
                                     aggiornato = true;
                                     cambiatoAzimut = false;
                                     coordCambiate = false;
@@ -273,8 +273,6 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
 
         if (mLastAccelerometerSet && mLastMagnetometerSet) {
             SensorManager.getRotationMatrix(mR, mI, mLastAccelerometer, mLastMagnetometer);
-            float[] or = new float[9];
-            SensorManager.getOrientation(mR, or);
             float inclination = (float) Math.round(Math.toDegrees(Math.acos(mR[8])));
             if (inclination < 15) {  //TODO: valutare > 155  prima era < 25
                 if (!coloreSemaforo) {
@@ -341,7 +339,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
-        Log.d("accuracy", String.valueOf(accuracy));
+        //Log.d("accuracy", String.valueOf(accuracy));
 
     }
 
@@ -373,7 +371,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                 colori = intent.getStringArrayListExtra("colori");
 
                 if (latitudini.size() != numeroAmici) {   //TODO: controllare sta mierda!
-                    Log.d("primo", "giro");
+                  //  Log.d("primo", "giro");
                     numeroAmici = latitudini.size();
                     ultimeLongitudini.addAll(longitudini);
                     ultimeLatitudini.addAll(latitudini);
@@ -386,7 +384,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
                     if (ultimeLatitudini.size() > 0) {
                         for (int i = 0; i < ultimeLatitudini.size(); i++) {
                             if (Math.abs(ultimeLatitudini.get(i) - latitudini.get(i)) > 0.0004 || Math.abs(ultimeLongitudini.get(i) - longitudini.get(i)) > 0.0007) { //cambiamento di coord
-                                Log.d("Coordinate", "cambiate");
+                         //       Log.d("Coordinate", "cambiate");
                                 ultimeLatitudini.clear();
                                 ultimeLongitudini.clear();
                                 ultimeLongitudini.addAll(longitudini);

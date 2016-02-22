@@ -10,13 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.parse.starter.MapActivity">
 
-
-   <!-- <ImageView
-        android:id="@+id/semaforo"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentTop="true" /> -->
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -2416,14 +2416,15 @@ containing a value of this type.
         public static final int ic_photo=0x7f020073;
         public static final int ic_settings=0x7f020074;
         public static final int ic_user=0x7f020075;
-        public static final int layout_bt=0x7f020076;
-        public static final int notification_template_icon_bg=0x7f02007d;
-        public static final int picture_map_popup=0x7f020077;
-        public static final int powered_by_google_dark=0x7f020078;
-        public static final int powered_by_google_light=0x7f020079;
-        public static final int semaforo_rosso_map=0x7f02007a;
-        public static final int semaforo_verde_map=0x7f02007b;
-        public static final int side_nav_bar=0x7f02007c;
+        public static final int icon=0x7f020076;
+        public static final int layout_bt=0x7f020077;
+        public static final int notification_template_icon_bg=0x7f02007e;
+        public static final int picture_map_popup=0x7f020078;
+        public static final int powered_by_google_dark=0x7f020079;
+        public static final int powered_by_google_light=0x7f02007a;
+        public static final int semaforo_rosso_map=0x7f02007b;
+        public static final int semaforo_verde_map=0x7f02007c;
+        public static final int side_nav_bar=0x7f02007d;
     }
     public static final class id {
         public static final int action0=0x7f0c00a1;

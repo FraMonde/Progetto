@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.parse.ParseSession;
 import com.parse.ParseUser;
 
 public class DispatchActivity extends AppCompatActivity {

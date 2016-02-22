@@ -72,7 +72,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         timer = new Timer();
         timer.schedule(timerTask, 0, 30000);
 
-        if(pref.getBoolean(BOOL_GROUP_KEY,false)) {
+        if (pref.getBoolean(BOOL_GROUP_KEY, true)) {
             startService(new Intent(Main2Activity.this, FindMyPosition.class));
         }
 
@@ -141,7 +141,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
 
         int p = pref.getInt(ITEM_SELECTED_KEY, R.id.nav_home);
         MenuItem i = nvDrawer.getMenu().findItem(p);
-        if(i == null)
+        if (i == null)
             i = nvDrawer.getMenu().findItem(R.id.nav_home);
         selectDrawerItem(i);
     }
@@ -274,6 +274,8 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                     }
                 }
             });
+        } else {
+            pref.edit().putBoolean(BOOL_GROUP_KEY, true).apply();
         }
     }
 
