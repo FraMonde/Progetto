@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:textColor="#ffffff"
-        android:textSize="17dp"
+        android:textSize="17sp"
         android:textStyle="bold" />
 
     <TextView
@@ -20,7 +20,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginLeft="10dp"
         android:textColor="#ffffff"
-        android:textSize="17dp"
+        android:textSize="17sp"
         android:textStyle="bold" />
 
 </RelativeLayout>

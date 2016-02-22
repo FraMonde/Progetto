@@ -14,8 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="10dp"
-        android:hint="Inserisci username"
+        android:hint="@string/username_hint"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff" />
 
@@ -24,8 +25,9 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="10dp"
-        android:hint="Inserisci e-mail"
+        android:hint="@string/email_hint"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff" />
 
@@ -34,9 +36,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="10dp"
-        android:hint="Inserisci password"
+        android:hint="@string/password_hint"
         android:inputType="textPassword"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff" />
 
@@ -45,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="30dp"
-        android:hint="Conferma password"
+        android:hint="@string/confirm_password_hint"
         android:inputType="textVisiblePassword"
         android:paddingLeft="15dp"
         android:textColor="#ffffff"
@@ -57,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/layout_bt"
-        android:text="Sign up"
+        android:text="@string/sign_up_bt"
         android:textColor="#ffffff"
         android:textStyle="bold" />
 

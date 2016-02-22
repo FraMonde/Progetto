@@ -14,7 +14,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
-        android:hint="Nome del gruppo"
+        android:hint="@string/group_name_hint"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff" />
 
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:hint="Aggiungi un amico"
+            android:hint="@string/add_member_hint"
             android:singleLine="true"
             android:textColor="#ffffff"
             android:textColorHint="#ffffff" />
@@ -53,7 +53,7 @@
         android:layout_marginLeft="35dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
-        android:text="MEMBRI DEL GRUPPO"
+        android:text="@string/member_title"
         android:textColor="#ffffff"
         android:textStyle="bold" />
 

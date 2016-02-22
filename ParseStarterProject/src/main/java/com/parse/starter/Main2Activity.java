@@ -304,9 +304,8 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
     //Interface OnMyGroupFragmentListener's method. Called when I exit from a group.
     @Override
     public void onExitGroupButtonClick() {
-        GroupFragment fragment = GroupFragment.newInstance();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        MenuItem item = nvDrawer.getMenu().findItem(R.id.nav_group);
+        selectDrawerItem(item);
         // Stop the location service.
         stopService(new Intent(Main2Activity.this, FindMyPosition.class));
         pref.edit().putBoolean(BOOL_GROUP_KEY, false).apply();

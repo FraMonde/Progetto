@@ -22,8 +22,9 @@
         android:layout_height="40dp"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="30dp"
-        android:hint="Inserisci username"
+        android:hint="@string/username_hint"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:singleLine="true"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff" />
@@ -33,9 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="30dp"
-        android:hint="Inserisci password"
+        android:hint="@string/password_hint"
         android:inputType="textPassword"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:singleLine="true"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff" />
@@ -47,7 +49,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="30dp"
         android:background="@drawable/layout_bt"
-        android:text="Sign in"
+        android:text="@string/sign_in_bt"
         android:textColor="#ffffff"
         android:textStyle="bold" />
 
@@ -57,7 +59,7 @@
         android:layout_height="20dp"
         android:layout_gravity="center"
         android:background="@android:color/transparent"
-        android:text="Not a member? Sign up now!"
+        android:text="@string/sign_up_now"
         android:textColor="#ffffff" />
 
 </LinearLayout>

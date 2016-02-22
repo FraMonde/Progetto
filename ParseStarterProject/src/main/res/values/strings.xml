@@ -43,4 +43,17 @@
     <string name="accept_group">Accetta</string>
     <string name="refuse_group">Rifiuta</string>
     <string name="title_activity_map">Mappa</string>
+    <string name="username_hint">Inserisci username</string>
+    <string name="password_hint">Inserisci password</string>
+    <string name="sign_in_bt">Sign in</string>
+    <string name="sign_up_now">Non sei membro? Registrati ora!</string>
+    <string name="email_hint">Inserisci e-mail</string>
+    <string name="confirm_password_hint">Conferma password</string>
+    <string name="sign_up_bt">Sign up</string>
+    <string name="blue_service">TIENI ACCESO IL BLUETOOTH E ATTIVA IL NOSTRO SERVIZIO PER SEGNALARE LA TUA PRESENZA IN CODA</string>
+    <string name="wait">in attesa</string>
+    <string name="group_name_hint">Nome del gruppo</string>
+    <string name="member_title">MEMBRI DEL GRUPPO</string>
+    <string name="add_member_hint">Aggiungi un amico</string>
+    <string name="map_bt">Mappa</string>
 </resources>

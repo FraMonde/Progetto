@@ -346,7 +346,8 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
                                         data.add(user);
                                         // Assign a color to the user.
                                         int j = data.indexOf(user);
-                                        user.put(UserKey.COLORS_KEY, UserKey.COLORS_LIST.get(j));
+                                        if (user.getBoolean(UserKey.GROUP_KEY))
+                                            user.put(UserKey.COLORS_KEY, UserKey.COLORS_LIST.get(j));
 
                                         memberText.setText("");
                                         groupMemberAdapter.notifyDataSetChanged();

@@ -17,14 +17,14 @@
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/color"
         android:textColor="#ffffff"
-        android:textSize="14dp" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/wait_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="in attesa"
+        android:text="@string/wait"
         android:textColor="#ffffff"
         android:textStyle="italic" />
 

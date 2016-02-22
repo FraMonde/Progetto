@@ -80,6 +80,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Nuovo gruppo");
         pref = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -125,11 +126,12 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
         String json = appSharedPrefs.getString(LIST_MEMBER_KEY, "");
         Type type = new TypeToken<List<ParseUser>>() {
         }.getType();
-        if (!json.equals(null) && !json.equals("")) {
+        // TODO:aaaaa
+        /*if (!json.equals(null) && !json.equals("")) {
             members = gson.fromJson(json, type);
             if (members != null)
                 groupMemberAdapter.refreshEvents(members);
-        }
+        }*/
     }
 
     @Override

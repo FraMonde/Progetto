@@ -2444,7 +2444,6 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0c005c;
         public static final int action_mode_bar_stub=0x7f0c005b;
         public static final int action_mode_close_button=0x7f0c0041;
-        public static final int action_settings=0x7f0c00b7;
         public static final int activity_chooser_view_content=0x7f0c0042;
         public static final int addInMyGroup_bt=0x7f0c0091;
         public static final int add_bt=0x7f0c008b;
@@ -2491,7 +2490,7 @@ containing a value of this type.
         public static final int enterAlways=0x7f0c0015;
         public static final int enterAlwaysCollapsed=0x7f0c0016;
         public static final int exitUntilCollapsed=0x7f0c0017;
-        public static final int exit_bt=0x7f0c00b8;
+        public static final int exit_bt=0x7f0c00b7;
         public static final int expand_activities_button=0x7f0c0043;
         public static final int expanded_menu=0x7f0c0056;
         public static final int fill=0x7f0c002d;
@@ -2700,8 +2699,7 @@ containing a value of this type.
     public static final class menu {
         public static final int create_group_menu=0x7f0d0000;
         public static final int drawer_view=0x7f0d0001;
-        public static final int menu_main=0x7f0d0002;
-        public static final int my_group_menu=0x7f0d0003;
+        public static final int my_group_menu=0x7f0d0002;
     }
     public static final class mipmap {
         public static final int ic_launcher=0x7f030000;
@@ -2730,11 +2728,13 @@ containing a value of this type.
         public static final int action_settings=0x7f060035;
         public static final int action_sign_in=0x7f060036;
         public static final int action_sign_in_short=0x7f060037;
-        public static final int app_name=0x7f060038;
-        public static final int appbar_scrolling_view_behavior=0x7f060039;
-        public static final int auth_google_play_services_client_facebook_display_name=0x7f06003a;
-        public static final int auth_google_play_services_client_google_display_name=0x7f06003b;
-        public static final int character_counter_pattern=0x7f06003c;
+        public static final int add_member_hint=0x7f060038;
+        public static final int app_name=0x7f060039;
+        public static final int appbar_scrolling_view_behavior=0x7f06003a;
+        public static final int auth_google_play_services_client_facebook_display_name=0x7f06003b;
+        public static final int auth_google_play_services_client_google_display_name=0x7f06003c;
+        public static final int blue_service=0x7f06003d;
+        public static final int character_counter_pattern=0x7f06003e;
         public static final int common_android_wear_notification_needs_update_text=0x7f060013;
         public static final int common_android_wear_update_text=0x7f060014;
         public static final int common_android_wear_update_title=0x7f060015;
@@ -2767,27 +2767,38 @@ containing a value of this type.
         public static final int common_open_on_phone=0x7f060030;
         public static final int common_signin_button_text=0x7f060031;
         public static final int common_signin_button_text_long=0x7f060032;
-        public static final int error_field_required=0x7f06003d;
-        public static final int error_incorrect_password=0x7f06003e;
-        public static final int error_invalid_email=0x7f06003f;
-        public static final int error_invalid_password=0x7f060040;
-        public static final int hello_blank_fragment=0x7f060041;
-        public static final int hello_world=0x7f060042;
-        public static final int navigation_drawer_close=0x7f060043;
-        public static final int navigation_drawer_open=0x7f060044;
-        public static final int parse_app_id=0x7f060045;
-        public static final int parse_client_key=0x7f060046;
-        public static final int permission_rationale=0x7f060047;
-        public static final int prompt_email=0x7f060048;
-        public static final int prompt_password=0x7f060049;
-        public static final int refuse_group=0x7f06004a;
+        public static final int confirm_password_hint=0x7f06003f;
+        public static final int email_hint=0x7f060040;
+        public static final int error_field_required=0x7f060041;
+        public static final int error_incorrect_password=0x7f060042;
+        public static final int error_invalid_email=0x7f060043;
+        public static final int error_invalid_password=0x7f060044;
+        public static final int group_name_hint=0x7f060045;
+        public static final int hello_blank_fragment=0x7f060046;
+        public static final int hello_world=0x7f060047;
+        public static final int map_bt=0x7f060048;
+        public static final int member_title=0x7f060049;
+        public static final int navigation_drawer_close=0x7f06004a;
+        public static final int navigation_drawer_open=0x7f06004b;
+        public static final int parse_app_id=0x7f06004c;
+        public static final int parse_client_key=0x7f06004d;
+        public static final int password_hint=0x7f06004e;
+        public static final int permission_rationale=0x7f06004f;
+        public static final int prompt_email=0x7f060050;
+        public static final int prompt_password=0x7f060051;
+        public static final int refuse_group=0x7f060052;
+        public static final int sign_in_bt=0x7f060053;
+        public static final int sign_up_bt=0x7f060054;
+        public static final int sign_up_now=0x7f060055;
         public static final int status_bar_notification_info_overflow=0x7f060033;
-        public static final int title_activity_dispatch=0x7f06004b;
-        public static final int title_activity_home=0x7f06004c;
-        public static final int title_activity_login=0x7f06004d;
-        public static final int title_activity_main=0x7f06004e;
-        public static final int title_activity_map=0x7f06004f;
-        public static final int title_activity_member=0x7f060050;
+        public static final int title_activity_dispatch=0x7f060056;
+        public static final int title_activity_home=0x7f060057;
+        public static final int title_activity_login=0x7f060058;
+        public static final int title_activity_main=0x7f060059;
+        public static final int title_activity_map=0x7f06005a;
+        public static final int title_activity_member=0x7f06005b;
+        public static final int username_hint=0x7f06005c;
+        public static final int wait=0x7f06005d;
     }
     public static final class style {
         public static final int AlertDialog_AppCompat=0x7f09007f;
