@@ -1,17 +1,12 @@
 package com.parse.starter;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,11 +20,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class ChaletFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class ChaletFragment extends Fragment {
 
     // The fragment's ListView/GridView.
     private AbsListView listView;
     private ChaletAdapter chaletAdapter;
+
     private List<ParseObject> chaletList = new ArrayList<ParseObject>();
     private Timer timer;
 
@@ -90,10 +86,6 @@ public class ChaletFragment extends Fragment implements AbsListView.OnItemClickL
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
 
     /**

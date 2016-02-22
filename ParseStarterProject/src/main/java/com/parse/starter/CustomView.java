@@ -10,12 +10,16 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.parse.ParseUser;
+
 import java.util.ArrayList;
 
 /**
  * Created by Depa on 23/12/2015.
  */
 public class CustomView extends View {
+
+    private CustomViewListener myListener;
 
     private Paint paintUser, paintFriend, paintNameFriend, paintRadar, paintBackgroundRadar;
     private ArrayList<Float> longitudini;
@@ -43,9 +47,12 @@ public class CustomView extends View {
         super(context, attrs, defStyleAttr);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        myListener = (CustomViewListener) getContext();
 
         paintUser = new Paint();
-        paintUser.setColor(0xffff0000); //red
+        String c = ParseUser.getCurrentUser().getString(UserKey.COLORS_KEY);
+        setColor(paintUser, c);
+
         paintUser.setStyle(Paint.Style.FILL_AND_STROKE);
         paintUser.setStrokeWidth(15);
 
@@ -78,6 +85,12 @@ public class CustomView extends View {
     }
 
     @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        myListener = null;
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
@@ -96,39 +109,9 @@ public class CustomView extends View {
         canvas.translate(canvas.getWidth() / 2, canvas.getHeight() / 2);
         drawRadar(canvas);
         if (coordinate) {
-            Log.d("longView", String.valueOf(longitudini.size()));
-            Log.d("latView", String.valueOf(latitudini.size()));
 
-            //    drawRadar(canvas);
             for (int i = 0; i < latitudini.size(); i++) {
-                switch (colori.get(i)) {
-                    case "BLUE":
-                        paintFriend.setColor(Color.BLUE);
-                        break;
-                    case "GREEN":
-                        paintFriend.setColor(Color.GREEN);
-                        break;
-                    case "MAGENTA":
-                        paintFriend.setColor(Color.MAGENTA);
-                        break;
-                    case "CYAN":
-                        paintFriend.setColor(Color.CYAN);
-                        break;
-                    case "GRAY":
-                        paintFriend.setColor(Color.GRAY);
-                        break;
-                    case "YELLOW":
-                        paintFriend.setColor(Color.YELLOW);
-                        break;
-                    case "RED":
-                        paintFriend.setColor(Color.RED);
-                        break;
-                    case "WHITE":
-                        paintFriend.setColor(Color.WHITE);
-                        break;
-
-                }
-
+                setColor(paintFriend, colori.get(i));
                 canvas.drawPoint(longitudini.get(i), latitudini.get(i), paintFriend);
 
             }
@@ -150,8 +133,6 @@ public class CustomView extends View {
 
         float myLong = Float.parseFloat(preferences.getString(UserKey.PREF_LNG_KEY, ""));
         float myLat = Float.parseFloat(preferences.getString(UserKey.PREF_LAT_KEY, ""));
-        // Log.d("long", String.valueOf(myLong));
-        //Log.d("lat", String.valueOf(myLat));
 
         if (azimuth != null) {
             Log.d("azimuthView", String.valueOf(azimuth));
@@ -176,6 +157,8 @@ public class CustomView extends View {
                 float distance = (float) (RAGGIO_TERRA * Math.sqrt(x * x + y * y));
                 if (distance > max) {
                     max = distance;
+
+                    myListener.maxDistanceChange(max);
                 }
             }
 
@@ -231,6 +214,38 @@ public class CustomView extends View {
         canvas.drawPoint(0, 0, paintUser);
     }
 
+    private void setColor(Paint paint, String color) {
+        switch (color) {
+            case "BLUE":
+                paint.setColor(Color.BLUE);
+                break;
+            case "GREEN":
+                paint.setColor(Color.GREEN);
+                break;
+            case "MAGENTA":
+                paint.setColor(Color.MAGENTA);
+                break;
+            case "CYAN":
+                paint.setColor(Color.CYAN);
+                break;
+            case "GRAY":
+                paint.setColor(Color.GRAY);
+                break;
+            case "YELLOW":
+                paint.setColor(Color.YELLOW);
+                break;
+            case "RED":
+                paint.setColor(Color.RED);
+                break;
+            case "WHITE":
+                paint.setColor(Color.WHITE);
+                break;
 
+        }
+    }
+
+    public interface CustomViewListener {
+        public void maxDistanceChange(float d);
+    }
 }
 

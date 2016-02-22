@@ -1,12 +1,8 @@
 package com.parse.starter;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -25,15 +20,13 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class LiftFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class LiftFragment extends Fragment {
 
     // The fragment's ListView/GridView.
     private AbsListView listView;
     private LiftAdapter liftAdapter;
     private List<ParseObject> liftList = new ArrayList<ParseObject>();
     private Timer timer;
-    private ProgressDialog pdia;
-    private boolean firstAppear;
 
     public static LiftFragment newInstance() {
         LiftFragment fragment = new LiftFragment();
@@ -65,7 +58,6 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
         listView = (AbsListView) view.findViewById(android.R.id.list);
         liftAdapter = new LiftAdapter(liftList, getContext());
         listView.setAdapter(liftAdapter);
-        firstAppear = true;
 
         // Network call is called every 20 seconds.
         TimerTask timerTask = new TimerTask() {
@@ -96,10 +88,6 @@ public class LiftFragment extends Fragment implements AbsListView.OnItemClickLis
     @Override
     public void onDetach() {
         super.onDetach();
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
 
     /**

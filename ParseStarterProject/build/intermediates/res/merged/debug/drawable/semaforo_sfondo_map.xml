@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#2e3031" />
+
+    <padding
+        android:bottom="10dp"
+        android:left="20dp"
+        android:right="20dp"
+        android:top="10dp" />
+
+    <corners
+        android:bottomLeftRadius="15dp"
+        android:bottomRightRadius="15dp"
+        android:topLeftRadius="15dp"
+        android:topRightRadius="15dp" />
+</shape><!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/drawable/semaforo_sfondo_map.xml -->

@@ -123,13 +123,13 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
 
         SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity().getApplicationContext());
         String json = appSharedPrefs.getString(LIST_MEMBER_KEY, "");
-        Type type = new TypeToken<List<ParseUser>>() {}.getType();
-        // TODO: non va.
-        /*if (!json.equals(null) && !json.equals("")) {
+        Type type = new TypeToken<List<ParseUser>>() {
+        }.getType();
+        if (!json.equals(null) && !json.equals("")) {
             members = gson.fromJson(json, type);
             if (members != null)
                 groupMemberAdapter.refreshEvents(members);
-        } */
+        }
     }
 
     @Override
@@ -182,7 +182,7 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     private void searchFriend(final String username) {
 
         // Check group's size.
-        if(members.size() == 8) {
+        if (members.size() == 7) {
             Toast.makeText(getActivity(), "Il gruppo è già pieno!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -293,12 +293,11 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
         members.add(user);
         // Update the user's variable for group.
         user.put(UserKey.GROUP_KEY, true);
-        user.put(UserKey.COLORS_KEY, "RED");
         user.saveInBackground();
 
         ParseRelation<ParseObject> relation = group.getRelation("members");
 
-        for(ParseUser u:members) {
+        for (ParseUser u : members) {
             relation.add(u);
             acl.setWriteAccess(u, true);
         }
@@ -309,8 +308,8 @@ public class GroupFragment extends Fragment implements View.OnClickListener, Gro
     }
 
     private boolean checkAddedUser(ParseUser user) {
-        for(ParseUser u:members) {
-            if(u.getUsername().equals(user.getUsername()))
+        for (ParseUser u : members) {
+            if (u.getUsername().equals(user.getUsername()))
                 return true;
         }
         return false;

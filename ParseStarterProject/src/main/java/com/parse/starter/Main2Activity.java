@@ -181,7 +181,7 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
                 fragmentClass = ChaletFragment.class;
                 break;
             case R.id.nav_group:
-                if (ParseUser.getCurrentUser().getBoolean("group"))
+                if (ParseUser.getCurrentUser().getBoolean(UserKey.GROUP_KEY))
                     fragmentClass = MyGroupFragment.class;
                 else
                     fragmentClass = GroupFragment.class;
@@ -312,9 +312,9 @@ public class Main2Activity extends AppCompatActivity implements HomeFragment.OnH
         pref.edit().putBoolean(BOOL_GROUP_KEY, false).apply();
     }
 
+    // Used to go to the Home screen and not to the DispatchActivity.
     @Override
     public void onBackPressed() {
-        // Used to go to the Home screen and not to the DispatchActivity.
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

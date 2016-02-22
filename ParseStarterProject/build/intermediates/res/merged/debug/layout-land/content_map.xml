@@ -11,32 +11,42 @@
     tools:context="com.parse.starter.MapActivity">
 
     <LinearLayout
+        android:id="@+id/semaforo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentTop="true"
-        android:id="@+id/semaforo">
-        <View
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/semaforo_rosso_map"
-            android:id="@+id/semaforo_rosso"
-            android:layout_marginRight="5dp"/>
+        android:background="@drawable/semaforo_sfondo_map"
+        android:orientation="horizontal">
 
         <View
+            android:id="@+id/semaforo_rosso"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/semaforo_verde_map"
+            android:layout_marginRight="7dp"
+            android:background="@drawable/semaforo_rosso_map" />
+
+        <View
+            android:id="@+id/semaforo_verde"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
-            android:id="@+id/semaforo_verde"/>
+            android:background="@drawable/semaforo_verde_map" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/distance_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/semaforo"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff" />
 
     <com.parse.starter.CustomView
         android:id="@+id/cv"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/semaforo" />
+        android:layout_below="@id/distance_tv" />
 
 
 </RelativeLayout>

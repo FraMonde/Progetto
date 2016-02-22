@@ -289,7 +289,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
     private void searchFriend(final String username) {
 
         // Check the group's size
-        if (data.size() == 9) {
+        if (data.size() == 8) {
             Toast.makeText(getActivity(), "Il gruppo è già pieno!", Toast.LENGTH_SHORT).show();
             return;
         }

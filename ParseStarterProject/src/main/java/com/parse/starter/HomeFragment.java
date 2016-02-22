@@ -21,6 +21,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     CheckBox bluetoothButton;
     TextView home_TextView;
+
     private OnHomeFragmentInteractionListener myListener;
     private SharedPreferences pref;
 
@@ -62,6 +63,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        pref.edit().putBoolean("CHECKED", bluetoothButton.isChecked()).apply();
+    }
+
+    @Override
     public void onClick(View view) {
 
         // Use this check to determine whether BLE is supported on the device. Then
@@ -85,22 +93,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    public interface OnHomeFragmentInteractionListener {
-        public void onBluetoothButtonClick(boolean enable);
-    }
-
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         boolean checked = pref.getBoolean("CHECKED", false);
         bluetoothButton.setChecked(checked);
+        if(checked) {
+            myListener.onBluetoothButtonClick(checked);
+        }
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        pref.edit().putBoolean("CHECKED", bluetoothButton.isChecked()).apply();
+    public interface OnHomeFragmentInteractionListener {
+        public void onBluetoothButtonClick(boolean enable);
     }
+
 }
