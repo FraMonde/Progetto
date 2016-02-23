@@ -250,7 +250,7 @@ public class MyGroupFragment extends Fragment implements View.OnClickListener {
 
 
                 if (!pref.getBoolean(prefCheckMap, false)) {
-                    final AlertDialog.Builder alertMap = new AlertDialog.Builder(getContext());
+                    final AlertDialog.Builder alertMap = new AlertDialog.Builder(getActivity());
                     View viewMapPopup = new View(getContext()).inflate(getContext(), R.layout.layout_map_popup, null);
                     final CheckBox checkMap = (CheckBox) viewMapPopup.findViewById(R.id.check_map_opup);
 

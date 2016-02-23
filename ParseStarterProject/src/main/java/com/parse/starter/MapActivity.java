@@ -1,8 +1,5 @@
 package com.parse.starter;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -54,7 +51,6 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
     private ArrayList<Float> ultimeLatitudini = new ArrayList<>();
     private ArrayList<Float> ultimeLongitudini = new ArrayList<>();
     private ArrayList<String> colori = new ArrayList<>();
-    private boolean flat;
     private boolean coloreSemaforo = false;
     private boolean cambiatoAzimut = false;
     private boolean coordCambiate;
@@ -257,7 +253,7 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         if (mLastAccelerometerSet && mLastMagnetometerSet) {
             SensorManager.getRotationMatrix(mR, mI, mLastAccelerometer, mLastMagnetometer);
             float inclination = (float) Math.round(Math.toDegrees(Math.acos(mR[8])));
-            if (inclination < 15) {  //TODO: valutare > 155  prima era < 25
+            if (inclination < 15) {
                 if (!coloreSemaforo) {
                     semaforo_rosso.getBackground().setAlpha(100);
                     semaforo_verde.getBackground().setAlpha(255);
@@ -334,66 +330,9 @@ public class MapActivity extends AppCompatActivity implements SensorEventListene
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                max_distance.setText("Amico più lontano: "+String.valueOf((int)d)+" m");
+                max_distance.setText("Amico più lontano: " + String.valueOf((int) d) + " m");
             }
         });
-    }
-
-    public class ResponseReceiver extends BroadcastReceiver {
-
-        public static final String PROCESS_RESPONSE = "com.parse.starter.intent.action.PROCESS_RESPONSE";
-        private ArrayList<Float> latitudini;
-        private ArrayList<Float> longitudini;
-        private ArrayList<Float> ultimeLatitudini = new ArrayList<>();
-        private ArrayList<Float> ultimeLongitudini = new ArrayList<>();
-        private ArrayList<String> colori;
-        private int numeroAmici = 0;
-        private boolean coordCambiate;
-        private boolean cambiatoAzimut;
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-
-            coordCambiate = false;
-
-            if (coloreSemaforo) {
-                latitudini = (ArrayList<Float>) intent.getSerializableExtra(UserKey.PREF_LAT_KEY);
-                longitudini = (ArrayList<Float>) intent.getSerializableExtra(UserKey.PREF_LNG_KEY);
-                colori = intent.getStringArrayListExtra("colori");
-
-                if (latitudini.size() != numeroAmici) {
-                    numeroAmici = latitudini.size();
-                    ultimeLongitudini.addAll(longitudini);
-                    ultimeLatitudini.addAll(latitudini);
-                    customView.setPoint(longitudini, latitudini, colori);
-                    customView.invalidate();
-                    latitudini.clear();
-                    longitudini.clear();
-
-                } else {
-                    if (ultimeLatitudini.size() > 0) {
-                        for (int i = 0; i < ultimeLatitudini.size(); i++) {
-                            if (Math.abs(ultimeLatitudini.get(i) - latitudini.get(i)) > 0.0004 || Math.abs(ultimeLongitudini.get(i) - longitudini.get(i)) > 0.0007) { //cambiamento di coord
-                                ultimeLatitudini.clear();
-                                ultimeLongitudini.clear();
-                                ultimeLongitudini.addAll(longitudini);
-                                ultimeLatitudini.addAll(latitudini);
-                                coordCambiate = true;
-                                break;
-                            }
-                        }
-                        if (coordCambiate || cambiatoAzimut) {
-                            cambiatoAzimut = false;
-                            customView.setPoint(longitudini, latitudini, colori);
-                            customView.invalidate();
-                            latitudini.clear();
-                            longitudini.clear();
-                        }
-                    }
-                }
-
-            }
-        }
     }
 
 

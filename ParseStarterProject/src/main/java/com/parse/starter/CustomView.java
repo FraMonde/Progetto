@@ -25,7 +25,6 @@ public class CustomView extends View {
     private ArrayList<Float> longitudini;
     private ArrayList<Float> latitudini;
     private ArrayList<String> colori;
-    private ArrayList<Float> distanze;
     private boolean coordinate;
     private SharedPreferences preferences;
     private Float azimuth;
@@ -95,7 +94,7 @@ public class CustomView extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
         if (orientation == 0) {
-            latoCortoSchermo = (MeasureSpec.getSize(widthMeasureSpec) - 10) / 2;  //TODO: sistemare sto 10
+            latoCortoSchermo = (MeasureSpec.getSize(widthMeasureSpec) - 10) / 2;
         } else {
             latoCortoSchermo = (MeasureSpec.getSize(heightMeasureSpec) - 10) / 2;
         }
@@ -158,7 +157,8 @@ public class CustomView extends View {
                 if (distance > max) {
                     max = distance;
 
-                    myListener.maxDistanceChange(max);
+                    if (myListener != null)
+                        myListener.maxDistanceChange(max);
                 }
             }
 

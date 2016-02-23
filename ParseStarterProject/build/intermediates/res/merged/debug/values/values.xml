@@ -332,7 +332,7 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="add_member_hint">Aggiungi un amico</string>
-    <string name="app_name">Parse Starter Project</string>
+    <string name="app_name">SkiGo</string>
     <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/build/intermediates/exploded-aar/com.android.support/design/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
@@ -432,10 +432,6 @@
         <item name="colorPrimary">#6DAEBE</item>
         <item name="colorPrimaryDark">#32647b</item>
         <item name="colorAccent">#009688</item>
-
-        <item name="colorControlNormal">#ffffff</item>
-        <item name="colorControlActivated">#ffffff</item>
-        <item name="colorControlHighlight">#ffffff</item>
 
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>

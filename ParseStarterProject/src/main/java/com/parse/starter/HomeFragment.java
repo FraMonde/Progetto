@@ -99,7 +99,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
         boolean checked = pref.getBoolean("CHECKED", false);
         bluetoothButton.setChecked(checked);
-        if(checked) {
+        myListener = (OnHomeFragmentInteractionListener) getActivity();
+        if((myListener != null) && checked) {
             myListener.onBluetoothButtonClick(checked);
         }
     }

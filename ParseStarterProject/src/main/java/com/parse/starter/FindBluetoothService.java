@@ -1,6 +1,5 @@
 package com.parse.starter;
 
-import android.app.Notification;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -34,7 +33,6 @@ public class FindBluetoothService extends Service {
     private boolean counted; //Used to know if I'm already registered in that lift.
     private HashMap<String, String> lifts;
     private Set keys;
-    private Notification notification;
     private boolean finished = true;
 
     @Nullable
@@ -51,6 +49,7 @@ public class FindBluetoothService extends Service {
         lifts = new HashMap<String, String>();
         lifts.put("E0:F8:47:30:19:E5", "XMEgkvbYQC");
         lifts.put("48:5A:B6:67:3A:28", "kailPiuHYB");
+        lifts.put("C8:9E:0F:5E:71:EB","fKwOl3eaud");
 
         keys = lifts.keySet();
 

@@ -22,7 +22,8 @@
         android:id="@+id/bluetotth_cb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="false" />
+        android:checked="false"
+        android:buttonTint="#ffffff"/>
 
 </LinearLayout>
 <!-- From: file:/Users/francy/Documents/Politecnico/Digital%20Interaction%20Design/Progetto/ParseStarterProject/src/main/res/layout/fragment_home.xml -->
